@@ -37,10 +37,7 @@ public class Screen {
     //     pack();
     // }
     
-    public Screen(){
-        init();
-    }
-    
+
     public void init(){
 
         JFrame frame = new JFrame();

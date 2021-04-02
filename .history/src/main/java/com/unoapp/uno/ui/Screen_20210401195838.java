@@ -40,7 +40,6 @@ public class Screen {
     public Screen(){
         init();
     }
-    
     public void init(){
 
         JFrame frame = new JFrame();

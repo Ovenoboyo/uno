@@ -13,7 +13,7 @@ public class Application {
 		ConfigurableApplicationContext context = new SpringApplicationBuilder(Application.class).headless(false)
 				.run(args);
 		Screen mScreen = context.getBean(Screen.class);
-		// mScreen.setVisible(true);
+		mScreen.setVisible(true);
 	}
 
 }
