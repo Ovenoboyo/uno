@@ -1,30 +1,23 @@
 package com.unoapp.uno.ui;
 
-import java.awt.Dimension;
-
-import javax.swing.GroupLayout;
-import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Screen extends javax.swing.JFrame {
     private static final long serialVersionUID = 4682933028079150112L;
 
     public Screen() {
-        this.initComponents();
+        this.init();
     }
 
-    private void initComponents() {
-        JDesktopPane desktopPane = new JDesktopPane();
+    public void init() {
 
-        GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        JFrame frame = new JFrame();
+        frame.setSize(100, 100);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
-
-        setMinimumSize(new Dimension(400, 400));
-        setLocationRelativeTo(null);
-        pack();
+        JPanel panel = new JPanel();
     }
 
 }

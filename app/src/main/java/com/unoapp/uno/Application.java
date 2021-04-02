@@ -5,8 +5,6 @@ import com.unoapp.uno.ui.Game;
 public class Application {
 
 	public static void main(String[] args) {
-		System.out.println("here");
-
 		Game game = new Game();
 		game.setVisible(true);
 	}
