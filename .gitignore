@@ -32,7 +32,11 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+/src/NetBeans/
 
 ### VS Code ###
 .vscode/
-/src/Netbeans/homepage/target/
+.history/
+
+# Ignore Gradle build output directory
+build

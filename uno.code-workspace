@@ -11,5 +11,7 @@
 			"walkme.java-extension-pack"
 		]
 	},
-	"settings": {}
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
 }
