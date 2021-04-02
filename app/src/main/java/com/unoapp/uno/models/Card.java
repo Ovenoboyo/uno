@@ -4,7 +4,18 @@ import java.util.UUID;
 
 public class Card {
     public enum Color {
-        RED, BLUE, YELLOW, GREEN
+        RED("Red"), BLUE("Blue"), YELLOW("Yellow"), GREEN("Green");
+
+        private final String valueString;
+
+        Color(final String text) {
+            this.valueString = text;
+        }
+
+        @Override
+        public String toString() {
+            return valueString;
+        }
     }
 
     // TODO: Wild Cards
@@ -17,14 +28,29 @@ public class Card {
     private Integer num;
     private Color color;
 
+    /**
+     * Get UID of card
+     * 
+     * @return String UID
+     */
     public String getUID() {
         return this.UID;
     }
 
+    /**
+     * Get number associated with card
+     * 
+     * @return Number
+     */
     public int getNum() {
         return this.num;
     }
 
+    /**
+     * Get color associated with card
+     * 
+     * @return Color
+     */
     public Color getColor() {
         return this.color;
     }
@@ -33,5 +59,10 @@ public class Card {
         this.UID = UUID.randomUUID().toString();
         this.num = num;
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return this.color.toString() + " " + this.num.toString();
     }
 }

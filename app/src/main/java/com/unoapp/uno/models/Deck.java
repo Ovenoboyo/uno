@@ -14,6 +14,9 @@ public class Deck {
         this.shuffleDeck();
     }
 
+    /**
+     * Generate deck with 108 cards
+     */
     private void populateDeck() {
 
         // Populate number and action cards
@@ -25,16 +28,29 @@ public class Deck {
         // TODO: Populate Wild Cards
     }
 
+    /**
+     * Shuffle the generated deck
+     */
     private void shuffleDeck() {
         Collections.shuffle(deck);
     }
 
+    /**
+     * Remove a card from top of deck
+     * 
+     * @return removed card
+     */
     public Card popDeck() {
         Card c = deck.get(0);
         deck.remove(0);
         return c;
     }
 
+    /**
+     * Used to allocate 7 cards to players at start of game
+     * 
+     * @return 7 cards from top of deck
+     */
     public List<Card> getInitialCards() {
         // Make copy of objects before clearing them from deck
         // https://stackoverflow.com/a/6536128 Shallow copy

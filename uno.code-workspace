@@ -8,10 +8,16 @@
 		"recommendations": [
 			"vscjava.vscode-java-pack",
 			"sohibe.java-generate-setters-getters",
-			"walkme.java-extension-pack"
+			"walkme.java-extension-pack",
+			"richardwillis.vscode-gradle"
 		]
 	},
 	"settings": {
-		"java.configuration.updateBuildConfiguration": "automatic"
-	}
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"gradle.javaDebug": {
+			"tasks": [
+				"app:run"
+			]
+		}
+	},
 }
