@@ -49,7 +49,7 @@ public class Player {
      * @param UID of card to be found
      * @return found card
      */
-    private Card getByUID(String UID) {
+    public Card getByUID(String UID) {
         return hand.stream().filter(card -> UID.equals(card.getUID())).findFirst().orElse(null);
     }
 }

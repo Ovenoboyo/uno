@@ -34,7 +34,7 @@ public class Game {
     }
 
     public void generatePlayerCards() {
-        ArrayList<Card> cards = controller.getCurrentPlayerCards();
+        ArrayList<Card> cards = controller.getCurrentPlayer().getHand();
 
         for (Card c : cards)
             activeCardPanel.add(populateCard(c.toString()));
