@@ -5,15 +5,8 @@ import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.JDesktopPane;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Screen extends javax.swing.JFrame {
-
-    /**
-     * Generated SerialUID
-     */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4682933028079150112L;
 
     public Screen() {
         this.initComponents();
