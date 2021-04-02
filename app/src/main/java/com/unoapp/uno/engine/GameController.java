@@ -7,6 +7,9 @@ import com.unoapp.uno.models.Deck;
 import com.unoapp.uno.models.Played;
 import com.unoapp.uno.models.Player;
 
+/**
+ * Controller to handle logic of game
+ */
 public class GameController {
     private ArrayList<Player> players = new ArrayList<>();
 

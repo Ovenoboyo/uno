@@ -3,6 +3,9 @@ package com.unoapp.uno.models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model to hold player data
+ */
 public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
 

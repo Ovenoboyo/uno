@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.unoapp.uno.models.Card.Color;
 
+/**
+ * Model to hold a deck of 108 cards as per UNO rules
+ */
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<>();
 

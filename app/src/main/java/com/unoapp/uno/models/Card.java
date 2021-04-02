@@ -2,6 +2,9 @@ package com.unoapp.uno.models;
 
 import java.util.UUID;
 
+/**
+ * Model to hold data of a single Card
+ */
 public class Card {
     public enum Color {
         RED("Red"), BLUE("Blue"), YELLOW("Yellow"), GREEN("Green");

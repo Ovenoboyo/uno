@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import com.unoapp.uno.engine.GameController;
 import com.unoapp.uno.models.Card;
 
+/**
+ * Game Screen
+ */
 public class Game {
     JFrame frame = new JFrame();
     JPanel activeCardPanel;

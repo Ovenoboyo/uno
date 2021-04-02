@@ -2,6 +2,9 @@ package com.unoapp.uno.models;
 
 import java.util.ArrayList;
 
+/**
+ * Model to hold cards played by players
+ */
 public class Played {
     private ArrayList<Card> playedCards = new ArrayList<>();
 
