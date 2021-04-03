@@ -115,6 +115,11 @@ public class GameController {
         return false;
     }
 
+    /**
+     * Get the topmost card from playedcards stack
+     * 
+     * @return card played latest
+     */
     public Card getLastPlayedCard() {
         return playedCard.getTop();
     }

@@ -16,15 +16,21 @@ import com.unoapp.uno.models.Card;
  * Game Screen
  */
 public class Game {
-    JFrame frame = new JFrame();
+    JFrame frame;
     JPanel activePlayerCardPanel;
     JPanel lastCardPanel;
     GameController controller;
 
+    /**
+     * Default constructor
+     */
     public Game() {
         init();
     }
 
+    /**
+     * Initialize game screen
+     */
     private void init() {
         generateUIComponents();
 
@@ -34,7 +40,11 @@ public class Game {
 
     }
 
+    /**
+     * Generate all the UI required for game screen
+     */
     private void generateUIComponents() {
+        frame = new JFrame();
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -53,10 +63,17 @@ public class Game {
         frame.pack();
     }
 
+    /**
+     * Initialize controller to handle game loop
+     */
     private void initializeController() {
         this.controller = new GameController(() -> refreshUI());
     }
 
+    /**
+     * Update all the UI components based off changed values. Called after every
+     * turn
+     */
     private void refreshUI() {
         lastCardPanel.removeAll();
         generateLastCard();
@@ -71,6 +88,9 @@ public class Game {
         frame.pack();
     }
 
+    /**
+     * Generate buttons based off players allocated cards
+     */
     private void generatePlayerCards() {
         ArrayList<Card> cards = controller.getCurrentPlayer().getHand();
 
@@ -78,18 +98,33 @@ public class Game {
             activePlayerCardPanel.add(populateCard(c));
     }
 
+    /**
+     * Generate component to show last played card
+     */
     private void generateLastCard() {
+        // TODO: Replace button with something more non-clickable
         JButton button = new JButton(controller.getLastPlayedCard().toString());
         lastCardPanel.add(button);
 
     }
 
+    /**
+     * Generates a component with details of card
+     * 
+     * @param card card of which button is to be generated
+     * @return Generated compoenent (Currently JButton)
+     */
     private JButton populateCard(Card card) {
         JButton button = new JButton(card.toString());
         button.addActionListener(arg0 -> controller.playCard(card));
         return button;
     }
 
+    /**
+     * Set visibility of game screen
+     * 
+     * @param value
+     */
     public void setVisible(Boolean value) {
         this.frame.setVisible(value);
     }
