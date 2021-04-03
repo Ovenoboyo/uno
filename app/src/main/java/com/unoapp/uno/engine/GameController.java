@@ -12,15 +12,29 @@ import com.unoapp.uno.models.Player;
  */
 public class GameController {
     private ArrayList<Player> players = new ArrayList<>();
+    private IGameController mGameController;
 
     private Deck deck = new Deck();
     private Played playedCard = new Played();
 
-    public GameController() {
+    /**
+     * Holds the index of player whose turn it is
+     */
+    private Integer turnIndex = -1;
+
+    public GameController(IGameController mGameController) {
+        this.mGameController = mGameController;
         // Add 2 players
         for (int i = 0; i < 2; i++)
             this.players.add(new Player());
         populatePlayerCards();
+
+        // Play one card initially
+        playedCard.playCard(deck.popDeck());
+    }
+
+    public void startGameLoop() {
+        nextTurn();
     }
 
     /**
@@ -60,18 +74,16 @@ public class GameController {
     }
 
     /**
-     * Holds the index of player whose turn it is
-     */
-    private Integer turnIndex = 0;
-
-    /**
      * Increments turnIndex if its lesser than total players else set it to point
      * first player
      */
-    public void nextTurn() {
+    private void nextTurn() {
         turnIndex++;
         if (turnIndex == players.size())
             turnIndex = 0;
+
+        // Notify of turn end event
+        mGameController.turnEndCallback();
     }
 
     /**
@@ -87,14 +99,13 @@ public class GameController {
      * Play card identified by provided UID. Removes card from players hand and adds
      * to played cards
      * 
-     * @param UID UID of card
+     * @param card card to be played
      * @return true if card is playable, false if not playable
      */
-    public boolean playCard(String UID) {
+    public boolean playCard(Card card) {
         Player player = getCurrentPlayer();
-        Card card = player.getByUID(UID);
         if (playedCard.validateCard(card)) {
-            player.removeCard(UID);
+            player.removeCard(card.getUID());
             playedCard.playCard(card);
 
             // Increment turn if card is played
@@ -102,5 +113,19 @@ public class GameController {
             return true;
         }
         return false;
+    }
+
+    public Card getLastPlayedCard() {
+        return playedCard.getTop();
+    }
+
+    /**
+     * Interface for all required event callbacks
+     */
+    public interface IGameController {
+        /**
+         * Fires on every turn end and at the start of t he game.
+         */
+        void turnEndCallback();
     }
 }

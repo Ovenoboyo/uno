@@ -50,7 +50,8 @@ public class Deck {
     }
 
     /**
-     * Used to allocate 7 cards to players at start of game
+     * Used to allocate 7 cards to players at start of game. Gets 7 cards from top
+     * of deck and removes them from the deck before returning
      * 
      * @return 7 cards from top of deck
      */

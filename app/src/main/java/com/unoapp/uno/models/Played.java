@@ -23,8 +23,8 @@ public class Played {
      * 
      * @return latest played card
      */
-    private Card getTop() {
-        return playedCards.get(0);
+    public Card getTop() {
+        return playedCards.get(playedCards.size() - 1);
     }
 
     /**
@@ -34,6 +34,7 @@ public class Played {
      * @return true if last played card is same color or same number
      */
     public boolean validateCard(Card card) {
-        return (getTop().getColor().equals(card.getColor()) || getTop().getNum() == card.getNum());
+        Card topCard = getTop();
+        return (topCard.getColor().equals(card.getColor()) || topCard.getNum() == card.getNum());
     }
 }
