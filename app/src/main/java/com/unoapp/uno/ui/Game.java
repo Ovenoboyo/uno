@@ -6,11 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
 import com.unoapp.uno.engine.GameController;
+import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.models.Card;
+import com.unoapp.uno.models.Player;
 
 /**
  * Game Screen
@@ -18,7 +21,7 @@ import com.unoapp.uno.models.Card;
 public class Game {
     JFrame frame;
     JPanel activePlayerCardPanel;
-    JPanel lastCardPanel;
+    JPanel tablePanel;
     GameController controller;
 
     /**
@@ -45,7 +48,7 @@ public class Game {
      */
     private void generateUIComponents() {
         frame = new JFrame();
-        frame.setSize(400, 400);
+        frame.setPreferredSize(new Dimension(640, 480));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -55,10 +58,10 @@ public class Game {
         activePlayerCardPanel = new JPanel();
         activePlayerCardPanel.setLayout(new FlowLayout());
 
-        lastCardPanel = new JPanel();
-        lastCardPanel.setLayout(new FlowLayout());
+        tablePanel = new JPanel();
+        tablePanel.setLayout(new FlowLayout());
 
-        pane.add(lastCardPanel);
+        pane.add(tablePanel);
         pane.add(activePlayerCardPanel);
         frame.pack();
     }
@@ -67,7 +70,23 @@ public class Game {
      * Initialize controller to handle game loop
      */
     private void initializeController() {
-        this.controller = new GameController(() -> refreshUI());
+        this.controller = new GameController(new IGameController() {
+            @Override
+            public void turnEndCallback() {
+                refreshUI();
+            }
+
+            @Override
+            public void drawCardCallback() {
+                refreshUI();
+            }
+
+            @Override
+            public void gotWinnerCallback(Player player) {
+                System.out.println("Got winner");
+
+            }
+        });
     }
 
     /**
@@ -75,9 +94,10 @@ public class Game {
      * turn
      */
     private void refreshUI() {
-        lastCardPanel.removeAll();
+        tablePanel.removeAll();
         generateLastCard();
-        lastCardPanel.revalidate();
+        generateDeckButton();
+        tablePanel.revalidate();
 
         activePlayerCardPanel.removeAll();
         generatePlayerCards();
@@ -85,7 +105,6 @@ public class Game {
 
         frame.revalidate();
         frame.repaint();
-        frame.pack();
     }
 
     /**
@@ -104,8 +123,13 @@ public class Game {
     private void generateLastCard() {
         // TODO: Replace button with something more non-clickable
         JButton button = new JButton(controller.getLastPlayedCard().toString());
-        lastCardPanel.add(button);
+        tablePanel.add(button);
+    }
 
+    private void generateDeckButton() {
+        JButton button = new JButton("Draw card");
+        button.addActionListener(arg0 -> controller.drawCard(controller.getCurrentPlayer()));
+        tablePanel.add(button);
     }
 
     /**

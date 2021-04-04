@@ -34,7 +34,7 @@ public class GameController {
     }
 
     public void startGameLoop() {
-        nextTurn();
+        nextTurn(null);
     }
 
     /**
@@ -56,15 +56,6 @@ public class GameController {
     }
 
     /**
-     * Get generated deck of cards
-     * 
-     * @return Deck of 108 cards
-     */
-    public Deck getDeck() {
-        return this.deck;
-    }
-
-    /**
      * Set initial hand of all players by picking 7 cards from deck
      */
     private void populatePlayerCards() {
@@ -75,15 +66,23 @@ public class GameController {
 
     /**
      * Increments turnIndex if its lesser than total players else set it to point
-     * first player
+     * first player. Also checks for winner on every turn. If winner is found then
+     * gotWinnerCallback will be fired otherwise turnEndCallback will be fired
+     * 
      */
-    private void nextTurn() {
-        turnIndex++;
-        if (turnIndex == players.size())
-            turnIndex = 0;
+    private void nextTurn(Player player) {
+        // If the player is null, then it indicates first turn where turnIndex is -1
+        if (player == null || !checkWinner(player)) {
+            turnIndex++;
+            if (turnIndex == players.size())
+                turnIndex = 0;
 
-        // Notify of turn end event
-        mGameController.turnEndCallback();
+            // Notify of turn end event
+            mGameController.turnEndCallback();
+            return;
+        }
+        // Notify of the winner
+        mGameController.gotWinnerCallback(player);
     }
 
     /**
@@ -109,10 +108,21 @@ public class GameController {
             playedCard.playCard(card);
 
             // Increment turn if card is played
-            nextTurn();
+            nextTurn(player);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Pops a card from the deck and adds to to players hand
+     * 
+     * @param player player to which card is to be given
+     */
+    public void drawCard(Player player) {
+        player.addCard(deck.popDeck());
+        mGameController.drawCardCallback();
+        nextTurn(player);
     }
 
     /**
@@ -124,6 +134,10 @@ public class GameController {
         return playedCard.getTop();
     }
 
+    public boolean checkWinner(Player player) {
+        return player.getHand().size() == 0;
+    }
+
     /**
      * Interface for all required event callbacks
      */
@@ -132,5 +146,12 @@ public class GameController {
          * Fires on every turn end and at the start of t he game.
          */
         void turnEndCallback();
+
+        /**
+         * Fires everytime a card is drawn from the deck
+         */
+        void drawCardCallback();
+
+        void gotWinnerCallback(Player player);
     }
 }
