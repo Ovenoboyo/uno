@@ -1,11 +1,13 @@
 package com.unoapp.uno.engine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Deck;
 import com.unoapp.uno.models.Played;
 import com.unoapp.uno.models.Player;
+import com.unoapp.uno.utils.Constants;
 
 /**
  * Controller to handle logic of game
@@ -25,14 +27,17 @@ public class GameController {
     public GameController(IGameController mGameController) {
         this.mGameController = mGameController;
         // Add 2 players
-        for (int i = 0; i < 2; i++)
-            this.players.add(new Player());
+        for (int i = 0; i < 3; i++)
+            this.players.add(new Player("Player " + i));
         populatePlayerCards();
 
         // Play one card initially
         playedCard.playCard(deck.popDeck());
     }
 
+    /**
+     * Start the game loop
+     */
     public void startGameLoop() {
         nextTurn(null);
     }
@@ -44,6 +49,13 @@ public class GameController {
      */
     public Player getPlayer(Integer index) {
         return this.players.get(index);
+    }
+
+    private Player getNextPlayer() {
+        if (turnIndex + 1 == players.size()) {
+            return players.get(0);
+        }
+        return players.get(turnIndex + 1);
     }
 
     /**
@@ -64,6 +76,35 @@ public class GameController {
         }
     }
 
+    private void drawTwo(Player player) {
+        for (int i = 0; i < 2; i++)
+            player.addCard(deck.popDeck());
+
+    }
+
+    private void handleActionCards(Card card) {
+        switch (card.getNum()) {
+        case Constants.SKIP:
+            incrementTurn();
+            break;
+
+        case Constants.DRAW2:
+            drawTwo(getNextPlayer());
+            break;
+
+        case Constants.REVERSE:
+            Collections.reverse(players);
+            turnIndex = players.size() - turnIndex - 1;
+            break;
+        }
+    }
+
+    private void incrementTurn() {
+        turnIndex++;
+        if (turnIndex == players.size())
+            turnIndex = 0;
+    }
+
     /**
      * Increments turnIndex if its lesser than total players else set it to point
      * first player. Also checks for winner on every turn. If winner is found then
@@ -73,9 +114,12 @@ public class GameController {
     private void nextTurn(Player player) {
         // If the player is null, then it indicates first turn where turnIndex is -1
         if (player == null || !checkWinner(player)) {
-            turnIndex++;
-            if (turnIndex == players.size())
-                turnIndex = 0;
+            Card lastPlayed = playedCard.getTop();
+            if (lastPlayed.isAction()) {
+                handleActionCards(lastPlayed);
+            }
+
+            incrementTurn();
 
             // Notify of turn end event
             mGameController.turnEndCallback();
@@ -134,6 +178,12 @@ public class GameController {
         return playedCard.getTop();
     }
 
+    /**
+     * Checks if the player has 0 cards left or not
+     * 
+     * @param player player to be checked for winner
+     * @return true if winner else false
+     */
     public boolean checkWinner(Player player) {
         return player.getHand().size() == 0;
     }
@@ -152,6 +202,11 @@ public class GameController {
          */
         void drawCardCallback();
 
+        /**
+         * Fires when a winner is found
+         * 
+         * @param player object of the winner
+         */
         void gotWinnerCallback(Player player);
     }
 }

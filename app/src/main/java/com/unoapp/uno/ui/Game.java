@@ -3,6 +3,7 @@ package com.unoapp.uno.ui;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Container;
@@ -21,6 +22,7 @@ import com.unoapp.uno.models.Player;
 public class Game {
     JFrame frame;
     JPanel activePlayerCardPanel;
+    JPanel activePlayerDetails;
     JPanel tablePanel;
     GameController controller;
 
@@ -58,11 +60,15 @@ public class Game {
         activePlayerCardPanel = new JPanel();
         activePlayerCardPanel.setLayout(new FlowLayout());
 
+        activePlayerDetails = new JPanel();
+        activePlayerDetails.setLayout(new FlowLayout());
+
         tablePanel = new JPanel();
         tablePanel.setLayout(new FlowLayout());
 
         pane.add(tablePanel);
         pane.add(activePlayerCardPanel);
+        pane.add(activePlayerDetails);
         frame.pack();
     }
 
@@ -103,6 +109,10 @@ public class Game {
         generatePlayerCards();
         activePlayerCardPanel.revalidate();
 
+        activePlayerDetails.removeAll();
+        generatePlayerDetails();
+        activePlayerDetails.revalidate();
+
         frame.revalidate();
         frame.repaint();
     }
@@ -115,6 +125,10 @@ public class Game {
 
         for (Card c : cards)
             activePlayerCardPanel.add(populateCard(c));
+    }
+
+    private void generatePlayerDetails() {
+        activePlayerDetails.add(new JLabel(controller.getCurrentPlayer().getName()));
     }
 
     /**

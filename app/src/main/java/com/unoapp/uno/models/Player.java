@@ -8,6 +8,15 @@ import java.util.List;
  */
 public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
+    private String name;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Player(String name) {
+        this.name = name;
+    }
 
     /**
      * Get cards in players hand

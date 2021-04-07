@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.unoapp.uno.models.Card.Color;
+import com.unoapp.uno.utils.Constants;
 
 /**
  * Model to hold a deck of 108 cards as per UNO rules
@@ -24,7 +24,7 @@ public class Deck {
 
         // Populate number and action cards
         for (int i = 0; i < 13; i++) {
-            for (Color c : Color.values())
+            for (Constants.Color c : Constants.Color.values())
                 deck.add(new Card(i, c));
         }
 

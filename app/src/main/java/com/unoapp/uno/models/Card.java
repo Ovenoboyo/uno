@@ -2,31 +2,13 @@ package com.unoapp.uno.models;
 
 import java.util.UUID;
 
+import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Constants.Color;
+
 /**
  * Model to hold data of a single Card
  */
 public class Card {
-    public enum Color {
-        RED("Red"), BLUE("Blue"), YELLOW("Yellow"), GREEN("Green");
-
-        private final String valueString;
-
-        Color(final String text) {
-            this.valueString = text;
-        }
-
-        @Override
-        public String toString() {
-            return valueString;
-        }
-    }
-
-    // TODO: Wild Cards
-
-    public final Integer SKIP = 10;
-    public final Integer REVERSE = 11;
-    public final Integer DRAW2 = 12;
-
     private String UID;
     private Integer num;
     private Color color;
@@ -58,14 +40,30 @@ public class Card {
         return this.color;
     }
 
+    public boolean isAction() {
+        return num == Constants.SKIP || num == Constants.DRAW2 || num == Constants.REVERSE;
+    }
+
     public Card(Integer num, Color color) {
         this.UID = UUID.randomUUID().toString();
         this.num = num;
         this.color = color;
     }
 
+    private String getActionCardNaming() {
+        switch (num) {
+        case Constants.SKIP:
+            return "Skip";
+        case Constants.REVERSE:
+            return "Reverse";
+        case Constants.DRAW2:
+            return "Draw Two";
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
-        return this.color.toString() + " " + this.num.toString();
+        return this.color.toString() + " " + ((this.isAction()) ? getActionCardNaming() : this.num.toString());
     }
 }
