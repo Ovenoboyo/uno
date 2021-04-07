@@ -49,21 +49,4 @@ public class Card {
         this.num = num;
         this.color = color;
     }
-
-    private String getActionCardNaming() {
-        switch (num) {
-        case Constants.SKIP:
-            return "Skip";
-        case Constants.REVERSE:
-            return "Reverse";
-        case Constants.DRAW2:
-            return "Draw Two";
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return this.color.toString() + " " + ((this.isAction()) ? getActionCardNaming() : this.num.toString());
-    }
 }

@@ -1,6 +1,7 @@
 package com.unoapp.uno.ui;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,6 +10,9 @@ import javax.swing.JPanel;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.unoapp.uno.engine.GameController;
@@ -50,7 +54,15 @@ public class Game {
      */
     private void generateUIComponents() {
         frame = new JFrame();
-        frame.setPreferredSize(new Dimension(640, 480));
+
+        // WSL Workaround
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        int xSize = ((int) tk.getScreenSize().getWidth());
+        int ySize = ((int) tk.getScreenSize().getHeight());
+        frame.setPreferredSize(new Dimension(xSize, ySize));
+
+        // Should work on normal
+        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -124,7 +136,7 @@ public class Game {
         ArrayList<Card> cards = controller.getCurrentPlayer().getHand();
 
         for (Card c : cards)
-            activePlayerCardPanel.add(populateCard(c));
+            activePlayerCardPanel.add(populateCard(c, false));
     }
 
     private void generatePlayerDetails() {
@@ -135,9 +147,7 @@ public class Game {
      * Generate component to show last played card
      */
     private void generateLastCard() {
-        // TODO: Replace button with something more non-clickable
-        JButton button = new JButton(controller.getLastPlayedCard().toString());
-        tablePanel.add(button);
+        tablePanel.add(populateCard(controller.getLastPlayedCard(), true));
     }
 
     private void generateDeckButton() {
@@ -152,10 +162,16 @@ public class Game {
      * @param card card of which button is to be generated
      * @return Generated compoenent (Currently JButton)
      */
-    private JButton populateCard(Card card) {
-        JButton button = new JButton(card.toString());
-        button.addActionListener(arg0 -> controller.playCard(card));
-        return button;
+    private CardDrawable populateCard(Card card, boolean isStatic) {
+        CardDrawable drawable;
+        try {
+            drawable = new CardDrawable(card.getColor(), card.getNum(),
+                    (isStatic) ? null : () -> controller.playCard(card));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return drawable;
     }
 
     /**

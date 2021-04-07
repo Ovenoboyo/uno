@@ -2,18 +2,7 @@ package com.unoapp.uno.utils;
 
 public class Constants {
     public enum Color {
-        RED("Red"), BLUE("Blue"), YELLOW("Yellow"), GREEN("Green");
-
-        private final String valueString;
-
-        Color(final String text) {
-            this.valueString = text;
-        }
-
-        @Override
-        public String toString() {
-            return valueString;
-        }
+        RED, BLUE, YELLOW, GREEN;
     }
 
     // TODO: Wild Cards
