@@ -51,6 +51,11 @@ public class GameController {
         return this.players.get(index);
     }
 
+    /**
+     * returns the player next
+     * 
+     * @return Player
+     */
     private Player getNextPlayer() {
         if (turnIndex + 1 == players.size()) {
             return players.get(0);
@@ -82,6 +87,12 @@ public class GameController {
 
     }
 
+    /**
+     * Handle special functions exhibited by action cards NOTE: increment turn is
+     * always called even after handling action cards.
+     * 
+     * @param card card which was played last
+     */
     private void handleActionCards(Card card) {
         switch (card.getNum()) {
         case Constants.SKIP:
@@ -99,6 +110,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Increments turn in circular order
+     */
     private void incrementTurn() {
         turnIndex++;
         if (turnIndex == players.size())
