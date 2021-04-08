@@ -10,24 +10,31 @@ import javax.swing.JPanel;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Dialog;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.unoapp.uno.engine.GameController;
 import com.unoapp.uno.engine.GameController.IGameController;
+import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Player;
+import com.unoapp.uno.utils.Constants;
 
 /**
  * Game Screen
  */
 public class Game {
-    JFrame frame;
-    JPanel activePlayerCardPanel;
-    JPanel activePlayerDetails;
-    JPanel tablePanel;
-    GameController controller;
+    private JFrame frame;
+    private JPanel activePlayerCardPanel;
+    private JPanel activePlayerDetails;
+    private JPanel tablePanel;
+    private GameController controller;
+
+    private boolean nextPersonDraws = false;
+    private boolean isDrawing = false;
+    private boolean disabledExceptDraw2 = false;
 
     /**
      * Default constructor
@@ -48,17 +55,30 @@ public class Game {
 
     }
 
+    private void handlePreviousDraw2() {
+        if (nextPersonDraws) {
+            if (controller.getCurrentPlayer().getHand().stream().filter(card -> card.getNum() == Constants.DRAW2)
+                    .findAny().orElse(null) != null) {
+                disabledExceptDraw2 = true;
+
+            } else {
+                nextPersonDraws = false;
+                controller.drawTwo(controller.getCurrentPlayer());
+            }
+        }
+    }
+
     private void populateDialog(Card card, boolean isPlayable) {
         JDialog dialog = new JDialog();
-        // dialog.setUndecorated(true);
+        dialog.setUndecorated(true);
 
-        JLabel label = new JLabel("You have drawn a");
+        JLabel label = new JLabel(controller.getCurrentPlayer().getName() + " You have drawn a");
 
         Container pane = dialog.getContentPane();
         dialog.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
 
         JPanel panel = new JPanel();
-        panel.add(populateCard(card, true));
+        panel.add(populateCard(card, true, false));
 
         JPanel buttonGroup = new JPanel();
         JButton play = new JButton("Play");
@@ -66,6 +86,7 @@ public class Game {
         JButton keep = new JButton("Keep");
 
         play.addActionListener(arg0 -> {
+            isDrawing = false;
             controller.playCard(card);
             dialog.dispose();
         });
@@ -76,6 +97,7 @@ public class Game {
         });
 
         keep.addActionListener(arg0 -> {
+            isDrawing = false;
             controller.pass(controller.getCurrentPlayer());
             dialog.dispose();
         });
@@ -134,6 +156,38 @@ public class Game {
         frame.pack();
     }
 
+    private void populateDrawn2CardsDialog(ArrayList<Card> cards, continueDraw cDraw) {
+        JDialog dialog = new JDialog();
+        dialog.setUndecorated(true);
+
+        JLabel label = new JLabel(
+                controller.getCurrentPlayer().getName() + " You have drawn. Your turn will be skipped.");
+
+        Container pane = dialog.getContentPane();
+        dialog.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+
+        JPanel panel = new JPanel();
+        for (Card c : cards)
+            panel.add(populateCard(c, true, false));
+
+        JPanel buttonGroup = new JPanel();
+        JButton cont = new JButton("Continue");
+
+        cont.addActionListener(arg0 -> {
+            cDraw.continueTurn();
+            dialog.dispose();
+        });
+
+        buttonGroup.add(cont);
+
+        dialog.add(label);
+        dialog.add(panel);
+        dialog.add(buttonGroup);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
     /**
      * Initialize controller to handle game loop
      */
@@ -141,12 +195,12 @@ public class Game {
         this.controller = new GameController(new IGameController() {
             @Override
             public void turnEndCallback() {
-                System.out.println("here");
                 refreshUI();
             }
 
             @Override
             public void drawCardCallback(Card card, boolean isPlayable) {
+                isDrawing = true;
                 populateDialog(card, isPlayable);
                 refreshUI();
             }
@@ -155,6 +209,17 @@ public class Game {
             public void gotWinnerCallback(Player player) {
                 System.out.println("Got winner");
 
+            }
+
+            @Override
+            public void drawTwoCallback() {
+                nextPersonDraws = true;
+                System.out.println(nextPersonDraws);
+            }
+
+            @Override
+            public void drawingTwoCallback(ArrayList<Card> cards, continueDraw cDraw) {
+                populateDrawn2CardsDialog(cards, cDraw);
             }
         });
     }
@@ -170,6 +235,7 @@ public class Game {
         tablePanel.revalidate();
 
         activePlayerCardPanel.removeAll();
+        handlePreviousDraw2();
         generatePlayerCards();
         activePlayerCardPanel.revalidate();
 
@@ -188,7 +254,8 @@ public class Game {
         ArrayList<Card> cards = controller.getCurrentPlayer().getHand();
 
         for (Card c : cards)
-            activePlayerCardPanel.add(populateCard(c, false));
+            activePlayerCardPanel
+                    .add(populateCard(c, false, (isDrawing || (disabledExceptDraw2 && c.getNum() != Constants.DRAW2))));
     }
 
     private void generatePlayerDetails() {
@@ -199,7 +266,7 @@ public class Game {
      * Generate component to show last played card
      */
     private void generateLastCard() {
-        tablePanel.add(populateCard(controller.getLastPlayedCard(), true));
+        tablePanel.add(populateCard(controller.getLastPlayedCard(), true, false));
     }
 
     private void generateDeckButton() {
@@ -214,11 +281,15 @@ public class Game {
      * @param card card of which button is to be generated
      * @return Generated compoenent (Currently JButton)
      */
-    private CardDrawable populateCard(Card card, boolean isStatic) {
+    private CardDrawable populateCard(Card card, boolean isStatic, boolean isDisabled) {
         CardDrawable drawable;
         try {
-            drawable = new CardDrawable(card.getColor(), card.getNum(),
-                    (isStatic) ? null : () -> controller.playCard(card));
+            drawable = new CardDrawable(card.getColor(), card.getNum(), isDisabled,
+                    (isStatic || isDisabled) ? null : () -> {
+                        controller.playCard(card);
+                        if (disabledExceptDraw2)
+                            disabledExceptDraw2 = false;
+                    });
         } catch (IOException e) {
             e.printStackTrace();
             return null;

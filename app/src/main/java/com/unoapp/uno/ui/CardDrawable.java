@@ -34,6 +34,7 @@ public class CardDrawable extends JLabel {
     private Integer num;
     private BufferedImage image;
     private Border grayBorder;
+    private Boolean disabled;
 
     private final int width = 168;
     private final int height = 267;
@@ -42,9 +43,11 @@ public class CardDrawable extends JLabel {
     private final Font reverse = new Font("Gilmer Heavy", Font.PLAIN, -36);
     private final Font big = new Font("Gilmer Heavy", Font.PLAIN, 82);
 
-    CardDrawable(Constants.Color color, Integer num, onClickListener mClickListener) throws IOException {
+    CardDrawable(Constants.Color color, Integer num, Boolean disabled, onClickListener mClickListener)
+            throws IOException {
         this.color = color;
         this.num = num;
+        this.disabled = disabled;
 
         this.grayBorder = BorderFactory.createLineBorder(Color.DARK_GRAY);
         this.setMouseListener(mClickListener);
@@ -81,6 +84,10 @@ public class CardDrawable extends JLabel {
     }
 
     private Color getColor() {
+        if (disabled) {
+            return Color.GRAY;
+        }
+
         switch (this.color) {
         case RED:
             return new Color(206, 60, 61);

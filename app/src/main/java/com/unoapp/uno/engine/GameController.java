@@ -19,6 +19,8 @@ public class GameController {
     private Deck deck = new Deck();
     private Played playedCard = new Played();
 
+    private int isStackingD2;
+
     /**
      * Holds the index of player whose turn it is
      */
@@ -37,6 +39,8 @@ public class GameController {
 
     /**
      * Start the game loop
+     * 
+     * @
      */
     public void startGameLoop() {
         nextTurn(null, false);
@@ -81,16 +85,15 @@ public class GameController {
         }
     }
 
-    private void drawTwo(Player player) {
-        for (int i = 0; i < 2; i++)
-            player.addCard(deck.popDeck());
+    private void drawTwoHandler(Player player) {
+        mGameController.drawTwoCallback();
     }
 
     /**
      * Handle special functions exhibited by action cards NOTE: increment turn is
      * always called even after handling action cards.
      * 
-     * @param card card which was played last
+     * @param card card which was played last @
      */
     private void handleActionCards(Card card) {
         switch (card.getNum()) {
@@ -99,7 +102,8 @@ public class GameController {
             break;
 
         case Constants.DRAW2:
-            drawTwo(getNextPlayer());
+            isStackingD2++;
+            drawTwoHandler(getNextPlayer());
             break;
 
         case Constants.REVERSE:
@@ -125,18 +129,17 @@ public class GameController {
      * 
      * @param player player who just finished playing the card
      * @param isPass true if the current player has played a card. false if no card
-     *               was played by current player
+     *               was played by current player @
      */
     private void nextTurn(Player player, Boolean isPass) {
         // If the player is null, then it indicates first turn where turnIndex is -1
         if (player == null || !checkWinner(player)) {
+            Card lastPlayed = playedCard.getTop();
             if (!isPass) {
-                Card lastPlayed = playedCard.getTop();
                 if (lastPlayed.isAction()) {
                     handleActionCards(lastPlayed);
                 }
             }
-
             incrementTurn();
 
             // Notify of turn end event
@@ -161,7 +164,7 @@ public class GameController {
      * to played cards
      * 
      * @param card card to be played
-     * @return true if card is playable, false if not playable
+     * @return true if card is playable, false if not playable @
      */
     public boolean playCard(Card card) {
         Player player = getCurrentPlayer();
@@ -174,6 +177,17 @@ public class GameController {
             return true;
         }
         return false;
+    }
+
+    public void drawTwo(Player player) {
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 2 * isStackingD2; i++) {
+            Card card = deck.popDeck();
+            cards.add(card);
+            player.addCard(card);
+        }
+        isStackingD2 = 0;
+        mGameController.drawingTwoCallback(cards, () -> nextTurn(player, true));
     }
 
     /**
@@ -226,6 +240,14 @@ public class GameController {
          * @param isPlayable true if card is playable else false
          */
         void drawCardCallback(Card card, boolean isPlayable);
+
+        void drawTwoCallback();
+
+        public interface continueDraw {
+            void continueTurn();
+        }
+
+        void drawingTwoCallback(ArrayList<Card> cards, continueDraw cDraw);
 
         /**
          * Fires when a winner is found
