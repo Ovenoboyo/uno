@@ -39,7 +39,7 @@ public class GameController {
      * Start the game loop
      */
     public void startGameLoop() {
-        nextTurn(null);
+        nextTurn(null, false);
     }
 
     /**
@@ -84,7 +84,6 @@ public class GameController {
     private void drawTwo(Player player) {
         for (int i = 0; i < 2; i++)
             player.addCard(deck.popDeck());
-
     }
 
     /**
@@ -120,17 +119,22 @@ public class GameController {
     }
 
     /**
-     * Increments turnIndex if its lesser than total players else set it to point
+     * * Increments turnIndex if its lesser than total players else set it to point
      * first player. Also checks for winner on every turn. If winner is found then
      * gotWinnerCallback will be fired otherwise turnEndCallback will be fired
      * 
+     * @param player player who just finished playing the card
+     * @param isPass true if the current player has played a card. false if no card
+     *               was played by current player
      */
-    private void nextTurn(Player player) {
+    private void nextTurn(Player player, Boolean isPass) {
         // If the player is null, then it indicates first turn where turnIndex is -1
         if (player == null || !checkWinner(player)) {
-            Card lastPlayed = playedCard.getTop();
-            if (lastPlayed.isAction()) {
-                handleActionCards(lastPlayed);
+            if (!isPass) {
+                Card lastPlayed = playedCard.getTop();
+                if (lastPlayed.isAction()) {
+                    handleActionCards(lastPlayed);
+                }
             }
 
             incrementTurn();
@@ -166,7 +170,7 @@ public class GameController {
             playedCard.playCard(card);
 
             // Increment turn if card is played
-            nextTurn(player);
+            nextTurn(player, false);
             return true;
         }
         return false;
@@ -178,8 +182,13 @@ public class GameController {
      * @param player player to which card is to be given
      */
     public void drawCard(Player player) {
-        player.addCard(deck.popDeck());
-        mGameController.drawCardCallback();
+        Card card = deck.popDeck();
+        player.addCard(card);
+        mGameController.drawCardCallback(card, playedCard.validateCard(card));
+    }
+
+    public void pass(Player player) {
+        nextTurn(player, true);
     }
 
     /**
@@ -212,8 +221,11 @@ public class GameController {
 
         /**
          * Fires everytime a card is drawn from the deck
+         * 
+         * @param card       card drawn from deck
+         * @param isPlayable true if card is playable else false
          */
-        void drawCardCallback();
+        void drawCardCallback(Card card, boolean isPlayable);
 
         /**
          * Fires when a winner is found

@@ -38,15 +38,29 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public int getSize() {
+        return deck.size();
+    }
+
     /**
      * Remove a card from top of deck
      * 
      * @return removed card
      */
     public Card popDeck() {
+        if (deck.size() == 0) {
+            this.populateDeck();
+            this.shuffleDeck();
+        }
+
         Card c = deck.get(0);
         deck.remove(0);
         return c;
+    }
+
+    public void addAll(ArrayList<Card> list) {
+        deck.addAll(list);
+        this.shuffleDeck();
     }
 
     /**

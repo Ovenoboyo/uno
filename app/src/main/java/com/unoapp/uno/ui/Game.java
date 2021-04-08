@@ -2,6 +2,7 @@ package com.unoapp.uno.ui;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +48,57 @@ public class Game {
 
     }
 
+    private void populateDialog(Card card, boolean isPlayable) {
+        JDialog dialog = new JDialog();
+        // dialog.setUndecorated(true);
+
+        JLabel label = new JLabel("You have drawn a");
+
+        Container pane = dialog.getContentPane();
+        dialog.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+
+        JPanel panel = new JPanel();
+        panel.add(populateCard(card, true));
+
+        JPanel buttonGroup = new JPanel();
+        JButton play = new JButton("Play");
+        JButton drawNext = new JButton("Draw");
+        JButton keep = new JButton("Keep");
+
+        play.addActionListener(arg0 -> {
+            controller.playCard(card);
+            dialog.dispose();
+        });
+
+        drawNext.addActionListener(arg0 -> {
+            controller.drawCard(controller.getCurrentPlayer());
+            dialog.dispose();
+        });
+
+        keep.addActionListener(arg0 -> {
+            controller.pass(controller.getCurrentPlayer());
+            dialog.dispose();
+        });
+
+        if (!isPlayable) {
+            play.setEnabled(false);
+            keep.setEnabled(false);
+        } else {
+            drawNext.setEnabled(false);
+        }
+
+        buttonGroup.add(keep);
+        buttonGroup.add(play);
+        buttonGroup.add(drawNext);
+
+        dialog.add(label);
+        dialog.add(panel);
+        dialog.add(buttonGroup);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
     /**
      * Generate all the UI required for game screen
      */
@@ -89,11 +141,13 @@ public class Game {
         this.controller = new GameController(new IGameController() {
             @Override
             public void turnEndCallback() {
+                System.out.println("here");
                 refreshUI();
             }
 
             @Override
-            public void drawCardCallback() {
+            public void drawCardCallback(Card card, boolean isPlayable) {
+                populateDialog(card, isPlayable);
                 refreshUI();
             }
 

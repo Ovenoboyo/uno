@@ -1,12 +1,10 @@
 package com.unoapp.uno.models;
 
-import java.util.ArrayList;
-
 /**
  * Model to hold cards played by players
  */
 public class Played {
-    private ArrayList<Card> playedCards = new ArrayList<>();
+    private Card playedCard;
 
     /**
      * Adds the given card to played stack. Expected to be removed from wherever its
@@ -15,7 +13,7 @@ public class Played {
      * @param card to be played
      */
     public void playCard(Card card) {
-        playedCards.add(card);
+        playedCard = card;
     }
 
     /**
@@ -24,7 +22,7 @@ public class Played {
      * @return latest played card
      */
     public Card getTop() {
-        return playedCards.get(playedCards.size() - 1);
+        return playedCard;
     }
 
     /**
@@ -34,7 +32,6 @@ public class Played {
      * @return true if last played card is same color or same number
      */
     public boolean validateCard(Card card) {
-        Card topCard = getTop();
-        return (topCard.getColor().equals(card.getColor()) || topCard.getNum() == card.getNum());
+        return (playedCard.getColor().equals(card.getColor()) || playedCard.getNum() == card.getNum());
     }
 }
