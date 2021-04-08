@@ -17,6 +17,10 @@ import javax.swing.JLabel;
 import java.awt.image.BufferedImage;
 import javax.swing.border.Border;
 
+import com.unoapp.uno.ui.components.BlankCard;
+import com.unoapp.uno.ui.components.DrawTwo;
+import com.unoapp.uno.ui.components.Reverse;
+import com.unoapp.uno.ui.components.Skip;
 import com.unoapp.uno.utils.Constants;
 
 public class CardDrawable extends JLabel {
@@ -166,13 +170,12 @@ public class CardDrawable extends JLabel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         Graphics2D ng2d = (Graphics2D) g2d.create();
-        // if (image == null) {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         ng2d.drawImage(image, 0, 0, width, height, null);
         double coef = Math.min((double) width / (double) 1120, (double) height / (double) 1780);
         ng2d.scale(coef, coef);
         BlankCard.paint(getColor(), ng2d);
-        // }
+        ng2d.dispose();
 
         // g2d.scale(1, 1);
         g2d.setColor(Color.WHITE);
@@ -189,13 +192,7 @@ public class CardDrawable extends JLabel {
         }
 
         drawNormal(g2d);
-
         g2d.dispose();
-
-        // if (image != null) {
-        // g2d.drawImage(image, 0, 0, width, height, this);
-        // }
-        // g2d.dispose();
     }
 
     public interface onClickListener {
