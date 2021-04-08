@@ -10,10 +10,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextLayout;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import java.awt.image.BufferedImage;
@@ -44,7 +42,6 @@ public class CardDrawable extends JLabel {
         this.color = color;
         this.num = num;
 
-        image = ImageIO.read(new File(getImagePath()));
         this.grayBorder = BorderFactory.createLineBorder(Color.DARK_GRAY);
         this.setMouseListener(mClickListener);
     }
@@ -77,20 +74,6 @@ public class CardDrawable extends JLabel {
             public void mouseReleased(MouseEvent arg0) {
             }
         });
-    }
-
-    private String getImagePath() {
-        switch (this.color) {
-        case RED:
-            return "assets/red.png";
-        case BLUE:
-            return "assets/blue.png";
-        case GREEN:
-            return "assets/green.png";
-        case YELLOW:
-            return "assets/yellow.png";
-        }
-        return null;
     }
 
     private Color getColor() {
@@ -135,9 +118,9 @@ public class CardDrawable extends JLabel {
                 (width - 16) - (Reverse.getOrigX() * 0.05) - (Reverse.getOrigWidth() * 0.05),
                 (height - 34) - (Reverse.getOrigY() * 0.05) - (Reverse.getOrigHeight() * 0.05 * 0.5));
 
-        Reverse.paint(g2d, getColor(), 0.2f,
-                (width / 2) - (Reverse.getOrigWidth() * 0.2 * 0.5) - Reverse.getOrigX() * 0.2,
-                (height / 2) - (Reverse.getOrigHeight() * 0.2 * 0.5) - Reverse.getOrigY() * 0.2);
+        Reverse.paint(g2d, getColor(), 0.15f,
+                (width / 2) - (Reverse.getOrigWidth() * 0.15 * 0.5) - Reverse.getOrigX() * 0.15,
+                (height / 2) - (Reverse.getOrigHeight() * 0.15 * 0.5) - Reverse.getOrigY() * 0.15);
 
     }
 
@@ -182,15 +165,16 @@ public class CardDrawable extends JLabel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-        if (image == null) {
-            image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            double coef = Math.min((double) width / (double) 1120, (double) height / (double) 1780);
-            g2d.scale(coef, coef);
-            BlankCard.paint(g2d);
-        }
+        Graphics2D ng2d = (Graphics2D) g2d.create();
+        // if (image == null) {
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        ng2d.drawImage(image, 0, 0, width, height, null);
+        double coef = Math.min((double) width / (double) 1120, (double) height / (double) 1780);
+        ng2d.scale(coef, coef);
+        BlankCard.paint(getColor(), ng2d);
+        // }
 
-        g2d.drawImage(image, 0, 0, width, height, null);
-
+        // g2d.scale(1, 1);
         g2d.setColor(Color.WHITE);
         if (isAction()) {
             if (num == Constants.DRAW2) {

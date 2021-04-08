@@ -15,7 +15,7 @@ public class BlankCard {
      * 
      * @param g Graphics context.
      */
-    public static void paint(Graphics2D g) {
+    public static void paint(Color color, Graphics2D g) {
         Shape shape = null;
 
         //
@@ -24,7 +24,7 @@ public class BlankCard {
 
         // _0_0
         shape = new RoundRectangle2D.Double(23.5, 23.5, 1073, 1733, 83, 83);
-        g.setPaint(new Color(0xCE3C3D));
+        g.setPaint(color);
         g.fill(shape);
         g.setPaint(WHITE);
         g.setStroke(new BasicStroke(47, 0, 0, 4));
