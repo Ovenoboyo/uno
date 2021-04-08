@@ -179,13 +179,17 @@ public class CardDrawable extends JLabel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
-        // g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-        // RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-        if (image != null) {
-            g2d.drawImage(image, 0, 0, width, height, this);
+        if (image == null) {
+            image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            double coef = Math.min((double) width / (double) 1120, (double) height / (double) 1780);
+            g2d.scale(coef, coef);
+            BlankCard.paint(g2d);
         }
+
+        g2d.drawImage(image, 0, 0, width, height, null);
 
         g2d.setColor(Color.WHITE);
         if (isAction()) {
@@ -201,7 +205,13 @@ public class CardDrawable extends JLabel {
         }
 
         drawNormal(g2d);
+
         g2d.dispose();
+
+        // if (image != null) {
+        // g2d.drawImage(image, 0, 0, width, height, this);
+        // }
+        // g2d.dispose();
     }
 
     public interface onClickListener {
