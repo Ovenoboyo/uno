@@ -180,7 +180,6 @@ public class GameController {
     public void drawCard(Player player) {
         player.addCard(deck.popDeck());
         mGameController.drawCardCallback();
-        nextTurn(player);
     }
 
     /**
