@@ -10,12 +10,16 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id 'java'
+    id 'org.beryx.jlink' version '2.23.6'
 }
 
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
 }
+
+sourceCompatibility = 11
+targetCompatibility = 11
 
 dependencies {
     // Use JUnit test framework.
@@ -28,6 +32,31 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass = 'com.unoapp.uno.Application'
+    mainModule = 'mainModule'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.unoapp.uno.Application'
+        )
+    }
+}
+
+jlink {
+    launcher{
+        name = 'Uno'
+    }
+}
+
+def JLINK_DIR = "$buildDir/image/bin"
+
+tasks.jlink.doLast {
+    copy {
+        includeEmptyDirs = false
+        from("assets/")
+        into JLINK_DIR + "/assets"
+    }
 }
 
 javadoc {
