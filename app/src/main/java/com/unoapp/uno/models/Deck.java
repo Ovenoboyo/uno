@@ -23,9 +23,11 @@ public class Deck {
     private void populateDeck() {
 
         // Populate number and action cards
-        for (int i = 0; i < 13; i++) {
-            for (Constants.Color c : Constants.Color.values())
-                deck.add(new Card(i, c));
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 13; i++) {
+                for (Constants.Color c : Constants.Color.values())
+                    deck.add(new Card(i, c));
+            }
         }
 
         // TODO: Populate Wild Cards
