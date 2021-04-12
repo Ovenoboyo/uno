@@ -8,7 +8,6 @@
 		"recommendations": [
 			"vscjava.vscode-java-pack",
 			"sohibe.java-generate-setters-getters",
-			"walkme.java-extension-pack",
 			"richardwillis.vscode-gradle"
 		]
 	},
