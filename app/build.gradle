@@ -34,6 +34,7 @@ ext {
     launcherName = 'uno'
     imageDirPath = "$buildDir/${launcherName}-image"
     imageZipPath = "$buildDir/image-zip/${launcherName}-image.zip"
+    installerPath = "installer"
 }
 
 
@@ -53,10 +54,13 @@ jar {
 
 jlink {
     imageDir = file(imageDirPath)
-    imageZip = file(imageZipPath)
+    // imageZip = file(imageZipPath)
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher{
         name = launcherName
+    }
+    jpackage  {
+        outputDir = "jpackage/installer"
     }
 }
 

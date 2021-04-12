@@ -29,9 +29,9 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew jlinkZip
+      run: ./gradlew jpackage
 
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.os }}-artifact
-        path: app/build/image-zip/uno-image.zip
+        path: app/build/jpackage/installer/*
