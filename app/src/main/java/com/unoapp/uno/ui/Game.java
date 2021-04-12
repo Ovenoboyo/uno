@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Dialog;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -245,6 +244,8 @@ public class Game {
 
         frame.revalidate();
         frame.repaint();
+
+        System.gc();
     }
 
     /**
