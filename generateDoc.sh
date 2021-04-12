@@ -1,0 +1,1 @@
+./gradlew javadoc && mv app/build/docs ./docs
