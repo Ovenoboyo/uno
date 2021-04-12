@@ -18,8 +18,11 @@ repositories {
     jcenter()
 }
 
-sourceCompatibility = 16
-targetCompatibility = 16
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
 
 dependencies {
     // Use JUnit test framework.
