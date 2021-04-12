@@ -1,0 +1,7 @@
+module:mainModule
+com.unoapp.uno
+com.unoapp.uno.engine
+com.unoapp.uno.models
+com.unoapp.uno.ui
+com.unoapp.uno.ui.components
+com.unoapp.uno.utils
