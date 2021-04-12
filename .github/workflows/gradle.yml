@@ -34,4 +34,6 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.os }}-artifact
-        path: app/build/jpackage/installer/*
+        path: |
+          app/build/jpackage/installer/*.deb
+          app/build/jpackage/installer/*.msi
