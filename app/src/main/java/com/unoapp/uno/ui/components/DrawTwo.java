@@ -15,7 +15,10 @@ public class DrawTwo {
      * Paints the transcoded SVG image on the specified graphics context. You can
      * install a custom transformation on the graphics context to scale the image.
      * 
-     * @param g Graphics context.
+     * @param g2d
+     * @param color
+     * @param x
+     * @param y
      */
     public static void paint(Graphics2D g2d, Color color, double x, double y) {
         Shape shape = null;

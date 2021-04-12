@@ -40,7 +40,7 @@ public class GameController {
     /**
      * Start the game loop
      * 
-     * @
+     *
      */
     public void startGameLoop() {
         nextTurn(null, false);
