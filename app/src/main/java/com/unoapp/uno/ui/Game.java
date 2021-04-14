@@ -82,7 +82,10 @@ public class Game {
         }
     }
 
-    private void populateDialog(Card card, boolean isPlayable) {
+    private void populateDrawDialog(Card card, boolean isPlayable) {
+        isDrawing = true;
+        refreshUI();
+
         JDialog dialog = new JDialog();
         dialog.setUndecorated(true);
 
@@ -171,6 +174,9 @@ public class Game {
     }
 
     private void populateDrawnCardsDialog(ArrayList<Card> cards, continueDraw cDraw) {
+        this.isDrawing = true;
+        refreshUI();
+
         JDialog dialog = new JDialog();
         dialog.setUndecorated(true);
 
@@ -188,6 +194,7 @@ public class Game {
         JButton cont = new JButton("Continue");
 
         cont.addActionListener(arg0 -> {
+            this.isDrawing = false;
             cDraw.continueTurn();
             dialog.dispose();
         });
@@ -269,15 +276,12 @@ public class Game {
 
             @Override
             public void drawCardCallback(Card card, boolean isPlayable) {
-                isDrawing = true;
-                populateDialog(card, isPlayable);
-                refreshUI();
+                populateDrawDialog(card, isPlayable);
             }
 
             @Override
             public void gotWinnerCallback(Player player) {
                 System.out.println("Got winner");
-
             }
 
             @Override
