@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Constants.Color;
 
 /**
  * Model to hold a deck of 108 cards as per UNO rules
@@ -26,7 +27,16 @@ public class Deck {
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < 13; i++) {
                 for (Constants.Color c : Constants.Color.values())
-                    deck.add(new Card(i, c));
+                    if (c != Color.BLACK)
+                        deck.add(new Card(i, c));
+
+            }
+
+            // Generate special cards (4 of each)
+            for (int i = Constants.WILD; i <= Constants.DRAWFOUR; i++) {
+                for (int k = 0; k < 4; k++) {
+                    deck.add(new Card(i, Color.BLACK));
+                }
             }
         }
 

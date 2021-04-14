@@ -20,6 +20,7 @@ public class GameController {
     private Played playedCard = new Played();
 
     private int isStackingD2;
+    private int isStackingD4;
 
     /**
      * Holds the index of player whose turn it is
@@ -56,18 +57,6 @@ public class GameController {
     }
 
     /**
-     * returns the player next
-     * 
-     * @return Player
-     */
-    private Player getNextPlayer() {
-        if (turnIndex + 1 == players.size()) {
-            return players.get(0);
-        }
-        return players.get(turnIndex + 1);
-    }
-
-    /**
      * Get total players count
      * 
      * @return Integer
@@ -85,10 +74,6 @@ public class GameController {
         }
     }
 
-    private void drawTwoHandler(Player player) {
-        mGameController.drawTwoCallback();
-    }
-
     /**
      * Handle special functions exhibited by action cards NOTE: increment turn is
      * always called even after handling action cards.
@@ -103,12 +88,23 @@ public class GameController {
 
         case Constants.DRAW2:
             isStackingD2++;
-            drawTwoHandler(getNextPlayer());
+            mGameController.drawTwoCallback();
             break;
 
         case Constants.REVERSE:
             Collections.reverse(players);
             turnIndex = players.size() - turnIndex - 1;
+            break;
+        }
+    }
+
+    private void handleSpecialCards(Card card) {
+        switch (card.getNum()) {
+        case Constants.DRAWFOUR:
+            isStackingD4++;
+            mGameController.drawFourCallback();
+            break;
+        case Constants.WILD:
             break;
         }
     }
@@ -123,9 +119,11 @@ public class GameController {
     }
 
     /**
-     * * Increments turnIndex if its lesser than total players else set it to point
+     * Increments turnIndex if its lesser than total players else set it to point
      * first player. Also checks for winner on every turn. If winner is found then
      * gotWinnerCallback will be fired otherwise turnEndCallback will be fired
+     * 
+     * lastPlayed here refers to latest card and not one previous of latest
      * 
      * @param player player who just finished playing the card
      * @param isPass true if the current player has played a card. false if no card
@@ -138,6 +136,8 @@ public class GameController {
             if (!isPass) {
                 if (lastPlayed.isAction()) {
                     handleActionCards(lastPlayed);
+                } else if (lastPlayed.isSpecial()) {
+                    handleSpecialCards(lastPlayed);
                 }
             }
             incrementTurn();
@@ -156,7 +156,10 @@ public class GameController {
      * @return current player
      */
     public Player getCurrentPlayer() {
-        return players.get(turnIndex);
+        if (turnIndex < players.size()) {
+            return players.get(turnIndex);
+        }
+        return players.get(0);
     }
 
     /**
@@ -169,6 +172,7 @@ public class GameController {
     public boolean playCard(Card card) {
         Player player = getCurrentPlayer();
         if (playedCard.validateCard(card)) {
+
             player.removeCard(card.getUID());
             playedCard.playCard(card);
 
@@ -188,6 +192,19 @@ public class GameController {
         }
         isStackingD2 = 0;
         mGameController.drawingTwoCallback(cards, () -> nextTurn(player, true));
+    }
+
+    public void drawFour(Player player) {
+        ArrayList<Card> cards = new ArrayList<>();
+        System.out.println(isStackingD4);
+
+        for (int i = 0; i < 4 * isStackingD4; i++) {
+            Card card = deck.popDeck();
+            cards.add(card);
+            player.addCard(card);
+        }
+        isStackingD2 = 0;
+        mGameController.drawingFourCallback(cards, () -> nextTurn(player, true));
     }
 
     /**
@@ -243,11 +260,15 @@ public class GameController {
 
         void drawTwoCallback();
 
+        void drawFourCallback();
+
         public interface continueDraw {
             void continueTurn();
         }
 
         void drawingTwoCallback(ArrayList<Card> cards, continueDraw cDraw);
+
+        void drawingFourCallback(ArrayList<Card> cards, continueDraw cDraw);
 
         /**
          * Fires when a winner is found

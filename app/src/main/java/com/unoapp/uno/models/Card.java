@@ -13,6 +13,11 @@ public class Card {
     private Integer num;
     private Color color;
 
+    public void setChangedColor(Color changedColor) {
+        if (isSpecial())
+            this.color = changedColor;
+    }
+
     /**
      * Get UID of card
      * 
@@ -42,6 +47,10 @@ public class Card {
 
     public boolean isAction() {
         return num == Constants.SKIP || num == Constants.DRAW2 || num == Constants.REVERSE;
+    }
+
+    public boolean isSpecial() {
+        return num == Constants.DRAWFOUR || num == Constants.WILD;
     }
 
     public Card(Integer num, Color color) {

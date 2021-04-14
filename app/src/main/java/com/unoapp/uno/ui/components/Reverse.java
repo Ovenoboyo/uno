@@ -87,6 +87,8 @@ public class Reverse {
 
         g.fill(shape);
 
+        g.dispose();
+
     }
 
     /**

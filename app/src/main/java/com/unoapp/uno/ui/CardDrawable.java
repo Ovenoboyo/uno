@@ -18,9 +18,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.border.Border;
 
 import com.unoapp.uno.ui.components.BlankCard;
+import com.unoapp.uno.ui.components.DrawFour;
 import com.unoapp.uno.ui.components.DrawTwo;
 import com.unoapp.uno.ui.components.Reverse;
 import com.unoapp.uno.ui.components.Skip;
+import com.unoapp.uno.ui.components.Wild;
 import com.unoapp.uno.utils.Constants;
 
 public class CardDrawable extends JLabel {
@@ -97,12 +99,10 @@ public class CardDrawable extends JLabel {
             return new Color(108, 181, 96);
         case YELLOW:
             return new Color(239, 211, 65);
+        case BLACK:
+            return new Color(36, 39, 41);
         }
         return null;
-    }
-
-    private boolean isAction() {
-        return num == Constants.SKIP || num == Constants.DRAW2 || num == Constants.REVERSE;
     }
 
     private boolean isSixNine() {
@@ -144,6 +144,16 @@ public class CardDrawable extends JLabel {
                 (height / 2) - (Skip.getOrigHeight() * 0.15 * 0.5));
     }
 
+    private void drawDraw4(Graphics2D g2d) {
+        new TextLayout("+4", small, g2d.getFontRenderContext()).draw(g2d, 14, 44);
+        new TextLayout("+4", reverse, g2d.getFontRenderContext()).draw(g2d, (width - 14), (height - 44));
+        DrawFour.paint(g2d, getColor(), (width / 2) - (706 * 0.15) / 2, height / 2 - (521 * 0.15) / 2);
+    }
+
+    private void drawWild(Graphics2D g2d) {
+        Wild.paint(g2d, getColor(), width, height);
+    }
+
     private void drawNormal(Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
         // Draw numbers
@@ -176,6 +186,12 @@ public class CardDrawable extends JLabel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
+        if (num == Constants.WILD) {
+            drawWild(g2d);
+            g2d.dispose();
+            return;
+        }
+
         Graphics2D ng2d = (Graphics2D) g2d.create();
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         ng2d.drawImage(image, 0, 0, width, height, null);
@@ -184,21 +200,29 @@ public class CardDrawable extends JLabel {
         BlankCard.paint(getColor(), ng2d);
         ng2d.dispose();
 
-        // g2d.scale(1, 1);
         g2d.setColor(Color.WHITE);
-        if (isAction()) {
-            if (num == Constants.DRAW2) {
-                drawPlus2(g2d);
-            } else if (num == Constants.REVERSE) {
-                drawReverse(g2d);
-            } else if (num == Constants.SKIP) {
-                drawSkip(g2d);
-            }
-            g2d.dispose();
-            return;
+
+        switch (num) {
+        case Constants.DRAW2:
+            drawPlus2(g2d);
+            break;
+        case Constants.REVERSE:
+            drawReverse(g2d);
+            break;
+        case Constants.SKIP:
+            drawSkip(g2d);
+            break;
+        case Constants.DRAWFOUR:
+            drawDraw4(g2d);
+            break;
+        case Constants.WILD:
+            drawWild(g2d);
+            break;
+        default:
+            drawNormal(g2d);
+            break;
         }
 
-        drawNormal(g2d);
         g2d.dispose();
     }
 

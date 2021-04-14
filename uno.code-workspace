@@ -8,7 +8,8 @@
 		"recommendations": [
 			"vscjava.vscode-java-pack",
 			"sohibe.java-generate-setters-getters",
-			"richardwillis.vscode-gradle"
+			"richardwillis.vscode-gradle",
+			"naco-siren.gradle-language"
 		]
 	},
 	"settings": {

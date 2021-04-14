@@ -31,9 +31,11 @@ public class Game {
     private JPanel tablePanel;
     private GameController controller;
 
-    private boolean nextPersonDraws = false;
+    private boolean nextPersonDrawsTwo = false;
+    private boolean nextPersonDrawsFour = false;
     private boolean isDrawing = false;
     private boolean disabledExceptDraw2 = false;
+    private boolean disabledExceptDraw4 = false;
 
     /**
      * Default constructor
@@ -55,14 +57,27 @@ public class Game {
     }
 
     private void handlePreviousDraw2() {
-        if (nextPersonDraws) {
+        if (nextPersonDrawsTwo) {
             if (controller.getCurrentPlayer().getHand().stream().filter(card -> card.getNum() == Constants.DRAW2)
                     .findAny().orElse(null) != null) {
                 disabledExceptDraw2 = true;
 
             } else {
-                nextPersonDraws = false;
+                nextPersonDrawsTwo = false;
                 controller.drawTwo(controller.getCurrentPlayer());
+            }
+        }
+    }
+
+    private void handlePreviousDraw4() {
+        if (nextPersonDrawsFour) {
+            if (controller.getCurrentPlayer().getHand().stream().filter(card -> card.getNum() == Constants.DRAWFOUR)
+                    .findAny().orElse(null) != null) {
+                disabledExceptDraw4 = true;
+
+            } else {
+                nextPersonDrawsFour = false;
+                controller.drawFour(controller.getCurrentPlayer());
             }
         }
     }
@@ -86,7 +101,7 @@ public class Game {
 
         play.addActionListener(arg0 -> {
             isDrawing = false;
-            controller.playCard(card);
+            onCardClick(card);
             dialog.dispose();
         });
 
@@ -155,7 +170,7 @@ public class Game {
         frame.pack();
     }
 
-    private void populateDrawn2CardsDialog(ArrayList<Card> cards, continueDraw cDraw) {
+    private void populateDrawnCardsDialog(ArrayList<Card> cards, continueDraw cDraw) {
         JDialog dialog = new JDialog();
         dialog.setUndecorated(true);
 
@@ -187,6 +202,61 @@ public class Game {
         dialog.setVisible(true);
     }
 
+    private void populateColorChangeUI(Card card) {
+        isDrawing = true;
+        refreshUI();
+
+        JDialog dialog = new JDialog();
+        dialog.setUndecorated(true);
+
+        JLabel label = new JLabel(controller.getCurrentPlayer().getName() + " Select color");
+
+        JPanel buttonGroup = new JPanel();
+        JButton red = new JButton("Red");
+        JButton green = new JButton("Green");
+        JButton blue = new JButton("Blue");
+        JButton yellow = new JButton("Yellow");
+
+        red.addActionListener(e -> {
+            isDrawing = false;
+            card.setChangedColor(Constants.Color.RED);
+            controller.playCard(card);
+            dialog.dispose();
+        });
+
+        green.addActionListener(e -> {
+            isDrawing = false;
+            card.setChangedColor(Constants.Color.GREEN);
+            controller.playCard(card);
+            dialog.dispose();
+        });
+
+        blue.addActionListener(e -> {
+            isDrawing = false;
+            card.setChangedColor(Constants.Color.BLUE);
+            controller.playCard(card);
+            dialog.dispose();
+        });
+
+        yellow.addActionListener(e -> {
+            isDrawing = false;
+            card.setChangedColor(Constants.Color.YELLOW);
+            controller.playCard(card);
+            dialog.dispose();
+        });
+
+        buttonGroup.add(red);
+        buttonGroup.add(green);
+        buttonGroup.add(blue);
+        buttonGroup.add(yellow);
+
+        dialog.add(label);
+        dialog.add(buttonGroup);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
     /**
      * Initialize controller to handle game loop
      */
@@ -212,13 +282,23 @@ public class Game {
 
             @Override
             public void drawTwoCallback() {
-                nextPersonDraws = true;
-                System.out.println(nextPersonDraws);
+                nextPersonDrawsTwo = true;
             }
 
             @Override
             public void drawingTwoCallback(ArrayList<Card> cards, continueDraw cDraw) {
-                populateDrawn2CardsDialog(cards, cDraw);
+                populateDrawnCardsDialog(cards, cDraw);
+            }
+
+            @Override
+            public void drawFourCallback() {
+                nextPersonDrawsFour = true;
+            }
+
+            @Override
+            public void drawingFourCallback(ArrayList<Card> cards, continueDraw cDraw) {
+                populateDrawnCardsDialog(cards, cDraw);
+
             }
         });
     }
@@ -235,6 +315,7 @@ public class Game {
 
         activePlayerCardPanel.removeAll();
         handlePreviousDraw2();
+        handlePreviousDraw4();
         generatePlayerCards();
         activePlayerCardPanel.revalidate();
 
@@ -256,7 +337,8 @@ public class Game {
 
         for (Card c : cards)
             activePlayerCardPanel
-                    .add(populateCard(c, false, (isDrawing || (disabledExceptDraw2 && c.getNum() != Constants.DRAW2))));
+                    .add(populateCard(c, false, (isDrawing || (disabledExceptDraw2 && c.getNum() != Constants.DRAW2)
+                            || disabledExceptDraw4 && c.getNum() == Constants.DRAWFOUR)));
     }
 
     private void generatePlayerDetails() {
@@ -286,16 +368,22 @@ public class Game {
         CardDrawable drawable;
         try {
             drawable = new CardDrawable(card.getColor(), card.getNum(), isDisabled,
-                    (isStatic || isDisabled) ? null : () -> {
-                        controller.playCard(card);
-                        if (disabledExceptDraw2)
-                            disabledExceptDraw2 = false;
-                    });
+                    (isStatic || isDisabled) ? null : () -> onCardClick(card));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
         return drawable;
+    }
+
+    private void onCardClick(Card card) {
+        if (card.isSpecial()) {
+            populateColorChangeUI(card);
+        } else {
+            controller.playCard(card);
+        }
+        if (disabledExceptDraw2)
+            disabledExceptDraw2 = false;
     }
 
     /**

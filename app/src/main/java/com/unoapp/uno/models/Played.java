@@ -32,6 +32,7 @@ public class Played {
      * @return true if last played card is same color or same number
      */
     public boolean validateCard(Card card) {
-        return (playedCard.getColor().equals(card.getColor()) || playedCard.getNum() == card.getNum());
+        return (card.isSpecial() || playedCard.getColor().equals(card.getColor())
+                || playedCard.getNum() == card.getNum());
     }
 }

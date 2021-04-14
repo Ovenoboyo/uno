@@ -44,6 +44,7 @@ public class DrawTwo {
         g.fill(shape);
         g.setPaint(WHITE);
         g.draw(shape);
+        g.dispose();
 
     }
 

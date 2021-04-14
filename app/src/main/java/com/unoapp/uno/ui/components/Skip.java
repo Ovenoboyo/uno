@@ -46,6 +46,8 @@ public class Skip {
 
         g.setTransform(transformations.pop()); // _0_1
 
+        g.dispose();
+
     }
 
     /**
