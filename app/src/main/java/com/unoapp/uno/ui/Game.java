@@ -88,6 +88,7 @@ public class Game {
 
         JDialog dialog = new JDialog();
         dialog.setUndecorated(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
         JLabel label = new JLabel(controller.getCurrentPlayer().getName() + " You have drawn a");
 
@@ -179,6 +180,7 @@ public class Game {
 
         JDialog dialog = new JDialog();
         dialog.setUndecorated(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
         JLabel label = new JLabel(
                 controller.getCurrentPlayer().getName() + " You have drawn. Your turn will be skipped.");
@@ -215,6 +217,7 @@ public class Game {
 
         JDialog dialog = new JDialog();
         dialog.setUndecorated(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
         JLabel label = new JLabel(controller.getCurrentPlayer().getName() + " Select color");
 
