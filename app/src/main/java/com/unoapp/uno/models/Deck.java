@@ -39,8 +39,6 @@ public class Deck {
                 }
             }
         }
-
-        // TODO: Populate Wild Cards
     }
 
     /**
