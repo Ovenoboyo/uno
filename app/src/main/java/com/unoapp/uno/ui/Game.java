@@ -2,7 +2,6 @@ package com.unoapp.uno.ui;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +18,9 @@ import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Player;
+import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Constants.Color;
 
 /**
  * Game Screen
@@ -31,6 +32,8 @@ public class Game {
     private JPanel tablePanel;
     private GameController controller;
 
+    private CustomCardDialog customDialog;
+
     private boolean nextPersonDrawsTwo = false;
     private boolean nextPersonDrawsFour = false;
     private boolean isDrawing = false;
@@ -39,8 +42,12 @@ public class Game {
 
     /**
      * Default constructor
+     * 
+     * @throws IOException
      */
-    public Game() {
+    public Game() throws IOException {
+        customDialog = new CustomCardDialog();
+
         init();
     }
 
@@ -82,61 +89,24 @@ public class Game {
         }
     }
 
-    private void populateDrawDialog(Card card, boolean isPlayable) {
+    private void populateDrawDialog(Card card, boolean isPlayable) throws IOException {
         isDrawing = true;
         refreshUI();
 
-        JDialog dialog = new JDialog();
-        dialog.setUndecorated(true);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        customDialog.clean();
 
-        JLabel label = new JLabel(controller.getCurrentPlayer().getName() + " You have drawn a");
-
-        Container pane = dialog.getContentPane();
-        dialog.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
-
-        JPanel panel = new JPanel();
-        panel.add(populateCard(card, true, false));
-
-        JPanel buttonGroup = new JPanel();
-        JButton play = new JButton("Play");
-        JButton drawNext = new JButton("Draw");
-        JButton keep = new JButton("Keep");
-
-        play.addActionListener(arg0 -> {
+        customDialog.addButton("Play", arg0 -> {
             isDrawing = false;
             onCardClick(card);
-            dialog.dispose();
-        });
+        }, isPlayable);
 
-        drawNext.addActionListener(arg0 -> {
-            controller.drawCard(controller.getCurrentPlayer());
-            dialog.dispose();
-        });
-
-        keep.addActionListener(arg0 -> {
+        customDialog.addButton("Draw", arg0 -> controller.drawCard(controller.getCurrentPlayer()), true);
+        customDialog.addButton("Keep", arg0 -> {
             isDrawing = false;
             controller.pass(controller.getCurrentPlayer());
-            dialog.dispose();
-        });
+        }, isPlayable);
 
-        if (!isPlayable) {
-            play.setEnabled(false);
-            keep.setEnabled(false);
-        } else {
-            drawNext.setEnabled(false);
-        }
-
-        buttonGroup.add(keep);
-        buttonGroup.add(play);
-        buttonGroup.add(drawNext);
-
-        dialog.add(label);
-        dialog.add(panel);
-        dialog.add(buttonGroup);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        customDialog.showDialog();
     }
 
     /**
@@ -178,93 +148,31 @@ public class Game {
         this.isDrawing = true;
         refreshUI();
 
-        JDialog dialog = new JDialog();
-        dialog.setUndecorated(true);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        customDialog.clean();
 
-        JLabel label = new JLabel(
-                controller.getCurrentPlayer().getName() + " You have drawn. Your turn will be skipped.");
-
-        Container pane = dialog.getContentPane();
-        dialog.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
-
-        JPanel panel = new JPanel();
-        for (Card c : cards)
-            panel.add(populateCard(c, true, false));
-
-        JPanel buttonGroup = new JPanel();
-        JButton cont = new JButton("Continue");
-
-        cont.addActionListener(arg0 -> {
+        customDialog.addButton("Continue", arg0 -> {
             this.isDrawing = false;
             cDraw.continueTurn();
-            dialog.dispose();
-        });
+        }, true);
 
-        buttonGroup.add(cont);
-
-        dialog.add(label);
-        dialog.add(panel);
-        dialog.add(buttonGroup);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        customDialog.showDialog();
     }
 
     private void populateColorChangeUI(Card card) {
         isDrawing = true;
         refreshUI();
 
-        JDialog dialog = new JDialog();
-        dialog.setUndecorated(true);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        customDialog.clean();
 
-        JLabel label = new JLabel(controller.getCurrentPlayer().getName() + " Select color");
+        for (Color c : Constants.Color.values()) {
+            customDialog.addButton("Continue", arg0 -> {
+                isDrawing = false;
+                card.setChangedColor(c);
+                controller.playCard(card);
+            }, true);
+        }
 
-        JPanel buttonGroup = new JPanel();
-        JButton red = new JButton("Red");
-        JButton green = new JButton("Green");
-        JButton blue = new JButton("Blue");
-        JButton yellow = new JButton("Yellow");
-
-        red.addActionListener(e -> {
-            isDrawing = false;
-            card.setChangedColor(Constants.Color.RED);
-            controller.playCard(card);
-            dialog.dispose();
-        });
-
-        green.addActionListener(e -> {
-            isDrawing = false;
-            card.setChangedColor(Constants.Color.GREEN);
-            controller.playCard(card);
-            dialog.dispose();
-        });
-
-        blue.addActionListener(e -> {
-            isDrawing = false;
-            card.setChangedColor(Constants.Color.BLUE);
-            controller.playCard(card);
-            dialog.dispose();
-        });
-
-        yellow.addActionListener(e -> {
-            isDrawing = false;
-            card.setChangedColor(Constants.Color.YELLOW);
-            controller.playCard(card);
-            dialog.dispose();
-        });
-
-        buttonGroup.add(red);
-        buttonGroup.add(green);
-        buttonGroup.add(blue);
-        buttonGroup.add(yellow);
-
-        dialog.add(label);
-        dialog.add(buttonGroup);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        customDialog.showDialog();
     }
 
     /**
@@ -279,7 +187,11 @@ public class Game {
 
             @Override
             public void drawCardCallback(Card card, boolean isPlayable) {
-                populateDrawDialog(card, isPlayable);
+                try {
+                    populateDrawDialog(card, isPlayable);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

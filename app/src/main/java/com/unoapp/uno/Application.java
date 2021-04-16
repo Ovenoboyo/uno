@@ -16,7 +16,13 @@ public class Application {
 		} catch (IOException | FontFormatException e) {
 			e.printStackTrace();
 		}
-		Game game = new Game();
-		game.setVisible(true);
+		Game game;
+		try {
+			game = new Game();
+			game.setVisible(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 	}
 }

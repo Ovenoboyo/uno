@@ -45,7 +45,7 @@ public class CardDrawable extends JLabel {
     private final Font reverse = new Font("Gilmer Heavy", Font.PLAIN, -36);
     private final Font big = new Font("Gilmer Heavy", Font.PLAIN, 82);
 
-    CardDrawable(Constants.Color color, Integer num, Boolean disabled, onClickListener mClickListener)
+    public CardDrawable(Constants.Color color, Integer num, Boolean disabled, onClickListener mClickListener)
             throws IOException {
         this.color = color;
         this.num = num;
