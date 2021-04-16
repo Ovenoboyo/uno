@@ -95,12 +95,13 @@ public class Game {
 
         customDialog.clean();
 
+        customDialog.addCards(card);
         customDialog.addButton("Play", arg0 -> {
             isDrawing = false;
             onCardClick(card);
         }, isPlayable);
 
-        customDialog.addButton("Draw", arg0 -> controller.drawCard(controller.getCurrentPlayer()), true);
+        customDialog.addButton("Draw", arg0 -> controller.drawCard(controller.getCurrentPlayer()), !isPlayable);
         customDialog.addButton("Keep", arg0 -> {
             isDrawing = false;
             controller.pass(controller.getCurrentPlayer());
@@ -144,18 +145,18 @@ public class Game {
         frame.pack();
     }
 
-    private void populateDrawnCardsDialog(ArrayList<Card> cards, continueDraw cDraw) {
+    private void populateDrawnCardsDialog(Card[] cards, continueDraw cDraw) throws IOException {
         this.isDrawing = true;
-        refreshUI();
 
         customDialog.clean();
-
+        customDialog.addCards(cards);
         customDialog.addButton("Continue", arg0 -> {
             this.isDrawing = false;
             cDraw.continueTurn();
         }, true);
 
         customDialog.showDialog();
+
     }
 
     private void populateColorChangeUI(Card card) {
@@ -165,11 +166,12 @@ public class Game {
         customDialog.clean();
 
         for (Color c : Constants.Color.values()) {
-            customDialog.addButton("Continue", arg0 -> {
-                isDrawing = false;
-                card.setChangedColor(c);
-                controller.playCard(card);
-            }, true);
+            if (!c.equals(Constants.Color.BLACK))
+                customDialog.addButton(c.name(), arg0 -> {
+                    isDrawing = false;
+                    card.setChangedColor(c);
+                    controller.playCard(card);
+                }, true);
         }
 
         customDialog.showDialog();
@@ -205,8 +207,12 @@ public class Game {
             }
 
             @Override
-            public void drawingTwoCallback(ArrayList<Card> cards, continueDraw cDraw) {
-                populateDrawnCardsDialog(cards, cDraw);
+            public void drawingTwoCallback(Card[] cards, continueDraw cDraw) {
+                try {
+                    populateDrawnCardsDialog(cards, cDraw);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -215,8 +221,12 @@ public class Game {
             }
 
             @Override
-            public void drawingFourCallback(ArrayList<Card> cards, continueDraw cDraw) {
-                populateDrawnCardsDialog(cards, cDraw);
+            public void drawingFourCallback(Card[] cards, continueDraw cDraw) {
+                try {
+                    populateDrawnCardsDialog(cards, cDraw);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -256,8 +266,8 @@ public class Game {
 
         for (Card c : cards)
             activePlayerCardPanel
-                    .add(populateCard(c, false, (isDrawing || (disabledExceptDraw2 && c.getNum() != Constants.DRAW2)
-                            || disabledExceptDraw4 && c.getNum() == Constants.DRAWFOUR)));
+                    .add(populateCard(c, false, isDrawing || (disabledExceptDraw2 && c.getNum() != Constants.DRAW2)
+                            || (disabledExceptDraw4 && c.getNum() != Constants.DRAWFOUR)));
     }
 
     private void generatePlayerDetails() {
@@ -303,6 +313,8 @@ public class Game {
         }
         if (disabledExceptDraw2)
             disabledExceptDraw2 = false;
+        if (disabledExceptDraw4)
+            disabledExceptDraw4 = false;
     }
 
     /**

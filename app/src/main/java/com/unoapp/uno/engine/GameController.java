@@ -19,8 +19,8 @@ public class GameController {
     private Deck deck = new Deck();
     private Played playedCard = new Played();
 
-    private int isStackingD2;
-    private int isStackingD4;
+    private int isStackingD2 = 0;
+    private int isStackingD4 = 0;
 
     /**
      * Holds the index of player whose turn it is
@@ -156,7 +156,7 @@ public class GameController {
      * @return current player
      */
     public Player getCurrentPlayer() {
-        if (turnIndex < players.size()) {
+        if (turnIndex < players.size() && turnIndex > 0) {
             return players.get(turnIndex);
         }
         return players.get(0);
@@ -184,10 +184,10 @@ public class GameController {
     }
 
     public void drawTwo(Player player) {
-        ArrayList<Card> cards = new ArrayList<>();
+        Card cards[] = new Card[2 * isStackingD2];
         for (int i = 0; i < 2 * isStackingD2; i++) {
             Card card = deck.popDeck();
-            cards.add(card);
+            cards[i] = card;
             player.addCard(card);
         }
         isStackingD2 = 0;
@@ -195,15 +195,14 @@ public class GameController {
     }
 
     public void drawFour(Player player) {
-        ArrayList<Card> cards = new ArrayList<>();
-        System.out.println(isStackingD4);
+        Card cards[] = new Card[4 * isStackingD4];
 
         for (int i = 0; i < 4 * isStackingD4; i++) {
             Card card = deck.popDeck();
-            cards.add(card);
+            cards[i] = card;
             player.addCard(card);
         }
-        isStackingD2 = 0;
+        isStackingD4 = 0;
         mGameController.drawingFourCallback(cards, () -> nextTurn(player, true));
     }
 
@@ -266,9 +265,9 @@ public class GameController {
             void continueTurn();
         }
 
-        void drawingTwoCallback(ArrayList<Card> cards, continueDraw cDraw);
+        void drawingTwoCallback(Card[] cards, continueDraw cDraw);
 
-        void drawingFourCallback(ArrayList<Card> cards, continueDraw cDraw);
+        void drawingFourCallback(Card[] cards, continueDraw cDraw);
 
         /**
          * Fires when a winner is found

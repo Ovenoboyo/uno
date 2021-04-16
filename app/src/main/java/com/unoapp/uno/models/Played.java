@@ -1,5 +1,7 @@
 package com.unoapp.uno.models;
 
+import com.unoapp.uno.utils.Constants.Color;
+
 /**
  * Model to hold cards played by players
  */
@@ -27,12 +29,16 @@ public class Played {
 
     /**
      * Validates a card to check if its playable or not
+     * Cases: 1) Played card is special (Wild / Draw 4)
+     *        2) Last played card is of color BLACK
+     *        3) Last played card matches color of current card
+     *        4) Last played card matches number of current number
      * 
      * @param card card to be validated
      * @return true if last played card is same color or same number
      */
     public boolean validateCard(Card card) {
-        return (card.isSpecial() || playedCard.getColor().equals(card.getColor())
-                || playedCard.getNum() == card.getNum());
+        return (card.isSpecial() || playedCard.getColor().equals(Color.BLACK)
+                || playedCard.getColor().equals(card.getColor()) || playedCard.getNum() == card.getNum());
     }
 }
