@@ -85,26 +85,6 @@ public class CardLabel extends JLabel {
         });
     }
 
-    private Color getColor() {
-        if (disabled) {
-            return Color.GRAY;
-        }
-
-        switch (this.color) {
-        case RED:
-            return new Color(206, 60, 61);
-        case BLUE:
-            return new Color(3, 107, 210);
-        case GREEN:
-            return new Color(108, 181, 96);
-        case YELLOW:
-            return new Color(239, 211, 65);
-        case BLACK:
-            return new Color(36, 39, 41);
-        }
-        return null;
-    }
-
     private boolean isSixNine() {
         return num == 6 || num == 9;
     }
@@ -117,7 +97,7 @@ public class CardLabel extends JLabel {
     private void drawPlus2(Graphics2D g2d) {
         new TextLayout("+2", small, g2d.getFontRenderContext()).draw(g2d, 14, 44);
         new TextLayout("+2", reverse, g2d.getFontRenderContext()).draw(g2d, (width - 14), (height - 44));
-        DrawTwo.paint(g2d, getColor(), (width / 2) - (DrawTwo.getOrigWidth() * 0.2 * 0.5),
+        DrawTwo.paint(g2d, Constants.getColor(color, disabled), (width / 2) - (DrawTwo.getOrigWidth() * 0.2 * 0.5),
                 (height / 2) - (DrawTwo.getOrigHeight() * 0.2 * 0.5));
     }
 
@@ -129,7 +109,7 @@ public class CardLabel extends JLabel {
                 (width - 16) - (Reverse.getOrigX() * 0.05) - (Reverse.getOrigWidth() * 0.05),
                 (height - 34) - (Reverse.getOrigY() * 0.05) - (Reverse.getOrigHeight() * 0.05 * 0.5));
 
-        Reverse.paint(g2d, getColor(), 0.15f,
+        Reverse.paint(g2d, Constants.getColor(color, disabled), 0.15f,
                 (width / 2) - (Reverse.getOrigWidth() * 0.15 * 0.5) - Reverse.getOrigX() * 0.15,
                 (height / 2) - (Reverse.getOrigHeight() * 0.15 * 0.5) - Reverse.getOrigY() * 0.15);
 
@@ -140,18 +120,18 @@ public class CardLabel extends JLabel {
 
         Skip.paint(g2d, Color.WHITE, 0.05f, (width - 16) - (Skip.getOrigWidth() * 0.05),
                 (height - 32) - (Skip.getOrigHeight() * 0.05 * 0.5));
-        Skip.paint(g2d, getColor(), 0.15f, (width / 2) - (Skip.getOrigWidth() * 0.15 * 0.5),
+        Skip.paint(g2d, Constants.getColor(color, disabled), 0.15f, (width / 2) - (Skip.getOrigWidth() * 0.15 * 0.5),
                 (height / 2) - (Skip.getOrigHeight() * 0.15 * 0.5));
     }
 
     private void drawDraw4(Graphics2D g2d) {
         new TextLayout("+4", small, g2d.getFontRenderContext()).draw(g2d, 14, 44);
         new TextLayout("+4", reverse, g2d.getFontRenderContext()).draw(g2d, (width - 14), (height - 44));
-        DrawFour.paint(g2d, getColor(), (width / 2) - (706 * 0.15) / 2, height / 2 - (521 * 0.15) / 2);
+        DrawFour.paint(g2d, (width / 2) - (706 * 0.15) / 2, height / 2 - (521 * 0.15) / 2);
     }
 
     private void drawWild(Graphics2D g2d) {
-        Wild.paint(g2d, getColor(), width, height);
+        Wild.paint(g2d, Constants.getColor(color, disabled), width, height);
     }
 
     private void drawNormal(Graphics2D g2d) {
@@ -170,7 +150,7 @@ public class CardLabel extends JLabel {
         if (isSixNine())
             g2d.fillRect((int) (width - 16 - 1 - r3.getWidth()), (height - 44 - 4), (int) r3.getWidth() + 2, 2);
 
-        g2d.setColor(getColor());
+        g2d.setColor(Constants.getColor(color, disabled));
         TextLayout layout2 = new TextLayout(num.toString(), big, g2d.getFontRenderContext());
         Rectangle r2 = layout2.getPixelBounds(null, 0, 0);
         float width2 = ((width / 2) - (float) (r2.getWidth() / 2));
@@ -197,7 +177,7 @@ public class CardLabel extends JLabel {
         ng2d.drawImage(image, 0, 0, width, height, null);
         double coef = Math.min((double) width / (double) 1120, (double) height / (double) 1780);
         ng2d.scale(coef, coef);
-        BlankCard.paint(getColor(), ng2d);
+        BlankCard.paint(Constants.getColor(color, disabled), ng2d);
         ng2d.dispose();
 
         g2d.setColor(Color.WHITE);

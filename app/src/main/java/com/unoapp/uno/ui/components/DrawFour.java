@@ -15,7 +15,7 @@ public class DrawFour {
          * 
          * @param g Graphics context.
          */
-        public static void paint(Graphics2D g2d, Color color, double x, double y) {
+        public static void paint(Graphics2D g2d, double x, double y) {
                 Shape shape = null;
                 //
 
@@ -27,7 +27,7 @@ public class DrawFour {
                 g.scale(0.15, 0.15);
                 shape = new RoundRectangle2D.Double(452.6000061035156, 17, 240.24600219726562, 374.4460144042969,
                                 84.46160125732422, 84.46160125732422);
-                g.setPaint(color);
+                g.setPaint(new Color(0x036BD2));
                 g.fill(shape);
                 g.setPaint(WHITE);
                 g.setStroke(new BasicStroke(32.8462f, 0, 0, 4));

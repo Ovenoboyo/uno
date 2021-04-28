@@ -182,22 +182,6 @@ public class ColorSelectionDialog extends JDialog {
             this.color = color;
         }
 
-        private Color getColor() {
-            switch (this.color) {
-            case RED:
-                return new Color(206, 60, 61);
-            case BLUE:
-                return new Color(3, 107, 210);
-            case GREEN:
-                return new Color(108, 181, 96);
-            case YELLOW:
-                return new Color(239, 211, 65);
-            case BLACK:
-                return new Color(36, 39, 41);
-            }
-            return null;
-        }
-
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -206,7 +190,8 @@ public class ColorSelectionDialog extends JDialog {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-            ColorSelection.paint(g2d, getColor(), angle, this.expanded, expandedSize - 5, normalSize);
+            ColorSelection.paint(g2d, Constants.getColor(color, false), angle, this.expanded, expandedSize - 5,
+                    normalSize);
 
             g2d.dispose();
         }

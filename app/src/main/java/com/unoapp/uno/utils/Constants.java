@@ -12,4 +12,24 @@ public class Constants {
     public static final int DRAW2 = 12;
     public static final int WILD = 13;
     public static final int DRAWFOUR = 14;
+
+    public static java.awt.Color getColor(Color color, boolean disabled) {
+        if (disabled) {
+            return java.awt.Color.GRAY;
+        }
+
+        switch (color) {
+        case RED:
+            return new java.awt.Color(206, 60, 61);
+        case BLUE:
+            return new java.awt.Color(3, 107, 210);
+        case GREEN:
+            return new java.awt.Color(108, 181, 96);
+        case YELLOW:
+            return new java.awt.Color(239, 211, 65);
+        case BLACK:
+            return new java.awt.Color(36, 39, 41);
+        }
+        return null;
+    }
 }

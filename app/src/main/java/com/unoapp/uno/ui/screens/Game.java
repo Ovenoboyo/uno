@@ -248,8 +248,6 @@ public class Game {
 
         frame.revalidate();
         frame.repaint();
-
-        System.gc();
     }
 
     /**

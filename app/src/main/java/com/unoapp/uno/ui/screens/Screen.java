@@ -22,5 +22,4 @@ public class Screen extends javax.swing.JFrame {
 
         JPanel panel = new JPanel();
     }
-
 }
