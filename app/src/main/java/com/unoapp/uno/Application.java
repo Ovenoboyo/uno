@@ -14,7 +14,7 @@ public class Application {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			System.out.println(new File(".").getCanonicalPath());
 			File file = new File("assets/gilmer_heavy.otf");
-			if (file == null) {
+			if (!file.exists()) {
 				file = new File("runtime/bin/assets/gilmer_heavy.otf");
 			}
 			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));

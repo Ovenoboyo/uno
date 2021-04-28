@@ -55,8 +55,11 @@ jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher{
         name = launcherName
+        noConsole = true
     }
     jpackage  {
+        imageOptions = ['--win-console']
+        installerOptions = ['--win-console', '--win-menu', '--win-shortcut']
         outputDir = "jpackage/installer"
     }
 }
