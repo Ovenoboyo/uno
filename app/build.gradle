@@ -57,9 +57,10 @@ jlink {
         name = launcherName
     }
     jpackage  {
-        targetPlatform("win") {
+        if(org.gradle.internal.os.OperatingSystem.current().windows) {
+            installerType = 'msi'
             imageOptions = ['--win-console']
-            installerOptions = ['--win-console', '--win-menu', '--win-shortcut']
+            installerOptions = ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
         }
         outputDir = "jpackage/installer"
     }
