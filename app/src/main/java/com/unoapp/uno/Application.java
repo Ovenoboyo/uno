@@ -12,6 +12,7 @@ public class Application {
 	public static void main(String[] args) {
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			System.out.println(new File(".").getCanonicalPath());
 			File file = new File("assets/gilmer_heavy.otf");
 			if (file == null) {
 				file = new File("runtime/bin/assets/gilmer_heavy.otf");
