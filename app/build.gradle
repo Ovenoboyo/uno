@@ -69,15 +69,6 @@ tasks.jlink.doLast {
     }
 }
 
-// tasks.withType(JavaCompile).configureEach {
-//     options.forkOptions.jvmArgs.addAll( ['--add-opens', 'jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED'] )
-
-//     def toolchainHome = javaToolchains.compilerFor {
-//             languageVersion = JavaLanguageVersion.of(16)
-//         }.get().metadata.installationPath.asFile.absolutePath
-//     options.forkOptions.executable = "$toolchainHome/javac"
-// }
-
 tasks.withType( JavaCompile ).configureEach {
     options.forkOptions.jvmArgs.addAll( ['--add-opens', 'jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED'] )
 }

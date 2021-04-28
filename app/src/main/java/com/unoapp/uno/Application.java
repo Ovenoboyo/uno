@@ -12,7 +12,11 @@ public class Application {
 	public static void main(String[] args) {
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("assets/gilmer_heavy.otf")));
+			File file = new File("assets/gilmer_heavy.otf");
+			if (file == null) {
+				file = new File("runtime/bin/assets/gilmer_heavy.otf");
+			}
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
 
 		} catch (IOException | FontFormatException e) {
 			e.printStackTrace();
