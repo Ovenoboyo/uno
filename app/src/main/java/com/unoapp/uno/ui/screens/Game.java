@@ -1,4 +1,4 @@
-package com.unoapp.uno.ui;
+package com.unoapp.uno.ui.screens;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,9 +18,10 @@ import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Player;
-import com.unoapp.uno.ui.components.CustomCardDialog;
+import com.unoapp.uno.ui.CardLabel;
+import com.unoapp.uno.ui.ColorSelectionDialog;
+import com.unoapp.uno.ui.CustomCardDialog;
 import com.unoapp.uno.utils.Constants;
-import com.unoapp.uno.utils.Constants.Color;
 
 /**
  * Game Screen
@@ -60,7 +61,6 @@ public class Game {
         // Initialize game controller after UI has been generated
         initializeController();
         controller.startGameLoop();
-
     }
 
     private void handlePreviousDraw2() {
@@ -163,18 +163,12 @@ public class Game {
         isDrawing = true;
         refreshUI();
 
-        customDialog.clean();
-
-        for (Color c : Constants.Color.values()) {
-            if (!c.equals(Constants.Color.BLACK))
-                customDialog.addButton(c.name(), arg0 -> {
-                    isDrawing = false;
-                    card.setChangedColor(c);
-                    controller.playCard(card);
-                }, true);
-        }
-
-        customDialog.showDialog();
+        ColorSelectionDialog dialog = new ColorSelectionDialog(color -> {
+            isDrawing = false;
+            card.setChangedColor(color);
+            controller.playCard(card);
+        });
+        dialog.showDialog();
     }
 
     /**
@@ -293,10 +287,10 @@ public class Game {
      * @param card card of which button is to be generated
      * @return Generated compoenent (Currently JButton)
      */
-    private CardDrawable populateCard(Card card, boolean isStatic, boolean isDisabled) {
-        CardDrawable drawable;
+    private CardLabel populateCard(Card card, boolean isStatic, boolean isDisabled) {
+        CardLabel drawable;
         try {
-            drawable = new CardDrawable(card.getColor(), card.getNum(), isDisabled,
+            drawable = new CardLabel(card.getColor(), card.getNum(), isDisabled,
                     (isStatic || isDisabled) ? null : () -> onCardClick(card));
         } catch (IOException e) {
             e.printStackTrace();

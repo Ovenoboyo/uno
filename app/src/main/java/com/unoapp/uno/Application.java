@@ -1,11 +1,12 @@
 package com.unoapp.uno;
 
-import com.unoapp.uno.ui.Game;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+
+import com.unoapp.uno.ui.screens.Game;
 
 public class Application {
 	public static void main(String[] args) {

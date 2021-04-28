@@ -1,4 +1,4 @@
-package com.unoapp.uno.ui;
+package com.unoapp.uno.ui.screens;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

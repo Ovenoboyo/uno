@@ -25,7 +25,7 @@ import com.unoapp.uno.ui.components.Skip;
 import com.unoapp.uno.ui.components.Wild;
 import com.unoapp.uno.utils.Constants;
 
-public class CardDrawable extends JLabel {
+public class CardLabel extends JLabel {
 
     /**
      * Auto Generated
@@ -45,7 +45,7 @@ public class CardDrawable extends JLabel {
     private final Font reverse = new Font("Gilmer Heavy", Font.PLAIN, -36);
     private final Font big = new Font("Gilmer Heavy", Font.PLAIN, 82);
 
-    public CardDrawable(Constants.Color color, Integer num, Boolean disabled, onClickListener mClickListener)
+    public CardLabel(Constants.Color color, Integer num, Boolean disabled, onClickListener mClickListener)
             throws IOException {
         this.color = color;
         this.num = num;

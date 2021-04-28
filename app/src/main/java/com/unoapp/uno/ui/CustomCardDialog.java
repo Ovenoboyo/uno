@@ -1,4 +1,4 @@
-package com.unoapp.uno.ui.components;
+package com.unoapp.uno.ui;
 
 import java.io.IOException;
 
@@ -14,7 +14,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 
 import com.unoapp.uno.models.Card;
-import com.unoapp.uno.ui.CardDrawable;
 
 public class CustomCardDialog extends JDialog {
 
@@ -50,7 +49,7 @@ public class CustomCardDialog extends JDialog {
 
     public void addCards(Card... cards) throws IOException {
         for (Card c : cards) {
-            cardPanel.add(new CardDrawable(c.getColor(), c.getNum(), false, null));
+            cardPanel.add(new CardLabel(c.getColor(), c.getNum(), false, null));
         }
     }
 
