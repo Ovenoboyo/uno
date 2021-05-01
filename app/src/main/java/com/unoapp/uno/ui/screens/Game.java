@@ -21,6 +21,7 @@ import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.components.CardLabel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
+import com.unoapp.uno.ui.components.LastPlayedComponent;
 import com.unoapp.uno.utils.Constants;
 
 /**
@@ -161,7 +162,11 @@ public class Game {
 
     private void populateColorChangeUI(Card card) {
         isDrawing = true;
-        refreshUI();
+        try {
+            refreshUI();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ColorSelectionDialog dialog = new ColorSelectionDialog(color -> {
             isDrawing = false;
@@ -178,7 +183,11 @@ public class Game {
         this.controller = new GameController(new IGameController() {
             @Override
             public void turnEndCallback() {
-                refreshUI();
+                try {
+                    refreshUI();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -229,8 +238,9 @@ public class Game {
     /**
      * Update all the UI components based off changed values. Called after every
      * turn
+     * @throws IOException
      */
-    private void refreshUI() {
+    private void refreshUI() throws IOException {
         tablePanel.removeAll();
         generateLastCard();
         generateDeckButton();
@@ -268,9 +278,11 @@ public class Game {
 
     /**
      * Generate component to show last played card
+     * @throws IOException
      */
-    private void generateLastCard() {
-        tablePanel.add(populateCard(controller.getLastPlayedCard(), true, false));
+    private void generateLastCard() throws IOException {
+        // tablePanel.add(populateCard(controller.getLastPlayedCard(), true, false));
+        tablePanel.add(new LastPlayedComponent(controller.getLastPlayedCard()));
     }
 
     private void generateDeckButton() {
@@ -288,8 +300,7 @@ public class Game {
     private CardLabel populateCard(Card card, boolean isStatic, boolean isDisabled) {
         CardLabel drawable;
         try {
-            drawable = new CardLabel(card.getColor(), card.getNum(), isDisabled,
-                    (isStatic || isDisabled) ? null : () -> onCardClick(card));
+            drawable = new CardLabel(card, isDisabled, (isStatic || isDisabled) ? null : () -> onCardClick(card));
         } catch (IOException e) {
             e.printStackTrace();
             return null;

@@ -13,10 +13,12 @@ import java.awt.font.TextLayout;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import java.awt.image.BufferedImage;
 import javax.swing.border.Border;
 
+import com.unoapp.uno.models.Card;
 import com.unoapp.uno.ui.drawables.BlankCard;
 import com.unoapp.uno.ui.drawables.DrawFour;
 import com.unoapp.uno.ui.drawables.DrawTwo;
@@ -25,7 +27,7 @@ import com.unoapp.uno.ui.drawables.Skip;
 import com.unoapp.uno.ui.drawables.Wild;
 import com.unoapp.uno.utils.Constants;
 
-public class CardLabel extends JLabel {
+public class CardLabel extends JPanel {
 
     /**
      * Auto Generated
@@ -45,10 +47,9 @@ public class CardLabel extends JLabel {
     private final Font reverse = new Font("Gilmer Heavy", Font.PLAIN, -36);
     private final Font big = new Font("Gilmer Heavy", Font.PLAIN, 82);
 
-    public CardLabel(Constants.Color color, Integer num, Boolean disabled, onClickListener mClickListener)
-            throws IOException {
-        this.color = color;
-        this.num = num;
+    public CardLabel(Card card, Boolean disabled, onClickListener mClickListener) throws IOException {
+        this.color = card.getColor();
+        this.num = card.getNum();
         this.disabled = disabled;
 
         this.grayBorder = BorderFactory.createLineBorder(Color.DARK_GRAY);
@@ -92,6 +93,16 @@ public class CardLabel extends JLabel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
     }
 
     private void drawPlus2(Graphics2D g2d) {
@@ -158,9 +169,7 @@ public class CardLabel extends JLabel {
         layout2.draw(g2d, width2, height2);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paintManually(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -204,6 +213,12 @@ public class CardLabel extends JLabel {
         }
 
         g2d.dispose();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.paintManually(g);
     }
 
     public interface onClickListener {

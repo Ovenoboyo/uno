@@ -248,8 +248,8 @@ public class GameController {
      * 
      * @return card played latest
      */
-    public Card getLastPlayedCard() {
-        return playedCard.getTop();
+    public ArrayList<Card> getLastPlayedCard() {
+        return playedCard.getLastPlayedCards();
     }
 
     /**

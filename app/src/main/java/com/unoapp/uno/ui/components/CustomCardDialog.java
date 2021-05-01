@@ -49,7 +49,7 @@ public class CustomCardDialog extends JDialog {
 
     public void addCards(Card... cards) throws IOException {
         for (Card c : cards) {
-            cardPanel.add(new CardLabel(c.getColor(), c.getNum(), false, null));
+            cardPanel.add(new CardLabel(c, false, null));
         }
     }
 
