@@ -18,9 +18,9 @@ import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Player;
-import com.unoapp.uno.ui.CardLabel;
-import com.unoapp.uno.ui.ColorSelectionDialog;
-import com.unoapp.uno.ui.CustomCardDialog;
+import com.unoapp.uno.ui.components.CardLabel;
+import com.unoapp.uno.ui.components.ColorSelectionDialog;
+import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.utils.Constants;
 
 /**

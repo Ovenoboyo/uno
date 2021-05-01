@@ -1,4 +1,4 @@
-package com.unoapp.uno.ui;
+package com.unoapp.uno.ui.components;
 
 import java.io.IOException;
 

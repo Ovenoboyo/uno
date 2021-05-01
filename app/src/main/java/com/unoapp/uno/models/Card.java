@@ -45,10 +45,18 @@ public class Card {
         return this.color;
     }
 
+    /**
+     * Check if card is action card (Draw 2, skip, reverse)
+     * @return true if action otherwise false
+     */
     public boolean isAction() {
         return num == Constants.SKIP || num == Constants.DRAW2 || num == Constants.REVERSE;
     }
 
+    /**
+     * Check if card is special (Draw 4 or wild)
+     * @return true if special otherwise false
+     */
     public boolean isSpecial() {
         return num == Constants.DRAWFOUR || num == Constants.WILD;
     }

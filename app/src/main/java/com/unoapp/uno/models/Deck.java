@@ -48,6 +48,10 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    /**
+     * Returns size of deck
+     * @return size of deck as int
+     */
     public int getSize() {
         return deck.size();
     }
@@ -68,6 +72,10 @@ public class Deck {
         return c;
     }
 
+    /**
+     * Add all cards from list to deck and shuffle
+     * @param list list of cards that is to be added to the deck
+     */
     public void addAll(ArrayList<Card> list) {
         deck.addAll(list);
         this.shuffleDeck();

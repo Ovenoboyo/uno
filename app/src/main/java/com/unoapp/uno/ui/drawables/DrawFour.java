@@ -1,4 +1,4 @@
-package com.unoapp.uno.ui.components;
+package com.unoapp.uno.ui.drawables;
 
 import java.awt.*;
 import java.awt.geom.*;

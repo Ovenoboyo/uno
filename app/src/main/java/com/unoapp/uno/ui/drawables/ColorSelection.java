@@ -1,36 +1,32 @@
-package com.unoapp.uno.ui.components;
+package com.unoapp.uno.ui.drawables;
 
 import java.awt.*;
 import java.awt.geom.*;
 
-/**
- * This class has been automatically generated using
- * <a href="http://ebourg.github.io/flamingo-svg-transcoder/">Flamingo SVG transcoder</a>.
- */
 public class ColorSelection {
     private static double[] getQuadrantTranslation(int quadrant, boolean expanded, int expandedSize, int normalSize) {
         double[] tranlations = new double[2];
         switch (quadrant) {
-        case 1:
-            tranlations[0] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
-            tranlations[1] = (expanded) ? 5 / 2 : 0;
-            break;
+            case 1:
+                tranlations[0] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
+                tranlations[1] = (expanded) ? 5 / 2 : 0;
+                break;
 
-        default:
-        case 2:
-            tranlations[0] = (expanded) ? 5 / 2 : 0;
-            tranlations[1] = (expanded) ? 5 / 2 : 0;
-            break;
+            default:
+            case 2:
+                tranlations[0] = (expanded) ? 5 / 2 : 0;
+                tranlations[1] = (expanded) ? 5 / 2 : 0;
+                break;
 
-        case 3:
-            tranlations[0] = (expanded) ? 5 / 2 : 0;
-            tranlations[1] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
-            break;
+            case 3:
+                tranlations[0] = (expanded) ? 5 / 2 : 0;
+                tranlations[1] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
+                break;
 
-        case 4:
-            tranlations[0] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
-            tranlations[1] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
-            break;
+            case 4:
+                tranlations[0] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
+                tranlations[1] = (expanded) ? (-expandedSize + 5 / 2) : -normalSize;
+                break;
         }
 
         return tranlations;

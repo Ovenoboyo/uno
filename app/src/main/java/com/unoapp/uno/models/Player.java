@@ -10,10 +10,18 @@ public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
     private String name;
 
+    /**
+     * Get name of the player
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * TODO: Add bots as a subtype of player
+     * Constructor for player
+     * @param name name of player
+     */
     public Player(String name) {
         this.name = name;
     }

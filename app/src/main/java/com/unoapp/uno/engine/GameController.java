@@ -27,6 +27,10 @@ public class GameController {
      */
     private Integer turnIndex = -1;
 
+    /**
+     * Constructor for GameController
+     * @param mGameController Interface for various events emmited by controller 
+     */
     public GameController(IGameController mGameController) {
         this.mGameController = mGameController;
         // Add 2 players
@@ -82,30 +86,36 @@ public class GameController {
      */
     private void handleActionCards(Card card) {
         switch (card.getNum()) {
-        case Constants.SKIP:
-            incrementTurn();
-            break;
+            case Constants.SKIP:
+                incrementTurn();
+                break;
 
-        case Constants.DRAW2:
-            isStackingD2++;
-            mGameController.drawTwoCallback();
-            break;
+            case Constants.DRAW2:
+                isStackingD2++;
+                mGameController.drawTwoCallback();
+                break;
 
-        case Constants.REVERSE:
-            Collections.reverse(players);
-            turnIndex = players.size() - turnIndex - 1;
-            break;
+            case Constants.REVERSE:
+                Collections.reverse(players);
+                turnIndex = players.size() - turnIndex - 1;
+                break;
         }
     }
 
+    /**
+     * Emits respective events if the card is special
+     * The color is already selected into the card before this method is called
+     * 
+     * @param card card to be handled
+     */
     private void handleSpecialCards(Card card) {
         switch (card.getNum()) {
-        case Constants.DRAWFOUR:
-            isStackingD4++;
-            mGameController.drawFourCallback();
-            break;
-        case Constants.WILD:
-            break;
+            case Constants.DRAWFOUR:
+                isStackingD4++;
+                mGameController.drawFourCallback();
+                break;
+            case Constants.WILD:
+                break;
         }
     }
 
@@ -183,6 +193,10 @@ public class GameController {
         return false;
     }
 
+    /**
+     * Draw 2 cards from deck and add them to player
+     * @param player player that is affected by draw 2
+     */
     public void drawTwo(Player player) {
         Card cards[] = new Card[2 * isStackingD2];
         for (int i = 0; i < 2 * isStackingD2; i++) {
@@ -194,6 +208,10 @@ public class GameController {
         mGameController.drawingTwoCallback(cards, () -> nextTurn(player, true));
     }
 
+    /**
+     * Draw 4 cards from deck and add them to player
+     * @param player player that is affected by draw 4
+     */
     public void drawFour(Player player) {
         Card cards[] = new Card[4 * isStackingD4];
 
@@ -217,6 +235,10 @@ public class GameController {
         mGameController.drawCardCallback(card, playedCard.validateCard(card));
     }
 
+    /**
+     * Pass turn without playing any card
+     * @param player
+     */
     public void pass(Player player) {
         nextTurn(player, true);
     }
@@ -257,16 +279,35 @@ public class GameController {
          */
         void drawCardCallback(Card card, boolean isPlayable);
 
+        /**
+         * Fired when a draw 2 card is played
+         */
         void drawTwoCallback();
 
+        /**
+        * Fired when a draw 4 card is played
+        */
         void drawFourCallback();
 
+        /**
+         * Interface to pass a method that continues the turn
+         */
         public interface continueDraw {
             void continueTurn();
         }
 
+        /**
+         * Called when current player is drawing 2 cards
+         * @param cards cards that are being drawn from deck
+         * @param cDraw callback to continue the turn (usually skips it)
+         */
         void drawingTwoCallback(Card[] cards, continueDraw cDraw);
 
+        /**
+         * Called when current player is drawing 4 cards
+         * @param cards cards that are being drawn from deck
+         * @param cDraw callback to continue the turn (usually skips it)
+         */
         void drawingFourCallback(Card[] cards, continueDraw cDraw);
 
         /**

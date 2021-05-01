@@ -1,4 +1,4 @@
-package com.unoapp.uno.ui;
+package com.unoapp.uno.ui.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,12 +17,12 @@ import javax.swing.JLabel;
 import java.awt.image.BufferedImage;
 import javax.swing.border.Border;
 
-import com.unoapp.uno.ui.components.BlankCard;
-import com.unoapp.uno.ui.components.DrawFour;
-import com.unoapp.uno.ui.components.DrawTwo;
-import com.unoapp.uno.ui.components.Reverse;
-import com.unoapp.uno.ui.components.Skip;
-import com.unoapp.uno.ui.components.Wild;
+import com.unoapp.uno.ui.drawables.BlankCard;
+import com.unoapp.uno.ui.drawables.DrawFour;
+import com.unoapp.uno.ui.drawables.DrawTwo;
+import com.unoapp.uno.ui.drawables.Reverse;
+import com.unoapp.uno.ui.drawables.Skip;
+import com.unoapp.uno.ui.drawables.Wild;
 import com.unoapp.uno.utils.Constants;
 
 public class CardLabel extends JLabel {
@@ -183,24 +183,24 @@ public class CardLabel extends JLabel {
         g2d.setColor(Color.WHITE);
 
         switch (num) {
-        case Constants.DRAW2:
-            drawPlus2(g2d);
-            break;
-        case Constants.REVERSE:
-            drawReverse(g2d);
-            break;
-        case Constants.SKIP:
-            drawSkip(g2d);
-            break;
-        case Constants.DRAWFOUR:
-            drawDraw4(g2d);
-            break;
-        case Constants.WILD:
-            drawWild(g2d);
-            break;
-        default:
-            drawNormal(g2d);
-            break;
+            case Constants.DRAW2:
+                drawPlus2(g2d);
+                break;
+            case Constants.REVERSE:
+                drawReverse(g2d);
+                break;
+            case Constants.SKIP:
+                drawSkip(g2d);
+                break;
+            case Constants.DRAWFOUR:
+                drawDraw4(g2d);
+                break;
+            case Constants.WILD:
+                drawWild(g2d);
+                break;
+            default:
+                drawNormal(g2d);
+                break;
         }
 
         g2d.dispose();

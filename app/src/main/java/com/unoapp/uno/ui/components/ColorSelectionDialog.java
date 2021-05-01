@@ -1,6 +1,5 @@
-package com.unoapp.uno.ui;
+package com.unoapp.uno.ui.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Dimension;
 
@@ -16,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 
-import com.unoapp.uno.ui.components.ColorSelection;
+import com.unoapp.uno.ui.drawables.ColorSelection;
 import com.unoapp.uno.utils.Constants;
 
 import java.awt.Graphics2D;
@@ -113,49 +112,49 @@ public class ColorSelectionDialog extends JDialog {
 
     private int[] getCoordinates(int quadrant, boolean expanded) {
         switch (quadrant) {
-        default:
-        case 1:
-            return (expanded) ? new int[] { expandedSize + offset, offset }
-                    : new int[] { expandedSize + offset, expandedSize + offset - normalSize };
+            default:
+            case 1:
+                return (expanded) ? new int[] { expandedSize + offset, offset }
+                        : new int[] { expandedSize + offset, expandedSize + offset - normalSize };
 
-        case 2:
-            return (expanded) ? new int[] { offset, offset }
-                    : new int[] { expandedSize + offset - normalSize, expandedSize + offset - normalSize };
+            case 2:
+                return (expanded) ? new int[] { offset, offset }
+                        : new int[] { expandedSize + offset - normalSize, expandedSize + offset - normalSize };
 
-        case 3:
-            return (expanded) ? new int[] { offset, expandedSize + offset }
-                    : new int[] { expandedSize + offset - normalSize, expandedSize + offset };
+            case 3:
+                return (expanded) ? new int[] { offset, expandedSize + offset }
+                        : new int[] { expandedSize + offset - normalSize, expandedSize + offset };
 
-        case 4:
-            return new int[] { expandedSize + offset, expandedSize + offset };
+            case 4:
+                return new int[] { expandedSize + offset, expandedSize + offset };
         }
     }
 
     private int getAngle(int quadrant) {
         switch (quadrant) {
-        default:
-        case 1:
-            return 0;
-        case 2:
-            return 90;
-        case 3:
-            return 180;
-        case 4:
-            return 270;
+            default:
+            case 1:
+                return 0;
+            case 2:
+                return 90;
+            case 3:
+                return 180;
+            case 4:
+                return 270;
         }
     }
 
     private Constants.Color getColorFromQuadrant(int quadrant) {
         switch (quadrant) {
-        default:
-        case 1:
-            return Constants.Color.BLUE;
-        case 2:
-            return Constants.Color.RED;
-        case 3:
-            return Constants.Color.YELLOW;
-        case 4:
-            return Constants.Color.GREEN;
+            default:
+            case 1:
+                return Constants.Color.BLUE;
+            case 2:
+                return Constants.Color.RED;
+            case 3:
+                return Constants.Color.YELLOW;
+            case 4:
+                return Constants.Color.GREEN;
         }
     }
 
