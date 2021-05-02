@@ -1,14 +1,22 @@
 package com.unoapp.uno.ui.screens;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+
+import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +30,7 @@ import com.unoapp.uno.ui.components.CardLabel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.ui.components.LastPlayedComponent;
+import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.utils.Constants;
 
 /**
@@ -123,27 +132,64 @@ public class Game {
         int ySize = ((int) tk.getScreenSize().getHeight());
         frame.setPreferredSize(new Dimension(xSize, ySize));
 
+        GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = graphics.getDefaultScreenDevice();
+
         // Should work on normal
-        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        Container pane = frame.getContentPane();
-        frame.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        JPanel nnPanel = new JPanel();
 
         activePlayerCardPanel = new JPanel();
+        // activePlayerCardPanel.setPreferredSize(new Dimension(500, 267 + 50));
         activePlayerCardPanel.setLayout(new FlowLayout());
 
+        JScrollPane scrollCards = new JScrollPane(activePlayerCardPanel);
+        scrollCards.setPreferredSize(new Dimension(xSize - 120, 267 + 50));
+        scrollCards.setBorder(null);
+
         activePlayerDetails = new JPanel();
-        activePlayerDetails.setLayout(new FlowLayout());
+        activePlayerDetails.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        JPanel nPanel = new JPanel();
+        nPanel.setLayout(new BoxLayout(nPanel, BoxLayout.PAGE_AXIS));
+
+        nPanel.add(activePlayerDetails);
+        nPanel.add(scrollCards);
+        nPanel.add(Box.createVerticalStrut(60));
+
+        nnPanel.add(nPanel);
+
+        JPanel nnnPanel = new JPanel();
+        nnnPanel.setLayout(new BoxLayout(nnnPanel, BoxLayout.PAGE_AXIS));
 
         tablePanel = new JPanel();
         tablePanel.setLayout(new FlowLayout());
+        tablePanel.setPreferredSize(new Dimension(xSize, 267 + 100));
 
-        pane.add(tablePanel);
-        pane.add(activePlayerCardPanel);
-        pane.add(activePlayerDetails);
-        frame.pack();
+        nnnPanel.add(Box.createVerticalStrut(60));
+        nnnPanel.add(tablePanel);
+
+        panel.add(nnnPanel, BorderLayout.NORTH);
+        panel.add(nnPanel, BorderLayout.SOUTH);
+        // panel.add(Box.createVerticalBox());
+
+        Container pane = frame.getContentPane();
+        JScrollPane globalScroll = new JScrollPane(panel);
+        // frame.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+        pane.add(globalScroll);
+
+        // frame.pack();
+        frame.setUndecorated(true);
+        frame.setResizable(false);
+
+        device.setFullScreenWindow(frame);
     }
 
     private void populateDrawnCardsDialog(Card[] cards, continueDraw cDraw) throws IOException {
@@ -157,7 +203,6 @@ public class Game {
         }, true);
 
         customDialog.showDialog();
-
     }
 
     private void populateColorChangeUI(Card card) {
@@ -273,7 +318,9 @@ public class Game {
     }
 
     private void generatePlayerDetails() {
-        activePlayerDetails.add(new JLabel(controller.getCurrentPlayer().getName()));
+        SmoothText label = new SmoothText(controller.getPlayers(), controller.getCurrentPlayer(),
+                controller.getLastPlayedCard().get(0).getColor());
+        activePlayerDetails.add(label);
     }
 
     /**

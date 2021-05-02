@@ -56,8 +56,8 @@ public class GameController {
      * 
      * @return list of all players
      */
-    public Player getPlayer(Integer index) {
-        return this.players.get(index);
+    public ArrayList<Player> getPlayers() {
+        return this.players;
     }
 
     /**
