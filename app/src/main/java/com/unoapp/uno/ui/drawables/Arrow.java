@@ -2,7 +2,6 @@ package com.unoapp.uno.ui.drawables;
 
 import java.awt.*;
 import java.awt.geom.*;
-import static java.awt.Color.*;
 
 /**
  * This class has been automatically generated using

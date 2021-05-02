@@ -7,17 +7,19 @@ import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.ui.components.LastPlayedComponent;
 import com.unoapp.uno.ui.components.SmoothText;
+import com.unoapp.uno.ui.drawables.Deck;
 import com.unoapp.uno.utils.Constants;
 
 /**
@@ -333,9 +336,37 @@ public class Game {
     }
 
     private void generateDeckButton() {
-        JButton button = new JButton("Draw card");
-        button.addActionListener(arg0 -> controller.drawCard(controller.getCurrentPlayer()));
-        tablePanel.add(button);
+        Deck deckIcon = new Deck(200, 280);
+        JLabel label = new JLabel(deckIcon);
+        label.setPreferredSize(new Dimension(200, 280));
+        label.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.drawCard(controller.getCurrentPlayer());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                label.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label.setBorder(null);
+            }
+        });
+
+        tablePanel.add(label);
     }
 
     /**
