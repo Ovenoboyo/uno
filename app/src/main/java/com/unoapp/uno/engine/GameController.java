@@ -1,7 +1,6 @@
 package com.unoapp.uno.engine;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Deck;
@@ -21,6 +20,7 @@ public class GameController {
 
     private int isStackingD2 = 0;
     private int isStackingD4 = 0;
+    private boolean isReversed = false;
 
     /**
      * Holds the index of player whose turn it is
@@ -78,6 +78,10 @@ public class GameController {
         }
     }
 
+    public boolean isReversed() {
+        return this.isReversed;
+    }
+
     /**
      * Handle special functions exhibited by action cards NOTE: increment turn is
      * always called even after handling action cards.
@@ -96,8 +100,7 @@ public class GameController {
                 break;
 
             case Constants.REVERSE:
-                Collections.reverse(players);
-                turnIndex = players.size() - turnIndex - 1;
+                this.isReversed = !this.isReversed;
                 break;
         }
     }
@@ -123,9 +126,17 @@ public class GameController {
      * Increments turn in circular order
      */
     private void incrementTurn() {
-        turnIndex++;
+        // Set first turn
+        if (turnIndex == -1) {
+            turnIndex = 0;
+        }
+
+        turnIndex = (isReversed) ? turnIndex - 1 : turnIndex + 1;
         if (turnIndex == players.size())
             turnIndex = 0;
+        else if (turnIndex == -1) {
+            turnIndex = players.size() - 1;
+        }
     }
 
     /**

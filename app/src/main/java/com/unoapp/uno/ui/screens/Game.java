@@ -30,7 +30,7 @@ import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.ui.components.LastPlayedComponent;
 import com.unoapp.uno.ui.components.ScaledBackground;
-import com.unoapp.uno.ui.components.SmoothText;
+import com.unoapp.uno.ui.components.PlayerOrder;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.drawables.Deck;
 import com.unoapp.uno.utils.Constants;
@@ -316,8 +316,8 @@ public class Game extends JFrame {
      * Generates JLabel to show all players and order of turns
      */
     private void generatePlayerOrder() {
-        SmoothText label = new SmoothText(controller.getPlayers(), controller.getCurrentPlayer(),
-                controller.getLastPlayedCard().get(0).getColor());
+        PlayerOrder label = new PlayerOrder(controller.getPlayers(), controller.getCurrentPlayer(),
+                controller.getLastPlayedCard().get(0).getColor(), controller.isReversed());
         activePlayerDetails.add(label);
     }
 

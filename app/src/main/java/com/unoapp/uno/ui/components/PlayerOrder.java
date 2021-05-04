@@ -15,18 +15,21 @@ import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.drawables.Arrow;
 import com.unoapp.uno.utils.Constants;
 
-public class SmoothText extends JPanel {
+public class PlayerOrder extends JPanel {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Constants.Color activeColor;
     private String str;
     private int charCount = 0;
+    private boolean isReversed;
 
-    public SmoothText(ArrayList<Player> players, Player currentPlayer, Constants.Color activeColor) {
+    public PlayerOrder(ArrayList<Player> players, Player currentPlayer, Constants.Color activeColor,
+            boolean isReversed) {
         this.players = players;
         this.currentPlayer = currentPlayer;
         this.activeColor = activeColor;
         this.setData();
+        this.isReversed = isReversed;
     }
 
     private void setData() {
@@ -71,6 +74,10 @@ public class SmoothText extends JPanel {
         g2d.setColor(new Color(185, 185, 185));
 
         g2d.translate(met.stringWidth(this.str.substring(0, charCount)) - Arrow.getIconWidth() / 2, 0);
+        if (this.isReversed) {
+            g2d.rotate(Math.PI);
+            g2d.translate(-Arrow.getIconWidth(), -Arrow.getIconHeight());
+        }
         Arrow.paint(g2d, Constants.getColor(activeColor, false));
 
         g2d.dispose();
