@@ -1,7 +1,5 @@
 package com.unoapp.uno.ui.components;
 
-import java.io.IOException;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -24,7 +22,7 @@ public class CustomCardDialog extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
-    public CustomCardDialog() throws IOException {
+    public CustomCardDialog() {
         super();
         init();
     }
@@ -47,7 +45,7 @@ public class CustomCardDialog extends JDialog {
         add(global);
     }
 
-    public void addCards(Card... cards) throws IOException {
+    public void addCards(Card... cards) {
         for (Card c : cards) {
             cardPanel.add(new CardLabel(c, false, null));
         }

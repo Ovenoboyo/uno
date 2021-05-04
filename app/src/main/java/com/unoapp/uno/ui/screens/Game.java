@@ -55,9 +55,8 @@ public class Game extends JFrame {
     /**
      * Default constructor
      * 
-     * @throws IOException
      */
-    public Game() throws IOException {
+    public Game() {
         customDialog = new CustomCardDialog();
 
         init();
@@ -74,6 +73,9 @@ public class Game extends JFrame {
         controller.startGameLoop();
     }
 
+    /**
+     * Handles draw 2
+     */
     private void handlePreviousDraw2() {
         if (nextPersonDrawsTwo) {
             if (controller.getCurrentPlayer().getHand().stream().filter(card -> card.getNum() == Constants.DRAW2)
@@ -87,12 +89,14 @@ public class Game extends JFrame {
         }
     }
 
+    /**
+     * Handles draw 4
+     */
     private void handlePreviousDraw4() {
         if (nextPersonDrawsFour) {
             if (controller.getCurrentPlayer().getHand().stream().filter(card -> card.getNum() == Constants.DRAWFOUR)
                     .findAny().orElse(null) != null) {
                 disabledExceptDraw4 = true;
-
             } else {
                 nextPersonDrawsFour = false;
                 controller.drawFour(controller.getCurrentPlayer());
@@ -100,7 +104,12 @@ public class Game extends JFrame {
         }
     }
 
-    private void populateDrawDialog(Card card, boolean isPlayable) throws IOException {
+    /**
+     * Creates and show dialog to draw cards
+     * @param card card that has been drawn
+     * @param isPlayable true if card drawn is playable otherwise false
+     */
+    private void populateDrawDialog(Card card, boolean isPlayable) {
         isDrawing = true;
         refreshUI();
 
@@ -162,6 +171,8 @@ public class Game extends JFrame {
         southPanel.add(scrollCards);
 
         tablePanel = new TransparentPanel();
+        tablePanel.add(generateDeckButton());
+
         tablePanel.setLayout(new FlowLayout());
         tablePanel.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 100));
 
@@ -170,13 +181,23 @@ public class Game extends JFrame {
         componentHolder.add(southPanel, BorderLayout.SOUTH);
         componentHolder.add(tablePanel, BorderLayout.NORTH);
 
-        ScaledBackground background = new ScaledBackground("assets/bg.png", xSize, ySize, new FlowLayout());
+        ScaledBackground background = new ScaledBackground("assets/bg.png", xSize + 120, ySize + 120, new FlowLayout());
 
         background.add(componentHolder);
 
         getContentPane().add(background);
     }
 
+    /**
+     * Creates dialog for actions on drawn cards
+     * Allows player to play drawn card, 
+     * Draw another card (if current card is unplayable), 
+     * Keep drawn card if it is playable
+     * 
+     * @param cards
+     * @param cDraw
+     * @throws IOException
+     */
     private void populateDrawnCardsDialog(Card[] cards, continueDraw cDraw) throws IOException {
         this.isDrawing = true;
 
@@ -190,13 +211,14 @@ public class Game extends JFrame {
         customDialog.showDialog();
     }
 
+    /**
+     * Shows color change wheel if player has played a valid special card
+     * 
+     * @param card card that has been played
+     */
     private void populateColorChangeUI(Card card) {
         isDrawing = true;
-        try {
-            refreshUI();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        refreshUI();
 
         ColorSelectionDialog dialog = new ColorSelectionDialog(color -> {
             isDrawing = false;
@@ -213,20 +235,12 @@ public class Game extends JFrame {
         this.controller = new GameController(new IGameController() {
             @Override
             public void turnEndCallback() {
-                try {
-                    refreshUI();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                refreshUI();
             }
 
             @Override
             public void drawCardCallback(Card card, boolean isPlayable) {
-                try {
-                    populateDrawDialog(card, isPlayable);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                populateDrawDialog(card, isPlayable);
             }
 
             @Override
@@ -260,7 +274,6 @@ public class Game extends JFrame {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
@@ -270,21 +283,18 @@ public class Game extends JFrame {
      * turn
      * @throws IOException
      */
-    private void refreshUI() throws IOException {
-        tablePanel.removeAll();
-        generateDeckButton();
+    private void refreshUI() {
+        if (tablePanel.getComponentCount() == 2)
+            tablePanel.remove(1);
         generateLastCard();
-        tablePanel.revalidate();
 
         activePlayerCardPanel.removeAll();
         handlePreviousDraw2();
         handlePreviousDraw4();
         generatePlayerCards();
-        activePlayerCardPanel.revalidate();
 
         activePlayerDetails.removeAll();
-        generatePlayerDetails();
-        activePlayerDetails.revalidate();
+        generatePlayerOrder();
 
         revalidate();
         repaint();
@@ -302,7 +312,10 @@ public class Game extends JFrame {
                             || (disabledExceptDraw4 && c.getNum() != Constants.DRAWFOUR)));
     }
 
-    private void generatePlayerDetails() {
+    /**
+     * Generates JLabel to show all players and order of turns
+     */
+    private void generatePlayerOrder() {
         SmoothText label = new SmoothText(controller.getPlayers(), controller.getCurrentPlayer(),
                 controller.getLastPlayedCard().get(0).getColor());
         activePlayerDetails.add(label);
@@ -312,12 +325,16 @@ public class Game extends JFrame {
      * Generate component to show last played card
      * @throws IOException
      */
-    private void generateLastCard() throws IOException {
-        // tablePanel.add(populateCard(controller.getLastPlayedCard(), true, false));
-        tablePanel.add(new LastPlayedComponent(controller.getLastPlayedCard()));
+    private void generateLastCard() {
+        tablePanel.add(new LastPlayedComponent(controller.getLastPlayedCard()), 1);
     }
 
-    private void generateDeckButton() {
+    /**
+     * Generates Button to draw card
+     * 
+     * @return JLabel with deck icon
+     */
+    private JLabel generateDeckButton() {
         Deck deckIcon = new Deck(200, 280);
         JLabel label = new JLabel(deckIcon);
         label.setPreferredSize(new Dimension(200, 280));
@@ -348,7 +365,7 @@ public class Game extends JFrame {
             }
         });
 
-        tablePanel.add(label);
+        return label;
     }
 
     /**
@@ -358,16 +375,13 @@ public class Game extends JFrame {
      * @return Generated compoenent (Currently JButton)
      */
     private CardLabel populateCard(Card card, boolean isStatic, boolean isDisabled) {
-        CardLabel drawable;
-        try {
-            drawable = new CardLabel(card, isDisabled, (isStatic || isDisabled) ? null : () -> onCardClick(card));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return drawable;
+        return new CardLabel(card, isDisabled, (isStatic || isDisabled) ? null : () -> onCardClick(card));
     }
 
+    /**
+     * Handles Card clicks
+     * @param card card that has been played
+     */
     private void onCardClick(Card card) {
         if (card.isSpecial()) {
             populateColorChangeUI(card);

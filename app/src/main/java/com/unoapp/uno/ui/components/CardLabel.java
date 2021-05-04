@@ -10,7 +10,6 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextLayout;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -47,7 +46,7 @@ public class CardLabel extends JPanel {
     private final Font reverse = new Font("Gilmer Heavy", Font.PLAIN, -36);
     private final Font big = new Font("Gilmer Heavy", Font.PLAIN, 82);
 
-    public CardLabel(Card card, Boolean disabled, onClickListener mClickListener) throws IOException {
+    public CardLabel(Card card, Boolean disabled, onClickListener mClickListener) {
         this.color = card.getColor();
         this.num = card.getNum();
         this.disabled = disabled;

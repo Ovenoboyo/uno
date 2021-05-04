@@ -23,12 +23,7 @@ public class Application {
 			e.printStackTrace();
 		}
 		Game game;
-		try {
-			game = new Game();
-			game.setVisible(true);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		game = new Game();
+		game.setVisible(true);
 	}
 }
