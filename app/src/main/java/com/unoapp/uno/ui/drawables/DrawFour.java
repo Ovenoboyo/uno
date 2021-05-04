@@ -56,6 +56,7 @@ public class DrawFour {
                 g.fill(shape);
                 g.setPaint(WHITE);
                 g.draw(shape);
+
                 g.dispose();
 
         }

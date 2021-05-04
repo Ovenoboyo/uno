@@ -38,6 +38,7 @@ public class LastPlayedComponent extends JPanel {
             label.paintManually(g2d);
             g2d.rotate(8 * Math.PI / 180, label.getWidth() / 2, label.getHeight() / 2);
         }
+        g2d.dispose();
     }
 
 }
