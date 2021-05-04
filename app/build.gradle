@@ -80,6 +80,10 @@ tasks.withType( JavaCompile ).configureEach {
 
 javadoc {
     source = sourceSets.main.allJava
+    options.addStringOption("--show-packages=all")
+    options.addStringOption("--show-module-contents=all")
+    options.addStringOption("--show-types=all")
+    options.addStringOption("--show-members=all")
 }
 
 

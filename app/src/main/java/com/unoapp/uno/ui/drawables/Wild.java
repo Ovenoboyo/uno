@@ -11,12 +11,13 @@ import static java.awt.Color.*;
  */
 public class Wild {
 
-    // this(1120, 1522);
-
     /**
      * Paints the transcoded SVG image on the specified graphics context.
      * 
-     * @param g Graphics context.
+     * @param g2d
+     * @param color
+     * @param width
+     * @param height
      */
     public static void paint(Graphics2D g2d, Color color, double width, double height) {
         Shape shape = null;

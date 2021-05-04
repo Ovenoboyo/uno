@@ -13,7 +13,9 @@ public class DrawFour {
         /**
          * Paints the transcoded SVG image on the specified graphics context.
          * 
-         * @param g Graphics context.
+         * @param g2d
+         * @param x
+         * @param y
          */
         public static void paint(Graphics2D g2d, double x, double y) {
                 Shape shape = null;

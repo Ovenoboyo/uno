@@ -1,6 +1,9 @@
 package com.unoapp.uno.utils;
 
 public class Constants {
+    /**
+     * Enum to hold all possible colors for cards
+     */
     public enum Color {
         RED, BLUE, YELLOW, GREEN, BLACK;
     }

@@ -44,7 +44,6 @@ public class GameController {
 
     /**
      * Start the game loop
-     * 
      *
      */
     public void startGameLoop() {
@@ -78,6 +77,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Returns if player order is reversed or not
+     * @return true if player order is reversed otherwise false
+     */
     public boolean isReversed() {
         return this.isReversed;
     }
@@ -248,7 +251,7 @@ public class GameController {
 
     /**
      * Pass turn without playing any card
-     * @param player
+     * @param player player who is passing the turn
      */
     public void pass(Player player) {
         nextTurn(player, true);
