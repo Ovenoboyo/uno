@@ -21,6 +21,10 @@ public class Played {
         this.cleanStack();
     }
 
+    /**
+     * Remove excessive cards
+     * Only keep last 3 played cards
+     */
     private void cleanStack() {
         if (playedCard.size() > 3) {
             for (int i = 3; i < playedCard.size(); i++) {
@@ -29,6 +33,10 @@ public class Played {
         }
     }
 
+    /**
+     * Get prevously played cards (Usually 3)
+     * @return
+     */
     public ArrayList<Card> getLastPlayedCards() {
         return playedCard;
     }

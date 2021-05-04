@@ -10,20 +10,25 @@ import com.unoapp.uno.ui.screens.Game;
 
 public class Application {
 	public static void main(String[] args) {
-		try {
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			System.out.println(new File(".").getCanonicalPath());
-			File file = new File("assets/gilmer_heavy.otf");
-			if (!file.exists()) {
-				file = new File("runtime/bin/assets/gilmer_heavy.otf");
-			}
-			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+					System.out.println(new File(".").getCanonicalPath());
+					File file = new File("assets/gilmer_heavy.otf");
+					if (!file.exists()) {
+						file = new File("runtime/bin/assets/gilmer_heavy.otf");
+					}
+					ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
 
-		} catch (IOException | FontFormatException e) {
-			e.printStackTrace();
-		}
-		Game game;
-		game = new Game();
-		game.setVisible(true);
+				} catch (IOException | FontFormatException e) {
+					e.printStackTrace();
+				}
+				Game game;
+				game = new Game();
+				game.setVisible(true);
+			}
+		});
+
 	}
 }
