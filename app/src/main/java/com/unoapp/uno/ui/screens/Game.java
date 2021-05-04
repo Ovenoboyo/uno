@@ -1,17 +1,14 @@
 package com.unoapp.uno.ui.screens;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import java.awt.BorderLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
@@ -32,15 +29,16 @@ import com.unoapp.uno.ui.components.CardLabel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.ui.components.LastPlayedComponent;
+import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
+import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.drawables.Deck;
 import com.unoapp.uno.utils.Constants;
 
 /**
  * Game Screen
  */
-public class Game {
-    private JFrame frame;
+public class Game extends JFrame {
     private JPanel activePlayerCardPanel;
     private JPanel activePlayerDetails;
     private JPanel tablePanel;
@@ -127,72 +125,56 @@ public class Game {
      * Generate all the UI required for game screen
      */
     private void generateUIComponents() {
-        frame = new JFrame();
-
         // WSL Workaround
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xSize = ((int) tk.getScreenSize().getWidth());
         int ySize = ((int) tk.getScreenSize().getHeight());
-        frame.setPreferredSize(new Dimension(xSize, ySize));
+        setPreferredSize(new Dimension(xSize, ySize));
+
+        final int MAX_COMPONENT_X = xSize - 120;
+        final int MAX_COMPONENT_Y = ySize - 60;
 
         GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
 
         // Should work on normal
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setUndecorated(true);
+        setResizable(false);
 
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        device.setFullScreenWindow(this);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        JPanel nnPanel = new JPanel();
-
-        activePlayerCardPanel = new JPanel();
-        // activePlayerCardPanel.setPreferredSize(new Dimension(500, 267 + 50));
-        activePlayerCardPanel.setLayout(new FlowLayout());
+        activePlayerCardPanel = new TransparentPanel();
 
         JScrollPane scrollCards = new JScrollPane(activePlayerCardPanel);
-        scrollCards.setPreferredSize(new Dimension(xSize - 120, 267 + 50));
+        scrollCards.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 50));
         scrollCards.setBorder(null);
 
-        activePlayerDetails = new JPanel();
+        activePlayerDetails = new TransparentPanel();
         activePlayerDetails.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JPanel nPanel = new JPanel();
-        nPanel.setLayout(new BoxLayout(nPanel, BoxLayout.PAGE_AXIS));
+        TransparentPanel southPanel = new TransparentPanel();
+        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.PAGE_AXIS));
 
-        nPanel.add(activePlayerDetails);
-        nPanel.add(scrollCards);
-        nPanel.add(Box.createVerticalStrut(60));
+        southPanel.add(activePlayerDetails);
+        southPanel.add(scrollCards);
 
-        nnPanel.add(nPanel);
-
-        JPanel nnnPanel = new JPanel();
-        nnnPanel.setLayout(new BoxLayout(nnnPanel, BoxLayout.PAGE_AXIS));
-
-        tablePanel = new JPanel();
+        tablePanel = new TransparentPanel();
         tablePanel.setLayout(new FlowLayout());
-        tablePanel.setPreferredSize(new Dimension(xSize, 267 + 100));
+        tablePanel.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 100));
 
-        nnnPanel.add(Box.createVerticalStrut(60));
-        nnnPanel.add(tablePanel);
+        TransparentPanel componentHolder = new TransparentPanel(new BorderLayout());
+        componentHolder.setPreferredSize(new Dimension(MAX_COMPONENT_X, MAX_COMPONENT_Y));
+        componentHolder.add(southPanel, BorderLayout.SOUTH);
+        componentHolder.add(tablePanel, BorderLayout.NORTH);
 
-        panel.add(nnnPanel, BorderLayout.NORTH);
-        panel.add(nnPanel, BorderLayout.SOUTH);
-        // panel.add(Box.createVerticalBox());
+        ScaledBackground background = new ScaledBackground("assets/bg.png", xSize, ySize, new FlowLayout());
 
-        Container pane = frame.getContentPane();
-        JScrollPane globalScroll = new JScrollPane(panel);
-        // frame.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
-        pane.add(globalScroll);
+        background.add(componentHolder);
 
-        // frame.pack();
-        frame.setUndecorated(true);
-        frame.setResizable(false);
-
-        device.setFullScreenWindow(frame);
+        getContentPane().add(background);
     }
 
     private void populateDrawnCardsDialog(Card[] cards, continueDraw cDraw) throws IOException {
@@ -290,8 +272,8 @@ public class Game {
      */
     private void refreshUI() throws IOException {
         tablePanel.removeAll();
-        generateLastCard();
         generateDeckButton();
+        generateLastCard();
         tablePanel.revalidate();
 
         activePlayerCardPanel.removeAll();
@@ -304,8 +286,8 @@ public class Game {
         generatePlayerDetails();
         activePlayerDetails.revalidate();
 
-        frame.revalidate();
-        frame.repaint();
+        revalidate();
+        repaint();
     }
 
     /**
@@ -396,14 +378,5 @@ public class Game {
             disabledExceptDraw2 = false;
         if (disabledExceptDraw4)
             disabledExceptDraw4 = false;
-    }
-
-    /**
-     * Set visibility of game screen
-     * 
-     * @param value
-     */
-    public void setVisible(Boolean value) {
-        this.frame.setVisible(value);
     }
 }
