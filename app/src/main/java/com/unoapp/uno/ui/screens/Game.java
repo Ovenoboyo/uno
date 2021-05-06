@@ -56,17 +56,17 @@ public class Game extends JFrame {
      * Default constructor
      * 
      */
-    public Game() {
+    public Game(String bgSrc) {
         customDialog = new CustomCardDialog();
 
-        init();
+        init(bgSrc);
     }
 
     /**
      * Initialize game screen
      */
-    private void init() {
-        generateUIComponents();
+    private void init(String bgSrc) {
+        generateUIComponents(bgSrc);
 
         // Initialize game controller after UI has been generated
         initializeController();
@@ -133,7 +133,7 @@ public class Game extends JFrame {
     /**
      * Generate all the UI required for game screen
      */
-    private void generateUIComponents() {
+    private void generateUIComponents(String bgSrc) {
         // WSL Workaround
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xSize = ((int) tk.getScreenSize().getWidth());
@@ -181,7 +181,7 @@ public class Game extends JFrame {
         componentHolder.add(southPanel, BorderLayout.SOUTH);
         componentHolder.add(tablePanel, BorderLayout.NORTH);
 
-        ScaledBackground background = new ScaledBackground("assets/bg.png", xSize + 120, ySize + 120, new FlowLayout());
+        ScaledBackground background = new ScaledBackground(bgSrc, xSize + 120, ySize + 120, new FlowLayout());
 
         background.add(componentHolder);
 

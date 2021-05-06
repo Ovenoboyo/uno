@@ -19,16 +19,19 @@ public class Application {
 					if (!file.exists()) {
 						file = new File("runtime/bin/assets/gilmer_heavy.otf");
 					}
+
+					String filePath = "assets/bg.png";
+					File bg = new File(filePath);
+					if (!bg.exists()) {
+						filePath = "runtime/bin/assets/bg.png";
+					}
 					ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
+					new Game(filePath).setVisible(true);
 
 				} catch (IOException | FontFormatException e) {
 					e.printStackTrace();
 				}
-				Game game;
-				game = new Game();
-				game.setVisible(true);
 			}
 		});
-
 	}
 }
