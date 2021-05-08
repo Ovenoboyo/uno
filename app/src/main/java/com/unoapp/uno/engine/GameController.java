@@ -219,7 +219,7 @@ public class GameController {
             player.addCard(card);
         }
         isStackingD2 = 0;
-        mGameController.drawingTwoCallback(cards, () -> nextTurn(player, true));
+        mGameController.drawingCallback(cards, () -> nextTurn(player, true));
     }
 
     /**
@@ -235,7 +235,7 @@ public class GameController {
             player.addCard(card);
         }
         isStackingD4 = 0;
-        mGameController.drawingFourCallback(cards, () -> nextTurn(player, true));
+        mGameController.drawingCallback(cards, () -> nextTurn(player, true));
     }
 
     /**
@@ -315,14 +315,7 @@ public class GameController {
          * @param cards cards that are being drawn from deck
          * @param cDraw callback to continue the turn (usually skips it)
          */
-        void drawingTwoCallback(Card[] cards, continueDraw cDraw);
-
-        /**
-         * Called when current player is drawing 4 cards
-         * @param cards cards that are being drawn from deck
-         * @param cDraw callback to continue the turn (usually skips it)
-         */
-        void drawingFourCallback(Card[] cards, continueDraw cDraw);
+        void drawingCallback(Card[] cards, continueDraw cDraw);
 
         /**
          * Fires when a winner is found

@@ -254,21 +254,12 @@ public class Game extends JFrame {
             }
 
             @Override
-            public void drawingTwoCallback(Card[] cards, continueDraw cDraw) {
-                try {
-                    populateDrawnCardsDialog(cards, cDraw);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
             public void drawFourCallback() {
                 nextPersonDrawsFour = true;
             }
 
             @Override
-            public void drawingFourCallback(Card[] cards, continueDraw cDraw) {
+            public void drawingCallback(Card[] cards, continueDraw cDraw) {
                 try {
                     populateDrawnCardsDialog(cards, cDraw);
                 } catch (IOException e) {
