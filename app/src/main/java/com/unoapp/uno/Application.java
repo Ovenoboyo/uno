@@ -5,11 +5,13 @@ import java.awt.GraphicsEnvironment;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import com.unoapp.uno.utils.Database;
 
 import com.unoapp.uno.ui.screens.Game;
 
 public class Application {
 	public static void main(String[] args) {
+		Database.connect();
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

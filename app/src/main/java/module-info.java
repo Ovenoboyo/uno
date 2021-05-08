@@ -1,5 +1,6 @@
 module mainModule {
     requires transitive java.desktop;
+    requires transitive java.sql;
 
     exports com.unoapp.uno;
     exports com.unoapp.uno.engine;
