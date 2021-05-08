@@ -12,6 +12,7 @@ import com.unoapp.uno.ui.screens.Game;
 public class Application {
 	public static void main(String[] args) {
 		Database.connect();
+		Database.createNewTable();
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
