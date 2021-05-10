@@ -150,8 +150,8 @@ public class Game extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setUndecorated(true);
-        setResizable(false);
+        // setUndecorated(true);
+        // setResizable(false);
 
         device.setFullScreenWindow(this);
 

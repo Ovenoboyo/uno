@@ -2,6 +2,7 @@ package com.unoapp.uno.ui.components;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 import java.awt.LayoutManager;
 
 public class ScaledBackground extends JLabel {
