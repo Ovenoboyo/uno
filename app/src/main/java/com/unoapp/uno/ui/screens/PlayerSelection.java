@@ -7,10 +7,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
+import com.unoapp.uno.ui.components.PersonIcon;
 import com.unoapp.uno.ui.components.RoundedRectangle;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TransparentPanel;
+import com.unoapp.uno.utils.Constants;
 
 import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
@@ -18,9 +20,9 @@ import java.awt.GraphicsEnvironment;
 
 import java.awt.Toolkit;
 
-public class TitleScreen extends JFrame {
+public class PlayerSelection extends JFrame {
 
-    public TitleScreen() {
+    public PlayerSelection() {
         init("assets/mainBg.png");
     }
 
@@ -54,11 +56,13 @@ public class TitleScreen extends JFrame {
 
         TransparentPanel buttonPanel = new TransparentPanel();
 
-        buttonPanel.add(createButton("Play", "assets/playIcon.png", 178, 124));
-        buttonPanel.add(Box.createHorizontalStrut(80));
-        buttonPanel.add(createButton("Settings", "assets/gear.png", 123, 123));
-        buttonPanel.add(Box.createHorizontalStrut(80));
-        buttonPanel.add(createButton("Quit", "assets/power.png", 144, 144));
+        buttonPanel.add(createButton(Constants.getColor(Constants.Color.BLUE, false)));
+        buttonPanel.add(Box.createHorizontalStrut(30));
+        buttonPanel.add(createButton(Constants.getColor(Constants.Color.GREEN, false)));
+        buttonPanel.add(Box.createHorizontalStrut(30));
+        buttonPanel.add(createButton(Constants.getColor(Constants.Color.YELLOW, false)));
+        buttonPanel.add(Box.createHorizontalStrut(30));
+        buttonPanel.add(createButton(Constants.getColor(Constants.Color.RED, false)));
         // buttonPanel.add(playButton);
 
         mainPanel.add(Box.createVerticalGlue());
@@ -74,24 +78,29 @@ public class TitleScreen extends JFrame {
 
     }
 
-    private TransparentPanel createButton(String labelText, String iconSrc, int iconWidth, int iconHeight) {
+    private TransparentPanel createButton(java.awt.Color color) {
         TransparentPanel mainPanel = new TransparentPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText text = new SmoothText(labelText, Color.WHITE);
+        SmoothText arrowL = new SmoothText("<", Color.BLACK);
+        SmoothText arrowR = new SmoothText(">", Color.BLACK);
+        SmoothText text = new SmoothText("Player Name", Color.BLACK);
+        textPanel.add(arrowL);
         textPanel.add(text);
+        textPanel.add(arrowR);
 
-        RoundedRectangle playButton = new RoundedRectangle(200, 200);
+        RoundedRectangle playButton = new RoundedRectangle(375, 375);
         playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
         TransparentPanel label = new TransparentPanel();
-        label.add(new ScaledBackground(iconSrc, iconWidth, iconHeight, new FlowLayout()));
+        label.add(new PersonIcon(color));
         playButton.add(Box.createVerticalGlue());
-        playButton.add(Box.createHorizontalStrut(iconHeight / 2));
+        playButton.add(Box.createHorizontalStrut(135 / 2));
         playButton.add(label);
+        playButton.add(textPanel);
         playButton.add(Box.createVerticalGlue());
 
-        mainPanel.add(textPanel);
+        // mainPanel.add(textPanel);
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(playButton);
 

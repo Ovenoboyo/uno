@@ -12,9 +12,11 @@ import javax.swing.JPanel;
 
 public class SmoothText extends JPanel {
     private String str;
+    private Color color;
 
-    public SmoothText(String str) {
+    public SmoothText(String str, Color color) {
         this.str = str;
+        this.color = color;
         setFont(new Font("Gilmer Heavy", Font.BOLD, 24));
         setOpaque(false);
     }
@@ -35,7 +37,7 @@ public class SmoothText extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(this.color);
         g2d.drawString(str, 0, getFont().getSize());
     }
 
