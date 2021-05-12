@@ -20,7 +20,7 @@ import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Player;
-import com.unoapp.uno.ui.components.CardLabel;
+import com.unoapp.uno.ui.components.CardPanel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
@@ -340,8 +340,8 @@ public class Game extends GenericMenuScreen {
      * @param card card of which button is to be generated
      * @return Generated compoenent (Currently JButton)
      */
-    private CardLabel populateCard(Card card, boolean isStatic, boolean isDisabled) {
-        return new CardLabel(card, isDisabled, (isStatic || isDisabled) ? null : () -> onCardClick(card));
+    private CardPanel populateCard(Card card, boolean isStatic, boolean isDisabled) {
+        return new CardPanel(card, isDisabled, (isStatic || isDisabled) ? null : () -> onCardClick(card));
     }
 
     /**

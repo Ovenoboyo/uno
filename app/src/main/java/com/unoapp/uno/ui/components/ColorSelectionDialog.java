@@ -19,6 +19,9 @@ import javax.swing.JPanel;
 import com.unoapp.uno.ui.drawables.ColorSelection;
 import com.unoapp.uno.utils.Constants;
 
+/**
+ * Dialog to hold color selection panel for special cards
+ */
 public class ColorSelectionDialog extends JDialog {
     private JPanel global = new JPanel();
     private JLabel label = new JLabel();
@@ -29,6 +32,10 @@ public class ColorSelectionDialog extends JDialog {
 
     private final onClickListener mListener;
 
+    /**
+     * Constructor
+     * @param listener onClick event when one of the 4 quadrants is selected
+     */
     public ColorSelectionDialog(onClickListener listener) {
         super();
         this.mListener = listener;
@@ -54,6 +61,9 @@ public class ColorSelectionDialog extends JDialog {
 
             }
 
+            /**
+             * Expand the quadrant and correctly place it when mouse is hovered
+             */
             @Override
             public void mouseEntered(MouseEvent e) {
                 img.expand();
@@ -61,6 +71,9 @@ public class ColorSelectionDialog extends JDialog {
                 img.setBounds(coordinates[0], coordinates[1], expandedSize, expandedSize);
             }
 
+            /**
+             * Shrink the quadrant back to normal size when mouse exits
+             */
             @Override
             public void mouseExited(MouseEvent e) {
                 img.shrink();
@@ -97,6 +110,11 @@ public class ColorSelectionDialog extends JDialog {
         add(global);
     }
 
+    /**
+     * Generates a single quadrant with respective color
+     * @param quadrant
+     * @return
+     */
     private ColorSelectionImage generateColorArc(int quadrant) {
         ColorSelectionImage img = new ColorSelectionImage(getAngle(quadrant), getColorFromQuadrant(quadrant));
 
@@ -108,6 +126,14 @@ public class ColorSelectionDialog extends JDialog {
         return img;
     }
 
+    /**
+     * Returns proper coordinates for quadrants (considering initial position as 0, 0)
+     * Also takes care of offsets
+     * 
+     * @param quadrant quadrant of which coordinates are required
+     * @param expanded true if quadrant is supposed to be expanded
+     * @return int[0] as x coordinate and int[1] as y coordinate
+     */
     private int[] getCoordinates(int quadrant, boolean expanded) {
         switch (quadrant) {
             default:
@@ -128,6 +154,11 @@ public class ColorSelectionDialog extends JDialog {
         }
     }
 
+    /**
+     * Get angle of rotation of respective quadrant
+     * @param quadrant number of quadrant
+     * @return returns angle in degrees for respective quadrant
+     */
     private int getAngle(int quadrant) {
         switch (quadrant) {
             default:
@@ -142,6 +173,11 @@ public class ColorSelectionDialog extends JDialog {
         }
     }
 
+    /**
+     * Get color of respective quadrant
+     * @param quadrant
+     * @return
+     */
     private Constants.Color getColorFromQuadrant(int quadrant) {
         switch (quadrant) {
             default:
@@ -156,12 +192,18 @@ public class ColorSelectionDialog extends JDialog {
         }
     }
 
+    /**
+     * Packs dialog and sets it visible
+     */
     public void showDialog() {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    /**
+     * Label to hold one quadrant
+     */
     private class ColorSelectionImage extends JLabel {
         private final int angle;
         private final Constants.Color color;

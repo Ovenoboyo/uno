@@ -29,6 +29,9 @@ import com.unoapp.uno.ui.components.StartLabel;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.utils.Constants;
 
+/**
+ * Screen where players will be choosen
+ */
 public class PlayerSelection extends GenericMenuScreen {
     private final class CreateUserDialog {
         private JPanel panel;
@@ -90,13 +93,13 @@ public class PlayerSelection extends GenericMenuScreen {
 
         TransparentPanel buttonPanel = new TransparentPanel();
 
-        buttonPanel.add(createButton(Constants.getColor(Constants.Color.BLUE, false), 0));
+        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.BLUE, false), 0));
         buttonPanel.add(Box.createHorizontalStrut(30));
-        buttonPanel.add(createButton(Constants.getColor(Constants.Color.GREEN, false), 1));
+        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.GREEN, false), 1));
         buttonPanel.add(Box.createHorizontalStrut(30));
-        buttonPanel.add(createButton(Constants.getColor(Constants.Color.YELLOW, false), 2));
+        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.YELLOW, false), 2));
         buttonPanel.add(Box.createHorizontalStrut(30));
-        buttonPanel.add(createButton(Constants.getColor(Constants.Color.RED, false), 3));
+        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.RED, false), 3));
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(Box.createVerticalGlue());
@@ -132,6 +135,10 @@ public class PlayerSelection extends GenericMenuScreen {
 
     }
 
+    /**
+     * Increments index in circular manner
+     * @param index index of frame whose index is to be incremented
+     */
     private void incrementIndex(Integer index) {
         frameIndices[index]++;
         if (frameIndices[index] >= players.size()) {
@@ -139,6 +146,10 @@ public class PlayerSelection extends GenericMenuScreen {
         }
     }
 
+    /**
+     * Decrements index in circular manner
+     * @param index index of frame whose index is to be decremented
+     */
     private void decrementIndex(Integer index) {
         frameIndices[index]--;
         if (frameIndices[index] < CREATE_NEW_BUTTON) {
@@ -146,7 +157,13 @@ public class PlayerSelection extends GenericMenuScreen {
         }
     }
 
-    private TransparentPanel createButton(java.awt.Color color, Integer index) {
+    /**
+     * Create panel with name of player
+     * @param color
+     * @param index index of panel (usually out of 4)
+     * @return
+     */
+    private TransparentPanel createPanel(java.awt.Color color, Integer index) {
         incrementIndex(index);
 
         TransparentPanel mainPanel = new TransparentPanel();
@@ -182,6 +199,9 @@ public class PlayerSelection extends GenericMenuScreen {
         return mainPanel;
     }
 
+    /**
+     * Mouse click listener for player name text
+     */
     private final class ITextMouseClickListener extends MouseClickListener {
         private final Integer index;
 
@@ -198,6 +218,9 @@ public class PlayerSelection extends GenericMenuScreen {
         }
     }
 
+    /**
+     * Mouse click listener for arrow
+     */
     private final class IArrowMouseListener extends MouseClickListener {
         private final SmoothText text;
         private final Integer index;

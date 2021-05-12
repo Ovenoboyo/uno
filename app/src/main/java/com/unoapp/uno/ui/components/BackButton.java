@@ -10,6 +10,9 @@ import java.awt.RenderingHints;
 
 import com.unoapp.uno.ui.drawables.FancyArrow;
 
+/**
+ * Panel to hold back icon and text
+ */
 public class BackButton extends TransparentPanel {
     private Double scale;
     private Font font;
@@ -19,15 +22,22 @@ public class BackButton extends TransparentPanel {
         this.font = font;
     }
 
+    /**
+     * returns preferred size of panel
+     * Size should usually be ((Size of string) + (Size of fancy arrow) + padding offset)) * scale
+     */
     @Override
     public Dimension getPreferredSize() {
         Graphics g = getGraphics();
         g.setFont(font);
         FontMetrics met = g.getFontMetrics();
-        return new Dimension(met.stringWidth("Back") + FancyArrow.getIconWidth() + 30,
-                Math.max(met.getHeight(), FancyArrow.getIconHeight()));
+        return new Dimension((int) ((met.stringWidth("Back") + FancyArrow.getIconWidth() + 30) * scale),
+                (int) (Math.max(met.getHeight(), FancyArrow.getIconHeight()) * scale));
     }
 
+    /**
+     * Paint the fancy arrow and back label
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

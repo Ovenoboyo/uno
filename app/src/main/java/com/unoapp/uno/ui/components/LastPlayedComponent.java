@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 
 import com.unoapp.uno.models.Card;
 
+/**
+ * Panel to hold last played cards
+ */
 public class LastPlayedComponent extends JPanel {
 
     private ArrayList<Card> lastPlayed = new ArrayList<>();
@@ -31,10 +34,10 @@ public class LastPlayedComponent extends JPanel {
         g2d.translate(25, 25);
 
         Card card;
-        CardLabel label;
+        CardPanel label;
         for (int i = lastPlayed.size() - 1; i >= 0; i--) {
             card = lastPlayed.get(i);
-            label = new CardLabel(card, false, null);
+            label = new CardPanel(card, false, null);
             label.paintManually(g2d);
             g2d.rotate(8 * Math.PI / 180, label.getWidth() / 2, label.getHeight() / 2);
         }

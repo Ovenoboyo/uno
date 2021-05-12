@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 
 import com.unoapp.uno.models.Card;
 
+/**
+ * Generic dialog that can display given cards along with a label and buttons
+ */
 public class CustomCardDialog extends JDialog {
 
     private JLabel label = new JLabel();
@@ -47,7 +50,7 @@ public class CustomCardDialog extends JDialog {
 
     public void addCards(Card... cards) {
         for (Card c : cards) {
-            cardPanel.add(new CardLabel(c, false, null));
+            cardPanel.add(new CardPanel(c, false, null));
         }
     }
 

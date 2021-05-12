@@ -23,6 +23,7 @@ public class Arrow {
      * Paints the transcoded SVG image on the specified graphics context.
      * 
      * @param g Graphics context.
+     * @param color color of arrow
      */
     public static void paint(Graphics2D g, Color color) {
         Shape shape = null;

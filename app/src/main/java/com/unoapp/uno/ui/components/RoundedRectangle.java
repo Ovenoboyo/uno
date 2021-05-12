@@ -7,6 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 
+/**
+ * Generic implementation of white rounded rectangle
+ */
 public class RoundedRectangle extends TransparentPanel {
 
     private int width, height, borderRadius;

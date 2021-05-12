@@ -6,6 +6,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+/**
+ * Generic fullscreen frame implementation
+ */
 public abstract class GenericMenuScreen extends JFrame {
     public final int MAX_COMPONENT_X, MAX_COMPONENT_Y, xSize, ySize;
 

@@ -10,4 +10,5 @@ module mainModule {
     exports com.unoapp.uno.ui.drawables;
     exports com.unoapp.uno.ui.screens;
     exports com.unoapp.uno.utils;
+    exports com.unoapp.uno.abstracts;
 }

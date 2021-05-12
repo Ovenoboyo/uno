@@ -15,10 +15,12 @@ import java.awt.geom.RoundRectangle2D;
  * transcoder</a>.
  */
 public class BlankCard {
+
     /**
      * Paints the transcoded SVG image on the specified graphics context.
      * 
      * @param g Graphics context.
+     * @param color color of blank card
      */
     public static void paint(Color color, Graphics2D g) {
         Shape shape = null;

@@ -4,6 +4,9 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
+/**
+ * Generic implementation of transparent JPanel
+ */
 public class TransparentPanel extends JPanel {
 
     public TransparentPanel() {

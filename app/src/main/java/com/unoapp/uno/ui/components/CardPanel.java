@@ -25,7 +25,10 @@ import com.unoapp.uno.ui.drawables.Skip;
 import com.unoapp.uno.ui.drawables.Wild;
 import com.unoapp.uno.utils.Constants;
 
-public class CardLabel extends JPanel {
+/**
+ * Panel to hold drawn uno card
+ */
+public class CardPanel extends JPanel {
 
     /**
      * Auto Generated
@@ -45,7 +48,13 @@ public class CardLabel extends JPanel {
     private final Font reverse = Constants.GilmerHeavy.deriveFont(-36);
     private final Font big = Constants.GilmerHeavy.deriveFont(82);
 
-    public CardLabel(Card card, Boolean disabled, onClickListener mClickListener) {
+    /**
+     * Constructor to generate card
+     * @param card card which is to be rendered
+     * @param disabled true if card should be disabled not not playable
+     * @param mClickListener onClick action for rendered panel
+     */
+    public CardPanel(Card card, Boolean disabled, onClickListener mClickListener) {
         this.color = card.getColor();
         this.num = card.getNum();
         this.disabled = disabled;
@@ -84,6 +93,11 @@ public class CardLabel extends JPanel {
         });
     }
 
+    /**
+     * Check if card is either a 6 or a 9 
+     * since both of them require underlines to be drawn
+     * @return true if card is a 6 or 9
+     */
     private boolean isSixNine() {
         return num == 6 || num == 9;
     }
@@ -103,6 +117,10 @@ public class CardLabel extends JPanel {
         return height;
     }
 
+    /**
+     * Draws +2 label on blank card
+     * @param g2d
+     */
     private void drawPlus2(Graphics2D g2d) {
         new TextLayout("+2", small, g2d.getFontRenderContext()).draw(g2d, 14, 44);
         new TextLayout("+2", reverse, g2d.getFontRenderContext()).draw(g2d, (width - 14), (height - 44));
@@ -110,6 +128,10 @@ public class CardLabel extends JPanel {
                 (height / 2) - (DrawTwo.getOrigHeight() * 0.2 * 0.5));
     }
 
+    /**
+     * Draws reverse label on blank card
+     * @param g2d
+     */
     private void drawReverse(Graphics2D g2d) {
         Reverse.paint(g2d, Color.WHITE, 0.05f, 16 - (Reverse.getOrigX() * 0.05),
                 34 - (Reverse.getOrigY() * 0.05) - (Reverse.getOrigHeight() * 0.05 * 0.5));
@@ -124,6 +146,10 @@ public class CardLabel extends JPanel {
 
     }
 
+    /**
+     * Draws skip label on blank card
+     * @param g2d
+     */
     private void drawSkip(Graphics2D g2d) {
         Skip.paint(g2d, Color.WHITE, 0.05f, 16, 32 - (Skip.getOrigHeight() * 0.05 * 0.5));
 
@@ -133,16 +159,29 @@ public class CardLabel extends JPanel {
                 (height / 2) - (Skip.getOrigHeight() * 0.15 * 0.5));
     }
 
+    /**
+     * Draws +4 label on blank card
+     * @param g2d
+     */
     private void drawDraw4(Graphics2D g2d) {
         new TextLayout("+4", small, g2d.getFontRenderContext()).draw(g2d, 14, 44);
         new TextLayout("+4", reverse, g2d.getFontRenderContext()).draw(g2d, (width - 14), (height - 44));
         DrawFour.paint(g2d, (width / 2) - (706 * 0.15) / 2, height / 2 - (521 * 0.15) / 2);
     }
 
+    /**
+     * Draw wild label on blank card
+     * Unlike other labels, this needs to only be drawn in center of card
+     * @param g2d
+     */
     private void drawWild(Graphics2D g2d) {
         Wild.paint(g2d, Constants.getColor(color, disabled), width, height);
     }
 
+    /**
+     * Draw normal number labels on card
+     * @param g2d
+     */
     private void drawNormal(Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
         // Draw numbers
@@ -167,6 +206,10 @@ public class CardLabel extends JPanel {
         layout2.draw(g2d, width2, height2);
     }
 
+    /**
+     * Render the blank card with appropriate labels
+     * @param g
+     */
     public void paintManually(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
 

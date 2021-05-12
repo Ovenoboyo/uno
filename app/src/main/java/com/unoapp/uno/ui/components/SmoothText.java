@@ -10,6 +10,9 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+/**
+ * Generic implementation of anti-aliased text
+ */
 public class SmoothText extends JPanel {
     private String str;
     private Color color;

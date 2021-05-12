@@ -14,6 +14,10 @@ import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.drawables.Arrow;
 import com.unoapp.uno.utils.Constants;
 
+/**
+ * Panel to hold player names with 
+ * arrow on top of current player
+ */
 public class PlayerOrder extends JPanel {
     private ArrayList<Player> players;
     private Player currentPlayer;

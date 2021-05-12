@@ -33,6 +33,11 @@ public class Application {
 		}
 	}
 
+	/**
+	 * Registers required fonts
+	 * @throws FontFormatException
+	 * @throws IOException
+	 */
 	private static void registerFont() throws FontFormatException, IOException {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		File gilmer = new File(Constants.getAsset("gilmer_heavy.otf"));

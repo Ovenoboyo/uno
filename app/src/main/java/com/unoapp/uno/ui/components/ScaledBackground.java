@@ -6,6 +6,9 @@ import java.awt.LayoutManager;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+/**
+ * Label to hold icon with scaled version of provided image
+ */
 public class ScaledBackground extends JLabel {
     public ScaledBackground(String src, int width, int height, LayoutManager mgr) {
         ImageIcon icon = new ImageIcon(src);
@@ -14,6 +17,12 @@ public class ScaledBackground extends JLabel {
         setLayout(mgr);
     }
 
+    /**
+     * 
+     * @param src Src of image
+     * @param width witdth of scaled image
+     * @param height height of scaled image
+     */
     public ScaledBackground(String src, int width, int height) {
         this(src, width, height, new FlowLayout());
     }

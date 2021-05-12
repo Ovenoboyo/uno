@@ -14,6 +14,10 @@ import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.utils.Constants;
 
+/**
+ * Title screen 
+ * Opens on start of program
+ */
 public class TitleScreen extends GenericMenuScreen {
 
     public TitleScreen() {
@@ -30,11 +34,11 @@ public class TitleScreen extends GenericMenuScreen {
 
         TransparentPanel buttonPanel = new TransparentPanel();
 
-        buttonPanel.add(createButton("Play", Constants.getAsset("playIcon.png"), 178, 124));
+        buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124));
         buttonPanel.add(Box.createHorizontalStrut(80));
-        buttonPanel.add(createButton("Settings", Constants.getAsset("gear.png"), 123, 123));
+        buttonPanel.add(createPanel("Settings", Constants.getAsset("gear.png"), 123, 123));
         buttonPanel.add(Box.createHorizontalStrut(80));
-        buttonPanel.add(createButton("Quit", Constants.getAsset("power.png"), 144, 144));
+        buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144));
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(Box.createVerticalGlue());
@@ -48,7 +52,15 @@ public class TitleScreen extends GenericMenuScreen {
         pack();
     }
 
-    private TransparentPanel createButton(String labelText, String iconSrc, int iconWidth, int iconHeight) {
+    /**
+     * Creates panel with button and text for respective operation
+     * @param labelText label of button
+     * @param iconSrc src of icon
+     * @param iconWidth width of icon
+     * @param iconHeight height of icon
+     * @return panel with label and icon
+     */
+    private TransparentPanel createPanel(String labelText, String iconSrc, int iconWidth, int iconHeight) {
         TransparentPanel mainPanel = new TransparentPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 

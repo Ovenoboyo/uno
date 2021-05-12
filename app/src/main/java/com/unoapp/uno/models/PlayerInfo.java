@@ -1,5 +1,8 @@
 package com.unoapp.uno.models;
 
+/**
+ * Model to hold player info retrieved from database
+ */
 public class PlayerInfo {
     private String id;
     private String name;
