@@ -5,26 +5,22 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.ArrowLabel;
+import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.PersonIcon;
 import com.unoapp.uno.ui.components.RoundedRectangle;
 import com.unoapp.uno.ui.components.ScaledBackground;
@@ -32,7 +28,7 @@ import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.utils.Constants;
 
-public class PlayerSelection extends JFrame {
+public class PlayerSelection extends GenericMenuScreen {
     private final class CreateUserDialog {
         private JPanel panel;
         private JTextField nameField;
@@ -72,8 +68,9 @@ public class PlayerSelection extends JFrame {
     private Integer[] frameIndices = new Integer[] { -1, 0, 1, 2 };
 
     public PlayerSelection() {
+        super();
         getPlayers();
-        init(Constants.getAsset(Paths.get("mainBg.png")).toString());
+        init(Constants.getAsset("mainBg.png"));
     }
 
     private void getPlayers() {
@@ -83,27 +80,7 @@ public class PlayerSelection extends JFrame {
     private void init(String bgSrc) {
         dialog = new CreateUserDialog(this);
 
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        int xSize = ((int) tk.getScreenSize().getWidth());
-        int ySize = ((int) tk.getScreenSize().getHeight());
-        setPreferredSize(new Dimension(xSize, ySize));
-
-        GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = graphics.getDefaultScreenDevice();
-
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setUndecorated(true);
-        setResizable(false);
-
-        device.setFullScreenWindow(this);
-
-        final int MAX_COMPONENT_X = xSize - 120;
-        final int MAX_COMPONENT_Y = ySize - 60;
-
-        ScaledBackground background = new ScaledBackground(bgSrc, xSize + 120, ySize + 120, new BorderLayout());
-        background.setBounds(0, 0, xSize, ySize);
+        ScaledBackground background = new ScaledBackground(bgSrc, xSize, ySize, new BorderLayout());
         getContentPane().add(background);
 
         TransparentPanel mainPanel = new TransparentPanel();
@@ -240,27 +217,5 @@ public class PlayerSelection extends JFrame {
                 text.setText(players.get(frameIndices[index]).getName());
             }
         }
-    }
-}
-
-abstract class MouseClickListener implements MouseListener {
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
     }
 }

@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -14,7 +11,6 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,6 +23,7 @@ import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.components.CardLabel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
+import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.LastPlayedComponent;
 import com.unoapp.uno.ui.components.PlayerOrder;
 import com.unoapp.uno.ui.components.ScaledBackground;
@@ -37,7 +34,7 @@ import com.unoapp.uno.utils.Constants;
 /**
  * Game Screen
  */
-public class Game extends JFrame {
+public class Game extends GenericMenuScreen {
     private JPanel activePlayerCardPanel;
     private JPanel activePlayerDetails;
     private JPanel tablePanel;
@@ -133,26 +130,7 @@ public class Game extends JFrame {
      * Generate all the UI required for game screen
      */
     private void generateUIComponents(String bgSrc) {
-        // WSL Workaround
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        int xSize = ((int) tk.getScreenSize().getWidth());
-        int ySize = ((int) tk.getScreenSize().getHeight());
-        setPreferredSize(new Dimension(xSize, ySize));
-
-        final int MAX_COMPONENT_X = xSize - 120;
-        final int MAX_COMPONENT_Y = ySize - 60;
-
-        GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = graphics.getDefaultScreenDevice();
-
-        // Should work on normal
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        // setUndecorated(true);
-        // setResizable(false);
-
-        device.setFullScreenWindow(this);
+        ScaledBackground background = new ScaledBackground(bgSrc, xSize, ySize);
 
         activePlayerCardPanel = new TransparentPanel();
 
@@ -179,8 +157,6 @@ public class Game extends JFrame {
         componentHolder.setPreferredSize(new Dimension(MAX_COMPONENT_X, MAX_COMPONENT_Y));
         componentHolder.add(southPanel, BorderLayout.SOUTH);
         componentHolder.add(tablePanel, BorderLayout.NORTH);
-
-        ScaledBackground background = new ScaledBackground(bgSrc, xSize + 120, ySize + 120, new FlowLayout());
 
         background.add(componentHolder);
 

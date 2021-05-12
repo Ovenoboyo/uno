@@ -56,12 +56,12 @@ public class Constants {
         return assets;
     }
 
-    public static Path getAsset(Path assetName) {
-        Path file = Paths.get(getAssetsDirectory().toString(), assetName.toString());
+    public static String getAsset(String assetName) {
+        Path file = Paths.get(getAssetsDirectory().toString(), assetName);
         if (!Files.exists(file)) {
             System.out.println("Asset " + assetName + " not found");
             System.exit(ASSET_NOT_FOUND_ERR);
         }
-        return file;
+        return file.toString();
     }
 }
