@@ -1,11 +1,11 @@
 package com.unoapp.uno;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.awt.GraphicsEnvironment;
-import java.awt.Font;
-import java.awt.FontFormatException;
 
 import com.unoapp.uno.ui.screens.PlayerSelection;
 import com.unoapp.uno.utils.Constants;
@@ -40,9 +40,5 @@ public class Application {
 		File proxima = new File(Constants.getAsset("ProximaNova-Bold.otf"));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, gilmer));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proxima));
-
-		// for (Font f : ge.getAllFonts()) {
-		// 	System.out.println(f.getName());
-		// }
 	}
 }
