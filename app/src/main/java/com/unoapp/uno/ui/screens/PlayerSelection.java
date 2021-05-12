@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.ArrowLabel;
+import com.unoapp.uno.ui.components.BackButton;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.PersonIcon;
 import com.unoapp.uno.ui.components.RoundedRectangle;
@@ -109,7 +111,7 @@ public class PlayerSelection extends GenericMenuScreen {
         TransparentPanel southPanel = new TransparentPanel(new FlowLayout(FlowLayout.RIGHT));
         RoundedRectangle startButton = new RoundedRectangle(160, 50, 30, new FlowLayout(FlowLayout.LEFT));
         startButton.add(Box.createRigidArea(new Dimension(15, 40)));
-        startButton.add(new SmoothText("Play", Color.BLACK));
+        startButton.add(new SmoothText("Play", Color.BLACK, Constants.ProximaNovaBold.deriveFont(28f)));
         startButton.add(Box.createHorizontalStrut(5));
         startButton.add(new ArrowLabel(0.6, Color.BLACK));
 
@@ -120,9 +122,14 @@ public class PlayerSelection extends GenericMenuScreen {
             }
         });
 
+        TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
+        northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
+        northPanel.add(new BackButton(0.8, Constants.ProximaNovaBold));
+
         southPanel.add(startButton);
         southPanel.add(Box.createRigidArea(new Dimension(30, 100)));
         background.add(southPanel, BorderLayout.SOUTH);
+        background.add(northPanel, BorderLayout.NORTH);
 
         pack();
 
@@ -149,9 +156,10 @@ public class PlayerSelection extends GenericMenuScreen {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText arrowL = new SmoothText("<", Color.BLACK);
-        SmoothText arrowR = new SmoothText(">", Color.BLACK);
-        SmoothText text = new SmoothText(players.get(frameIndices[index]).getName(), Color.BLACK);
+        SmoothText arrowL = new SmoothText("<", Color.BLACK, Constants.ProximaNovaBold);
+        SmoothText arrowR = new SmoothText(">", Color.BLACK, Constants.ProximaNovaBold);
+        SmoothText text = new SmoothText(players.get(frameIndices[index]).getName(), Color.BLACK,
+                Constants.ProximaNovaBold.deriveFont(28f));
 
         arrowR.addMouseListener(new IArrowMouseListener(text, index, true));
         arrowL.addMouseListener(new IArrowMouseListener(text, index, false));

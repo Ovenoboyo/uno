@@ -1,7 +1,11 @@
 package com.unoapp.uno;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.awt.GraphicsEnvironment;
+import java.awt.Font;
+import java.awt.FontFormatException;
 
 import com.unoapp.uno.ui.screens.PlayerSelection;
 import com.unoapp.uno.utils.Constants;
@@ -19,27 +23,26 @@ public class Application {
 		}
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new PlayerSelection().setVisible(true);
-				// try {
-				// 	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				// 	System.out.println(new File(".").getCanonicalPath());
-				// 	File file = new File("assets/gilmer_heavy.otf");
-				// 	if (!file.exists()) {
-				// 		file = new File("runtime/bin/assets/gilmer_heavy.otf");
-				// 	}
+				try {
+					registerFont();
+					new PlayerSelection().setVisible(true);
 
-				// 	String filePath = "assets/bg.png";
-				// 	File bg = new File(filePath);
-				// 	if (!bg.exists()) {
-				// 		filePath = "runtime/bin/assets/bg.png";
-				// 	}
-				// 	ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
-				// 	new Game(filePath).setVisible(true);
-
-				// } catch (IOException | FontFormatException e) {
-				// 	e.printStackTrace();
-				// }
+				} catch (FontFormatException | IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
+	}
+
+	private static void registerFont() throws FontFormatException, IOException {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		File gilmer = new File(Constants.getAsset("gilmer_heavy.otf"));
+		File proxima = new File(Constants.getAsset("ProximaNova-Bold.otf"));
+		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, gilmer));
+		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proxima));
+
+		// for (Font f : ge.getAllFonts()) {
+		// 	System.out.println(f.getName());
+		// }
 	}
 }

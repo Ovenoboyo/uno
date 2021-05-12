@@ -2,7 +2,6 @@ package com.unoapp.uno.ui.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -43,7 +42,7 @@ public class PlayerOrder extends JPanel {
             }
         }
         this.str = str;
-        setFont(new Font("Gilmer Heavy", Font.PLAIN, 36));
+        setFont(Constants.GilmerHeavy);
     }
 
     @Override

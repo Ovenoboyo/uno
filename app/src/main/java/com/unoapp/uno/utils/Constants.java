@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.awt.Font;
+
 public class Constants {
     /**
      * Enum to hold all possible colors for cards
@@ -64,4 +66,8 @@ public class Constants {
         }
         return file.toString();
     }
+
+    public static Font ProximaNovaBold = new Font("Proxima Nova Bold", Font.PLAIN, 36);
+    public static Font GilmerHeavy = new Font("Gilmer Heavy", Font.PLAIN, 36);
+
 }

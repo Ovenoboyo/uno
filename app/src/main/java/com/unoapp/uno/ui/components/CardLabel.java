@@ -41,9 +41,9 @@ public class CardLabel extends JPanel {
     private final int width = 168;
     private final int height = 267;
 
-    private final Font small = new Font("Gilmer Heavy", Font.PLAIN, 36);
-    private final Font reverse = new Font("Gilmer Heavy", Font.PLAIN, -36);
-    private final Font big = new Font("Gilmer Heavy", Font.PLAIN, 82);
+    private final Font small = Constants.GilmerHeavy;
+    private final Font reverse = Constants.GilmerHeavy.deriveFont(-36);
+    private final Font big = Constants.GilmerHeavy.deriveFont(82);
 
     public CardLabel(Card card, Boolean disabled, onClickListener mClickListener) {
         this.color = card.getColor();

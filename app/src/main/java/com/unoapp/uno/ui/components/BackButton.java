@@ -8,19 +8,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import javax.swing.JPanel;
+import com.unoapp.uno.ui.drawables.FancyArrow;
 
-public class SmoothText extends JPanel {
-    private String str;
-    private Color color;
+public class BackButton extends TransparentPanel {
+    private Double scale;
     private Font font;
 
-    public SmoothText(String str, Color color, Font font) {
-        this.str = str;
-        this.color = color;
+    public BackButton(Double scale, Font font) {
+        this.scale = scale;
         this.font = font;
-
-        setOpaque(false);
     }
 
     @Override
@@ -28,13 +24,8 @@ public class SmoothText extends JPanel {
         Graphics g = getGraphics();
         g.setFont(font);
         FontMetrics met = g.getFontMetrics();
-        return new Dimension(met.stringWidth(str), met.getHeight());
-    }
-
-    public void setText(String str) {
-        this.str = str;
-        repaint();
-        revalidate();
+        return new Dimension(met.stringWidth("Back") + FancyArrow.getIconWidth() + 30,
+                Math.max(met.getHeight(), FancyArrow.getIconHeight()));
     }
 
     @Override
@@ -48,8 +39,13 @@ public class SmoothText extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-        g2d.setColor(this.color);
-        g2d.drawString(str, 0, font.getSize());
-    }
+        g2d.scale(scale, scale);
 
+        FancyArrow.paint(g2d);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Back", FancyArrow.getIconWidth() + 15,
+                (font.getSize() / 2 + FancyArrow.getIconHeight() / 2) - 5);
+
+    }
 }

@@ -53,7 +53,7 @@ public class TitleScreen extends GenericMenuScreen {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText text = new SmoothText(labelText, Color.WHITE);
+        SmoothText text = new SmoothText(labelText, Color.WHITE, Constants.ProximaNovaBold);
         textPanel.add(text);
 
         RoundedRectangle playButton = new RoundedRectangle(200, 200, 80);
