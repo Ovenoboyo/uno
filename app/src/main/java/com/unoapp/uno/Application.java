@@ -1,18 +1,11 @@
 package com.unoapp.uno;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.FontFormatException;
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import com.unoapp.uno.utils.Constants;
-import com.unoapp.uno.utils.Database;
-import com.unoapp.uno.utils.Database.DBNotInitializedException;
-import com.unoapp.uno.models.PlayerInfo;
-import com.unoapp.uno.ui.screens.Game;
 import com.unoapp.uno.ui.screens.PlayerSelection;
+import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Database.DBNotInitializedException;
 
 public class Application {
 	public static void main(String[] args) {

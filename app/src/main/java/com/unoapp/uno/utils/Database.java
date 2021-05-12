@@ -101,5 +101,22 @@ public class Database {
         DBNotInitializedException() {
             super("Database not initialized");
         }
+
+    }
+
+    public static void createNewTable() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:/mnt/d/test/database.db";
+
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS achievments (\n" + " id integer PRIMARY KEY,\n"
+                + "	games_played integer,\n" + "	games_won integer,\n" + "	games_lost integer\n" + ");";
+
+        try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
