@@ -1,5 +1,6 @@
 module:mainModule
 com.unoapp.uno
+com.unoapp.uno.abstracts
 com.unoapp.uno.engine
 com.unoapp.uno.models
 com.unoapp.uno.ui.components
