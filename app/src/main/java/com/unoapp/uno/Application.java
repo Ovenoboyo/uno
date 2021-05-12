@@ -17,21 +17,20 @@ public class Application {
 			Constants.dbConnection.connect();
 			Constants.dbConnection.migrate();
 
+			java.awt.EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						registerFont();
+						new PlayerSelection().setVisible(true);
+					} catch (FontFormatException | IOException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+
 		} catch (IOException | SQLException | DBNotInitializedException e) {
 			e.printStackTrace();
-			return;
 		}
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					registerFont();
-					new PlayerSelection().setVisible(true);
-
-				} catch (FontFormatException | IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	private static void registerFont() throws FontFormatException, IOException {

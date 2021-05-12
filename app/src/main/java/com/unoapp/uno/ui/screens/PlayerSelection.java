@@ -19,13 +19,13 @@ import javax.swing.JTextField;
 
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
-import com.unoapp.uno.ui.components.ArrowLabel;
 import com.unoapp.uno.ui.components.BackButton;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.PersonIcon;
 import com.unoapp.uno.ui.components.RoundedRectangle;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
+import com.unoapp.uno.ui.components.StartLabel;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.utils.Constants;
 
@@ -108,11 +108,9 @@ public class PlayerSelection extends GenericMenuScreen {
         background.add(mainPanel, BorderLayout.CENTER);
 
         TransparentPanel southPanel = new TransparentPanel(new FlowLayout(FlowLayout.RIGHT));
-        RoundedRectangle startButton = new RoundedRectangle(160, 50, 30, new FlowLayout(FlowLayout.LEFT));
-        startButton.add(Box.createRigidArea(new Dimension(15, 40)));
-        startButton.add(new SmoothText("Play", Color.BLACK, Constants.ProximaNovaBold.deriveFont(28f)));
-        startButton.add(Box.createHorizontalStrut(5));
-        startButton.add(new ArrowLabel(0.6, Color.BLACK));
+        TransparentPanel startButton = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
+        startButton.add(Box.createRigidArea(new Dimension(0, 120)));
+        startButton.add(new StartLabel());
 
         startButton.addMouseListener(new MouseClickListener() {
             @Override

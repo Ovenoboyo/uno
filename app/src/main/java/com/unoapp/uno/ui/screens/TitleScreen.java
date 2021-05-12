@@ -1,6 +1,6 @@
 package com.unoapp.uno.ui.screens;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -53,19 +53,20 @@ public class TitleScreen extends GenericMenuScreen {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText text = new SmoothText(labelText, Color.WHITE, Constants.ProximaNovaBold);
+        SmoothText text = new SmoothText(labelText, Constants.getColor(Constants.Color.RED, false),
+                Constants.ProximaNovaBold.deriveFont(26f));
         textPanel.add(text);
+        textPanel.add(Box.createVerticalStrut(100));
 
-        RoundedRectangle playButton = new RoundedRectangle(200, 200, 80);
-        playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
+        RoundedRectangle playButton = new RoundedRectangle(280, 280, 80, new BorderLayout());
+        // playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
         TransparentPanel label = new TransparentPanel();
         label.add(new ScaledBackground(iconSrc, iconWidth, iconHeight, new FlowLayout()));
-        playButton.add(Box.createVerticalGlue());
-        playButton.add(Box.createHorizontalStrut(iconHeight / 2));
-        playButton.add(label);
-        playButton.add(Box.createVerticalGlue());
+        // playButton.add(Box.createVerticalGlue());
+        playButton.add(Box.createVerticalStrut(40), BorderLayout.NORTH);
+        playButton.add(label, BorderLayout.CENTER);
+        playButton.add(textPanel, BorderLayout.SOUTH);
 
-        mainPanel.add(textPanel);
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(playButton);
 
