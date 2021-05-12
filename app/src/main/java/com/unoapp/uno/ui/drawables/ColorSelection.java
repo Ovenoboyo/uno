@@ -1,7 +1,10 @@
 package com.unoapp.uno.ui.drawables;
 
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Arc2D;
 
 public class ColorSelection {
     private static double[] getQuadrantTranslation(int quadrant, boolean expanded, int expandedSize, int normalSize) {

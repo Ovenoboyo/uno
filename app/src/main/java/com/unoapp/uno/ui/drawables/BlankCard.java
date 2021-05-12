@@ -1,8 +1,13 @@
 package com.unoapp.uno.ui.drawables;
 
-import java.awt.*;
-import java.awt.geom.*;
-import static java.awt.Color.*;
+import static java.awt.Color.WHITE;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.RoundRectangle2D;
 
 /**
  * This class has been automatically generated using

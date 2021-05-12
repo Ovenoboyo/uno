@@ -1,8 +1,13 @@
 package com.unoapp.uno.ui.drawables;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 

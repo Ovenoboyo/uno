@@ -1,7 +1,9 @@
 package com.unoapp.uno.ui.drawables;
 
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
 
 /**
  * This class has been automatically generated using

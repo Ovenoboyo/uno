@@ -1,24 +1,23 @@
 package com.unoapp.uno.ui.screens;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.unoapp.uno.engine.GameController;
 import com.unoapp.uno.engine.GameController.IGameController;
@@ -29,8 +28,8 @@ import com.unoapp.uno.ui.components.CardLabel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
 import com.unoapp.uno.ui.components.LastPlayedComponent;
-import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.PlayerOrder;
+import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.drawables.Deck;
 import com.unoapp.uno.utils.Constants;

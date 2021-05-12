@@ -1,25 +1,23 @@
 package com.unoapp.uno.ui.components;
 
-import java.awt.Graphics;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
-
-import java.awt.event.WindowEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
 
 import com.unoapp.uno.ui.drawables.ColorSelection;
 import com.unoapp.uno.utils.Constants;
-
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 
 public class ColorSelectionDialog extends JDialog {
     private JPanel global = new JPanel();
