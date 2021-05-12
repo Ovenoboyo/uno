@@ -1,5 +1,9 @@
 package com.unoapp.uno.utils;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Constants {
     /**
      * Enum to hold all possible colors for cards
@@ -13,6 +17,8 @@ public class Constants {
     public static final int DRAW2 = 12;
     public static final int WILD = 13;
     public static final int DRAWFOUR = 14;
+
+    public static final Database dbConnection = new Database();
 
     /**
      * Get a color from predefined java.awt.Color
@@ -38,5 +44,24 @@ public class Constants {
                 return new java.awt.Color(36, 39, 41);
         }
         return null;
+    }
+
+    public static int ASSET_NOT_FOUND_ERR = -2;
+
+    public static Path getAssetsDirectory() {
+        Path assets = Paths.get("assets");
+        if (!Files.exists(assets)) {
+            assets = Paths.get("runtime", "bin", "assets");
+        }
+        return assets;
+    }
+
+    public static Path getAsset(Path assetName) {
+        Path file = Paths.get(getAssetsDirectory().toString(), assetName.toString());
+        if (!Files.exists(file)) {
+            System.out.println("Asset " + assetName + " not found");
+            System.exit(ASSET_NOT_FOUND_ERR);
+        }
+        return file;
     }
 }

@@ -3,24 +3,24 @@ package com.unoapp.uno.ui.components;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.LayoutManager;
-
 import java.awt.Graphics2D;
+import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 
 public class RoundedRectangle extends TransparentPanel {
 
-    private int width, height;
+    private int width, height, borderRadius;
 
-    public RoundedRectangle(int width, int height) {
+    public RoundedRectangle(int width, int height, int borderRadius) {
         super();
         this.width = width;
         this.height = height;
+        this.borderRadius = borderRadius;
         setPreferredSize(new Dimension(width, height));
     }
 
-    public RoundedRectangle(int width, int height, LayoutManager mgr) {
-        this(width, height);
+    public RoundedRectangle(int width, int height, int borderRadius, LayoutManager mgr) {
+        this(width, height, borderRadius);
         setLayout(mgr);
 
     }
@@ -36,6 +36,6 @@ public class RoundedRectangle extends TransparentPanel {
 
         g2d.setColor(Color.WHITE);
 
-        g2d.fillRoundRect(0, 0, width, height, 80, 80);
+        g2d.fillRoundRect(0, 0, width, height, borderRadius, borderRadius);
     }
 }

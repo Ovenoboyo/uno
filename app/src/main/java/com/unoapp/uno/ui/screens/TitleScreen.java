@@ -2,6 +2,10 @@ package com.unoapp.uno.ui.screens;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -11,12 +15,6 @@ import com.unoapp.uno.ui.components.RoundedRectangle;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TransparentPanel;
-
-import java.awt.FlowLayout;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-
-import java.awt.Toolkit;
 
 public class TitleScreen extends JFrame {
 
@@ -82,7 +80,7 @@ public class TitleScreen extends JFrame {
         SmoothText text = new SmoothText(labelText, Color.WHITE);
         textPanel.add(text);
 
-        RoundedRectangle playButton = new RoundedRectangle(200, 200);
+        RoundedRectangle playButton = new RoundedRectangle(200, 200, 80);
         playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
         TransparentPanel label = new TransparentPanel();
         label.add(new ScaledBackground(iconSrc, iconWidth, iconHeight, new FlowLayout()));
