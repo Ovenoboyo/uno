@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -94,6 +96,21 @@ public class PlayerSelection extends GenericMenuScreen {
         return players;
     }
 
+    private void validatePlayers() throws InvalidPlayersException {
+        for (Integer i : frameIndices) {
+            if (i == -1) {
+                throw new InvalidPlayersException();
+            }
+        }
+
+        Set<Integer> lump = new HashSet<Integer>();
+        for (Integer i : frameIndices) {
+            if (lump.contains(i))
+                throw new InvalidPlayersException();
+            lump.add(i);
+        }
+    }
+
     private void init(String bgSrc) {
         dialog = new CreateUserDialog(this);
 
@@ -131,7 +148,12 @@ public class PlayerSelection extends GenericMenuScreen {
         startButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(new ScreenObject(context, Screens.GAME, getActivePlayers()));
+                try {
+                    validatePlayers();
+                    Application.changeScreen(new ScreenObject(context, Screens.GAME, getActivePlayers()));
+                } catch (InvalidPlayersException e1) {
+                    JOptionPane.showMessageDialog(context, e1.getMessage(), "Error!", JOptionPane.OK_OPTION);
+                }
             }
         });
 
@@ -266,6 +288,12 @@ public class PlayerSelection extends GenericMenuScreen {
             } else {
                 text.setText(players.get(frameIndices[index]).getName());
             }
+        }
+    }
+
+    public class InvalidPlayersException extends Exception {
+        InvalidPlayersException() {
+            super("Players selected are invalid");
         }
     }
 }
