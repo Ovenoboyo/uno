@@ -9,7 +9,11 @@
 			"vscjava.vscode-java-pack",
 			"sohibe.java-generate-setters-getters",
 			"richardwillis.vscode-gradle",
-			"naco-siren.gradle-language"
+			"naco-siren.gradle-language",
+			"aaron-bond.better-comments",
+			"redhat.java",
+			"mtxr.sqltools",
+			"mtxr.sqltools-driver-mysql"
 		]
 	},
 	"settings": {
