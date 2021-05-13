@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
+import java.awt.FlowLayout;
 import java.awt.RenderingHints;
 
 /**
@@ -15,17 +16,20 @@ public class RoundedRectangle extends TransparentPanel {
     private int width, height, borderRadius;
 
     public RoundedRectangle(int width, int height, int borderRadius) {
+        this(width, height, borderRadius, new FlowLayout(), Color.WHITE);
+    }
+
+    public RoundedRectangle(int width, int height, int borderRadius, LayoutManager mgr) {
+        this(width, height, borderRadius, mgr, Color.WHITE);
+    }
+
+    public RoundedRectangle(int width, int height, int borderRadius, LayoutManager mgr, Color color) {
         super();
         this.width = width;
         this.height = height;
         this.borderRadius = borderRadius;
         setPreferredSize(new Dimension(width, height));
-    }
-
-    public RoundedRectangle(int width, int height, int borderRadius, LayoutManager mgr) {
-        this(width, height, borderRadius);
         setLayout(mgr);
-
     }
 
     @Override
