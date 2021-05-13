@@ -22,11 +22,14 @@ import com.unoapp.uno.models.PlayerInfo;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 /**
- *
- * @author sqlitetutorial.net
+ * Basic database operations
+ * 
  */
 public class Database {
 
+    /**
+     * Connection to database
+     */
     private Connection conn;
 
     /**
@@ -39,6 +42,14 @@ public class Database {
         conn = DriverManager.getConnection(url);
     }
 
+    /**
+     * Get path to database
+     * Returns a path in OS's data directory
+     * Maybe user specific
+     * 
+     * @return Path of database
+     * @throws IOException
+     */
     private String getDatabaseFile() throws IOException {
         Path userdata = Paths.get(Paths.get(System.getProperty("user.home")).toAbsolutePath().toString(), "unoapp");
         if (!Files.exists(userdata)) {
@@ -47,6 +58,12 @@ public class Database {
         return Paths.get(userdata.toString(), "userdata.db").toString();
     }
 
+    /**
+     * Carries out migrations specified in assets/migrations
+     * 
+     * @throws DBNotInitializedException if Database is not initialized prior to migration
+     * @throws FileNotFoundException if migration file isn't found
+     */
     public void migrate() throws DBNotInitializedException, FileNotFoundException {
         if (this.conn == null) {
             throw new DBNotInitializedException();
@@ -60,6 +77,11 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves details of all players from database
+     * 
+     * @return ArrayList of PlayerInfo
+     */
     public ArrayList<PlayerInfo> getAllPlayers() {
         ArrayList<PlayerInfo> players = null;
         try {
@@ -74,6 +96,33 @@ public class Database {
         return players;
     }
 
+    /**
+     * Retrieves details of single player
+     * 
+     * @param id ID of player to find
+     * @return PlayerInfo with details of player
+     */
+    public PlayerInfo getSinglePlayer(String id) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM players WHERE id = ?");
+            ResultSet set = stmt.executeQuery();
+            ArrayList<PlayerInfo> info = parseResultSet(set);
+            if (info.size() > 0) {
+                return info.get(0);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Create new player
+     * 
+     * @param name Name of player to be created
+     * @throws SQLException
+     */
     public void createPlayer(String name) throws SQLException {
         PreparedStatement prep = conn.prepareStatement("INSERT INTO players (id, name) VALUES (?, ?)");
         prep.setString(1, UUID.randomUUID().toString());
@@ -83,6 +132,13 @@ public class Database {
         conn.commit();
     }
 
+    /**
+     * Parses result set into ArrayList of PlayerInfo
+     * 
+     * @param set ResultSet retrieved after executing query
+     * @return ArrayList of PlayerInfo
+     * @throws SQLException
+     */
     private ArrayList<PlayerInfo> parseResultSet(ResultSet set) throws SQLException {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         while (set.next()) {
@@ -102,21 +158,5 @@ public class Database {
             super("Database not initialized");
         }
 
-    }
-
-    public static void createNewTable() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:/mnt/d/test/database.db";
-
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS achievments (\n" + " id integer PRIMARY KEY,\n"
-                + "	games_played integer,\n" + "	games_won integer,\n" + "	games_lost integer\n" + ");";
-
-        try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
-            // create a new table
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
