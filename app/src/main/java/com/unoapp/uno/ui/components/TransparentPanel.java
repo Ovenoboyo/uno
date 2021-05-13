@@ -14,8 +14,8 @@ public class TransparentPanel extends JPanel {
         setOpaque(false);
     }
 
-    public TransparentPanel(LayoutManager borderLayout) {
-        super(borderLayout);
+    public TransparentPanel(LayoutManager mgr) {
+        super(mgr);
         setOpaque(false);
     }
 }

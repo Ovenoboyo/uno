@@ -10,6 +10,8 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import com.unoapp.uno.utils.Constants;
+
 /**
  * Generic implementation of anti-aliased text
  */
@@ -24,6 +26,18 @@ public class SmoothText extends JPanel {
         this.font = font;
 
         setOpaque(false);
+    }
+
+    public SmoothText(String str, Color color) {
+        this(str, color, Constants.getProximaInstance(36));
+    }
+
+    public SmoothText(String str, Font font) {
+        this(str, Color.BLACK, font);
+    }
+
+    public SmoothText(String str) {
+        this(str, Color.BLACK, Constants.getProximaInstance(36));
     }
 
     @Override

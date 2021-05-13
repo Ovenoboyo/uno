@@ -81,7 +81,7 @@ public class PlayerSelection extends GenericMenuScreen {
     public PlayerSelection() {
         super();
         getPlayers();
-        init(Constants.getAsset("mainBg.png"));
+        init();
     }
 
     private void getPlayers() {
@@ -91,30 +91,27 @@ public class PlayerSelection extends GenericMenuScreen {
     private ArrayList<PlayerInfo> getActivePlayers() {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         for (Integer i : frameIndices) {
-            players.add(this.players.get(i));
+            if (i > 0)
+                players.add(this.players.get(i));
         }
         return players;
     }
 
     private void validatePlayers() throws InvalidPlayersException {
-        for (Integer i : frameIndices) {
-            if (i == -1) {
-                throw new InvalidPlayersException();
-            }
-        }
 
         Set<Integer> lump = new HashSet<Integer>();
         for (Integer i : frameIndices) {
-            if (lump.contains(i))
+            if (lump.contains(i) || i == -1)
                 throw new InvalidPlayersException();
             lump.add(i);
         }
     }
 
-    private void init(String bgSrc) {
+    private void init() {
         dialog = new CreateUserDialog(this);
 
-        ScaledBackground background = new ScaledBackground(bgSrc, xSize, ySize, new BorderLayout());
+        ScaledBackground background = new ScaledBackground(Constants.getAsset("mainBg.png"), xSize, ySize,
+                new BorderLayout());
         getContentPane().add(background);
 
         TransparentPanel mainPanel = new TransparentPanel();
@@ -212,10 +209,9 @@ public class PlayerSelection extends GenericMenuScreen {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText arrowL = new SmoothText("<", Color.BLACK, Constants.getProximaInstance(36));
-        SmoothText arrowR = new SmoothText(">", Color.BLACK, Constants.getProximaInstance(36));
-        SmoothText text = new SmoothText(players.get(frameIndices[index]).getName(), Color.BLACK,
-                Constants.getProximaInstance(28));
+        SmoothText arrowL = new SmoothText("<");
+        SmoothText arrowR = new SmoothText(">");
+        SmoothText text = new SmoothText(players.get(frameIndices[index]).getName(), Constants.getProximaInstance(28));
 
         arrowR.addMouseListener(new IArrowMouseListener(text, index, true));
         arrowL.addMouseListener(new IArrowMouseListener(text, index, false));
