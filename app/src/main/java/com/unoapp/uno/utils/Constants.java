@@ -66,8 +66,16 @@ public class Constants {
         return file.toString();
     }
 
-    public static Font ProximaNovaBold = new Font("Proxima Nova Bold", Font.PLAIN, 36);
-    public static Font GilmerHeavy = new Font("Gilmer Heavy", Font.PLAIN, 36);
+    private static Font ProximaNovaBold = new Font("Proxima Nova Bold", Font.PLAIN, 36);
+    private static Font GilmerHeavy = new Font("Gilmer Heavy", Font.PLAIN, 36);
+
+    public static Font getProximaInstance(float fontSize) {
+        return ProximaNovaBold.deriveFont(fontSize);
+    }
+
+    public static Font getGilmerInstance(float fontSize) {
+        return GilmerHeavy.deriveFont(fontSize);
+    }
 
     public enum Screens {
         TITLE_SCREEN, PLAYER_SELECT, GAME, EXIT

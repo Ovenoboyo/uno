@@ -6,9 +6,11 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.screens.Game;
 import com.unoapp.uno.ui.screens.PlayerSelection;
 import com.unoapp.uno.ui.screens.TitleScreen;
@@ -26,7 +28,7 @@ public class Application {
 				public void run() {
 					try {
 						registerFont();
-						changeScreen(null, Screens.TITLE_SCREEN);
+						changeScreen(new ScreenObject(Screens.TITLE_SCREEN));
 					} catch (FontFormatException | IOException e) {
 						e.printStackTrace();
 					}
@@ -51,12 +53,12 @@ public class Application {
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proxima));
 	}
 
-	public static void changeScreen(JFrame currentScreen, Constants.Screens screen) {
-		if (currentScreen != null)
-			currentScreen.dispose();
-		switch (screen) {
+	public static void changeScreen(ScreenObject screenObject) {
+		if (screenObject.currentScreen != null)
+			screenObject.currentScreen.dispose();
+		switch (screenObject.screen) {
 			case GAME:
-				new Game().setVisible(true);
+				new Game(screenObject.gameData).setVisible(true);
 				break;
 			case TITLE_SCREEN:
 				new TitleScreen().setVisible(true);
@@ -66,6 +68,26 @@ public class Application {
 				break;
 			case EXIT:
 				System.exit(0);
+		}
+	}
+
+	public static class ScreenObject {
+		Constants.Screens screen;
+		ArrayList<PlayerInfo> gameData;
+		JFrame currentScreen;
+
+		public ScreenObject(Constants.Screens screen) {
+			this.screen = screen;
+		}
+
+		public ScreenObject(JFrame currentScreen, Constants.Screens screen) {
+			this.screen = screen;
+			this.currentScreen = currentScreen;
+		}
+
+		public ScreenObject(JFrame currentScreen, Constants.Screens screen, ArrayList<PlayerInfo> gameData) {
+			this(currentScreen, screen);
+			this.gameData = gameData;
 		}
 	}
 }

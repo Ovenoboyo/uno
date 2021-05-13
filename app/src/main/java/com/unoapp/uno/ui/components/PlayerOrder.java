@@ -46,7 +46,7 @@ public class PlayerOrder extends JPanel {
             }
         }
         this.str = str;
-        setFont(Constants.GilmerHeavy);
+        setFont(Constants.getGilmerInstance(36f));
     }
 
     @Override

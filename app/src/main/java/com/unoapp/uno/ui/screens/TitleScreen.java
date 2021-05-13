@@ -9,6 +9,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import com.unoapp.uno.Application;
+import com.unoapp.uno.Application.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.abstracts.onClickListener;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
@@ -41,12 +42,12 @@ public class TitleScreen extends GenericMenuScreen {
 
         // Play button
         buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124,
-                () -> Application.changeScreen(this, Screens.PLAYER_SELECT)));
+                () -> Application.changeScreen(new ScreenObject(this, Screens.PLAYER_SELECT))));
         buttonPanel.add(Box.createHorizontalStrut(80));
 
         // Settings button
         buttonPanel.add(createPanel("Settings", Constants.getAsset("gear.png"), 123, 123,
-                () -> Application.changeScreen(this, Screens.EXIT)));
+                () -> Application.changeScreen(new ScreenObject(this, Screens.EXIT))));
         buttonPanel.add(Box.createHorizontalStrut(80));
 
         // Quit button
@@ -85,15 +86,13 @@ public class TitleScreen extends GenericMenuScreen {
 
         TransparentPanel textPanel = new TransparentPanel();
         SmoothText text = new SmoothText(labelText, Constants.getColor(Constants.Color.RED, false),
-                Constants.ProximaNovaBold.deriveFont(26f));
+                Constants.getProximaInstance(26));
         textPanel.add(text);
         textPanel.add(Box.createVerticalStrut(100));
 
         RoundedRectangle playButton = new RoundedRectangle(280, 280, 80, new BorderLayout());
-        // playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
         TransparentPanel label = new TransparentPanel();
         label.add(new ScaledBackground(iconSrc, iconWidth, iconHeight, new FlowLayout()));
-        // playButton.add(Box.createVerticalGlue());
         playButton.add(Box.createVerticalStrut(40), BorderLayout.NORTH);
         playButton.add(label, BorderLayout.CENTER);
         playButton.add(textPanel, BorderLayout.SOUTH);

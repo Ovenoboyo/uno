@@ -20,6 +20,7 @@ import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.models.Player;
+import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.CardPanel;
 import com.unoapp.uno.ui.components.ColorSelectionDialog;
 import com.unoapp.uno.ui.components.CustomCardDialog;
@@ -52,20 +53,27 @@ public class Game extends GenericMenuScreen {
      * Default constructor
      * 
      */
-    public Game() {
+    public Game(ArrayList<PlayerInfo> players) {
         customDialog = new CustomCardDialog();
+        init(players);
+    }
 
-        init();
+    private ArrayList<Player> populatePlayers(ArrayList<PlayerInfo> playerInfos) {
+        ArrayList<Player> players = new ArrayList<>();
+        for (PlayerInfo p : playerInfos) {
+            players.add(new Player(p.getName()));
+        }
+        return players;
     }
 
     /**
      * Initialize game screen
      */
-    private void init() {
+    private void init(ArrayList<PlayerInfo> players) {
         generateUIComponents();
 
         // Initialize game controller after UI has been generated
-        initializeController();
+        initializeController(populatePlayers(players));
         controller.startGameLoop();
     }
 
@@ -206,8 +214,8 @@ public class Game extends GenericMenuScreen {
     /**
      * Initialize controller to handle game loop
      */
-    private void initializeController() {
-        this.controller = new GameController(new IGameController() {
+    private void initializeController(ArrayList<Player> players) {
+        this.controller = new GameController(players, new IGameController() {
             @Override
             public void turnEndCallback() {
                 refreshUI();

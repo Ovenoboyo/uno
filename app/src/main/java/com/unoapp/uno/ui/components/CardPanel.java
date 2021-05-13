@@ -45,9 +45,9 @@ public class CardPanel extends JPanel {
     private final int width = 168;
     private final int height = 267;
 
-    private final Font small = Constants.GilmerHeavy;
-    private final Font reverse = Constants.GilmerHeavy.deriveFont(-36f);
-    private final Font big = Constants.GilmerHeavy.deriveFont(82f);
+    private final Font small = Constants.getGilmerInstance(36);
+    private final Font reverse = Constants.getGilmerInstance(-36);
+    private final Font big = Constants.getGilmerInstance(82);
 
     /**
      * Constructor to generate card

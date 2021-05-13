@@ -12,7 +12,7 @@ import com.unoapp.uno.utils.Constants;
  * Controller to handle logic of game
  */
 public class GameController {
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> players;
     private IGameController mGameController;
 
     private Deck deck = new Deck();
@@ -31,11 +31,10 @@ public class GameController {
      * Constructor for GameController
      * @param mGameController Interface for various events emmited by controller 
      */
-    public GameController(IGameController mGameController) {
+    public GameController(ArrayList<Player> players, IGameController mGameController) {
         this.mGameController = mGameController;
-        // Add 2 players
-        for (int i = 0; i < 3; i++)
-            this.players.add(new Player("Player " + i));
+        this.players = players;
+
         populatePlayerCards();
 
         // Play one card initially

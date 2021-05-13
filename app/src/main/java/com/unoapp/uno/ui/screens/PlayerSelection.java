@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.unoapp.uno.Application;
+import com.unoapp.uno.Application.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.BackButton;
@@ -85,6 +86,14 @@ public class PlayerSelection extends GenericMenuScreen {
         players = Constants.dbConnection.getAllPlayers();
     }
 
+    private ArrayList<PlayerInfo> getActivePlayers() {
+        ArrayList<PlayerInfo> players = new ArrayList<>();
+        for (Integer i : frameIndices) {
+            players.add(this.players.get(i));
+        }
+        return players;
+    }
+
     private void init(String bgSrc) {
         dialog = new CreateUserDialog(this);
 
@@ -122,17 +131,17 @@ public class PlayerSelection extends GenericMenuScreen {
         startButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(context, Screens.GAME);
+                Application.changeScreen(new ScreenObject(context, Screens.GAME, getActivePlayers()));
             }
         });
 
         TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
         northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
-        BackButton backButton = new BackButton(0.8, Constants.ProximaNovaBold);
+        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36));
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(context, Screens.TITLE_SCREEN);
+                Application.changeScreen(new ScreenObject(context, Screens.TITLE_SCREEN));
             }
         });
         northPanel.add(backButton);
@@ -181,10 +190,10 @@ public class PlayerSelection extends GenericMenuScreen {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText arrowL = new SmoothText("<", Color.BLACK, Constants.ProximaNovaBold);
-        SmoothText arrowR = new SmoothText(">", Color.BLACK, Constants.ProximaNovaBold);
+        SmoothText arrowL = new SmoothText("<", Color.BLACK, Constants.getProximaInstance(36));
+        SmoothText arrowR = new SmoothText(">", Color.BLACK, Constants.getProximaInstance(36));
         SmoothText text = new SmoothText(players.get(frameIndices[index]).getName(), Color.BLACK,
-                Constants.ProximaNovaBold.deriveFont(28f));
+                Constants.getProximaInstance(28));
 
         arrowR.addMouseListener(new IArrowMouseListener(text, index, true));
         arrowL.addMouseListener(new IArrowMouseListener(text, index, false));
@@ -196,8 +205,10 @@ public class PlayerSelection extends GenericMenuScreen {
 
         RoundedRectangle playButton = new RoundedRectangle(375, 375, 80);
         playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
+
         TransparentPanel label = new TransparentPanel();
         label.add(new PersonIcon(color));
+
         playButton.add(Box.createVerticalGlue());
         playButton.add(Box.createHorizontalStrut(135 / 2));
         playButton.add(label);
