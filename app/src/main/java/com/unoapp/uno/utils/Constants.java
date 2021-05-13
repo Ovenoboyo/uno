@@ -69,4 +69,8 @@ public class Constants {
     public static Font ProximaNovaBold = new Font("Proxima Nova Bold", Font.PLAIN, 36);
     public static Font GilmerHeavy = new Font("Gilmer Heavy", Font.PLAIN, 36);
 
+    public enum Screens {
+        TITLE_SCREEN, PLAYER_SELECT, GAME, EXIT
+    }
+
 }

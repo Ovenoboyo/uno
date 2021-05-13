@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.unoapp.uno.Application;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.BackButton;
@@ -28,11 +29,14 @@ import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.StartLabel;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Constants.Screens;
 
 /**
  * Screen where players will be choosen
  */
 public class PlayerSelection extends GenericMenuScreen {
+    private final GenericMenuScreen context = this;
+
     private final class CreateUserDialog {
         private JPanel panel;
         private JTextField nameField;
@@ -118,13 +122,20 @@ public class PlayerSelection extends GenericMenuScreen {
         startButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO: Change Screens
+                Application.changeScreen(context, Screens.GAME);
             }
         });
 
         TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
         northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
-        northPanel.add(new BackButton(0.8, Constants.ProximaNovaBold));
+        BackButton backButton = new BackButton(0.8, Constants.ProximaNovaBold);
+        backButton.addMouseListener(new MouseClickListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Application.changeScreen(context, Screens.TITLE_SCREEN);
+            }
+        });
+        northPanel.add(backButton);
 
         southPanel.add(startButton);
         southPanel.add(Box.createRigidArea(new Dimension(30, 100)));

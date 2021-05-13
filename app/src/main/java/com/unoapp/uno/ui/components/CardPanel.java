@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import com.unoapp.uno.abstracts.onClickListener;
 import com.unoapp.uno.models.Card;
 import com.unoapp.uno.ui.drawables.BlankCard;
 import com.unoapp.uno.ui.drawables.DrawFour;
@@ -45,8 +46,8 @@ public class CardPanel extends JPanel {
     private final int height = 267;
 
     private final Font small = Constants.GilmerHeavy;
-    private final Font reverse = Constants.GilmerHeavy.deriveFont(-36);
-    private final Font big = Constants.GilmerHeavy.deriveFont(82);
+    private final Font reverse = Constants.GilmerHeavy.deriveFont(-36f);
+    private final Font big = Constants.GilmerHeavy.deriveFont(82f);
 
     /**
      * Constructor to generate card
@@ -67,7 +68,7 @@ public class CardPanel extends JPanel {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent arg0) {
-                mClickListener.onClicked();
+                mClickListener.onClick();
             }
 
             @Override
@@ -260,9 +261,5 @@ public class CardPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.paintManually(g);
-    }
-
-    public interface onClickListener {
-        void onClicked();
     }
 }

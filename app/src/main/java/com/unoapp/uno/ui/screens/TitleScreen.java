@@ -3,16 +3,21 @@ package com.unoapp.uno.ui.screens;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import com.unoapp.uno.Application;
+import com.unoapp.uno.abstracts.MouseClickListener;
+import com.unoapp.uno.abstracts.onClickListener;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.RoundedRectangle;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Constants.Screens;
 
 /**
  * Title screen 
@@ -34,11 +39,18 @@ public class TitleScreen extends GenericMenuScreen {
 
         TransparentPanel buttonPanel = new TransparentPanel();
 
-        buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124));
+        // Play button
+        buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124,
+                () -> Application.changeScreen(this, Screens.PLAYER_SELECT)));
         buttonPanel.add(Box.createHorizontalStrut(80));
-        buttonPanel.add(createPanel("Settings", Constants.getAsset("gear.png"), 123, 123));
+
+        // Settings button
+        buttonPanel.add(createPanel("Settings", Constants.getAsset("gear.png"), 123, 123,
+                () -> Application.changeScreen(this, Screens.EXIT)));
         buttonPanel.add(Box.createHorizontalStrut(80));
-        buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144));
+
+        // Quit button
+        buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144, () -> System.exit(0)));
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(Box.createVerticalGlue());
@@ -60,9 +72,16 @@ public class TitleScreen extends GenericMenuScreen {
      * @param iconHeight height of icon
      * @return panel with label and icon
      */
-    private TransparentPanel createPanel(String labelText, String iconSrc, int iconWidth, int iconHeight) {
+    private TransparentPanel createPanel(String labelText, String iconSrc, int iconWidth, int iconHeight,
+            onClickListener listener) {
         TransparentPanel mainPanel = new TransparentPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.addMouseListener(new MouseClickListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                listener.onClick();
+            }
+        });
 
         TransparentPanel textPanel = new TransparentPanel();
         SmoothText text = new SmoothText(labelText, Constants.getColor(Constants.Color.RED, false),

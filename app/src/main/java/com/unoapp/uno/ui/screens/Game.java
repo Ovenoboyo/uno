@@ -52,17 +52,17 @@ public class Game extends GenericMenuScreen {
      * Default constructor
      * 
      */
-    public Game(String bgSrc) {
+    public Game() {
         customDialog = new CustomCardDialog();
 
-        init(bgSrc);
+        init();
     }
 
     /**
      * Initialize game screen
      */
-    private void init(String bgSrc) {
-        generateUIComponents(bgSrc);
+    private void init() {
+        generateUIComponents();
 
         // Initialize game controller after UI has been generated
         initializeController();
@@ -129,8 +129,8 @@ public class Game extends GenericMenuScreen {
     /**
      * Generate all the UI required for game screen
      */
-    private void generateUIComponents(String bgSrc) {
-        ScaledBackground background = new ScaledBackground(bgSrc, xSize, ySize);
+    private void generateUIComponents() {
+        ScaledBackground background = new ScaledBackground(Constants.getAsset("bg.png"), xSize, ySize);
 
         activePlayerCardPanel = new TransparentPanel();
 
