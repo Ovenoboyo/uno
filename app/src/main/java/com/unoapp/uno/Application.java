@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import com.unoapp.uno.models.PlayerInfo;
+import com.unoapp.uno.ui.screens.Achievement;
 import com.unoapp.uno.ui.screens.Game;
 import com.unoapp.uno.ui.screens.PlayerSelection;
 import com.unoapp.uno.ui.screens.TitleScreen;
@@ -28,7 +29,7 @@ public class Application {
 				public void run() {
 					try {
 						registerFont();
-						changeScreen(new ScreenObject(Screens.TITLE_SCREEN));
+						changeScreen(new ScreenObject(Screens.ACHIEVEMENT));
 					} catch (FontFormatException | IOException e) {
 						e.printStackTrace();
 					}
@@ -65,6 +66,9 @@ public class Application {
 				break;
 			case PLAYER_SELECT:
 				new PlayerSelection().setVisible(true);
+				break;
+			case ACHIEVEMENT:
+				new Achievement().setVisible(true);
 				break;
 			case EXIT:
 				System.exit(0);

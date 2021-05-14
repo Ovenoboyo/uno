@@ -78,7 +78,7 @@ public class Constants {
     }
 
     public enum Screens {
-        TITLE_SCREEN, PLAYER_SELECT, GAME, EXIT
+        TITLE_SCREEN, PLAYER_SELECT, GAME, ACHIEVEMENT, EXIT
     }
 
 }
