@@ -90,7 +90,7 @@ public class PlayerSelection extends GenericMenuScreen {
     private ArrayList<PlayerInfo> getActivePlayers() {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         for (Integer i : frameIndices) {
-            if (i > 0)
+            if (i > -1)
                 players.add(this.players.get(i));
         }
         return players;
