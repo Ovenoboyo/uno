@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS achievements (
+    id VARCHAR(36) PRIMARY KEY NOT NULL,
+    title TEXT NOT NULL,
+    type TEXT NOT NULL,
+    total INTEGER DEFAULT 1
+);
