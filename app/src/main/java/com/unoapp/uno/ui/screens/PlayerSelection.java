@@ -87,20 +87,22 @@ public class PlayerSelection extends GenericMenuScreen {
         players = Constants.dbConnection.getAllPlayers();
     }
 
-    private ArrayList<PlayerInfo> getActivePlayers() {
+    private ArrayList<PlayerInfo> getActivePlayers() throws InvalidPlayersException {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         for (Integer i : frameIndices) {
             if (i > -1)
                 players.add(this.players.get(i));
         }
+        if (players.size() < 2) {
+            throw new InvalidPlayersException();
+        }
         return players;
     }
 
     private void validatePlayers() throws InvalidPlayersException {
-
         Set<Integer> lump = new HashSet<Integer>();
         for (Integer i : frameIndices) {
-            if (lump.contains(i) || i == -1)
+            if (i != -1 && lump.contains(i))
                 throw new InvalidPlayersException();
             lump.add(i);
         }
@@ -210,7 +212,9 @@ public class PlayerSelection extends GenericMenuScreen {
         TransparentPanel textPanel = new TransparentPanel();
         SmoothText arrowL = new SmoothText("<");
         SmoothText arrowR = new SmoothText(">");
-        SmoothText text = new SmoothText(players.get(frameIndices[index]).getName(), Constants.getProximaInstance(28));
+        SmoothText text = new SmoothText(
+                frameIndices[index] >= 0 ? players.get(frameIndices[index]).getName() : "Create New",
+                Constants.getProximaInstance(28));
 
         arrowR.addMouseListener(new IArrowMouseListener(text, index, true));
         arrowL.addMouseListener(new IArrowMouseListener(text, index, false));
