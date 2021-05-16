@@ -66,7 +66,7 @@ public class SmoothText extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         g2d.setColor(this.color);
-        g2d.drawString(str, 0, font.getSize());
+        g2d.drawString(str, 0, font.getSize() * 3 / 4);
     }
 
 }

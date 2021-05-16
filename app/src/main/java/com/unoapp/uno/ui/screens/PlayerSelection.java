@@ -1,6 +1,7 @@
 package com.unoapp.uno.ui.screens;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -30,6 +31,7 @@ import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.StartLabel;
 import com.unoapp.uno.ui.components.TransparentPanel;
+import com.unoapp.uno.ui.components.TriangleArrow;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
 
@@ -41,6 +43,7 @@ public class PlayerSelection extends GenericMenuScreen {
 
     private final class CreateUserDialog {
         private JPanel panel;
+        JLabel label;
         private JTextField nameField;
         private Component parent;
 
@@ -50,21 +53,37 @@ public class PlayerSelection extends GenericMenuScreen {
         }
 
         private void init() {
+            label = new JLabel();
+            label.setForeground(Color.RED);
             nameField = new JTextField();
             panel = new JPanel(new GridLayout(0, 1));
             panel.add(new JLabel("Player name:"));
             panel.add(nameField);
+            panel.add(label);
         }
 
-        private void showDialog() {
+        private Boolean validate() {
+            return (nameField.getText().length() <= 15);
+        }
+
+        private void showDialog(String errorString) {
+            if (errorString != null) {
+                label.setText(errorString);
+            }
+
             int result = JOptionPane.showOptionDialog(parent, panel, "Create new player", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, new String[] { "Create", "Cancel" }, "Create");
             if (result == JOptionPane.OK_OPTION) {
-                try {
-                    Constants.dbConnection.createPlayer(nameField.getText());
-                    getPlayers();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                label.setText("");
+                if (validate()) {
+                    try {
+                        Constants.dbConnection.createPlayer(nameField.getText());
+                        getPlayers();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    showDialog("Character length should be less than 15!");
                 }
             }
         }
@@ -209,20 +228,26 @@ public class PlayerSelection extends GenericMenuScreen {
         TransparentPanel mainPanel = new TransparentPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
-        TransparentPanel textPanel = new TransparentPanel();
-        SmoothText arrowL = new SmoothText("<");
-        SmoothText arrowR = new SmoothText(">");
+        TransparentPanel textHolder = new TransparentPanel();
+        TransparentPanel textPanel = new TransparentPanel(new BorderLayout(), new Dimension(375 - 100, 30));
+        TriangleArrow arrowL = new TriangleArrow(true, color);
+        TriangleArrow arrowR = new TriangleArrow(false, color);
         SmoothText text = new SmoothText(
                 frameIndices[index] >= 0 ? players.get(frameIndices[index]).getName() : "Create New",
                 Constants.getProximaInstance(28));
+
+        TransparentPanel playerNameHolder = new TransparentPanel();
+        playerNameHolder.add(text);
 
         arrowR.addMouseListener(new IArrowMouseListener(text, index, true));
         arrowL.addMouseListener(new IArrowMouseListener(text, index, false));
         text.addMouseListener(new ITextMouseClickListener(index));
 
-        textPanel.add(arrowL);
-        textPanel.add(text);
-        textPanel.add(arrowR);
+        textPanel.add(arrowL, BorderLayout.WEST);
+        textPanel.add(playerNameHolder, BorderLayout.CENTER);
+        textPanel.add(arrowR, BorderLayout.EAST);
+
+        textHolder.add(textPanel);
 
         RoundedRectangle playButton = new RoundedRectangle(375, 375, 80);
         playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
@@ -233,7 +258,7 @@ public class PlayerSelection extends GenericMenuScreen {
         playButton.add(Box.createVerticalGlue());
         playButton.add(Box.createHorizontalStrut(135 / 2));
         playButton.add(label);
-        playButton.add(textPanel);
+        playButton.add(textHolder);
         playButton.add(Box.createVerticalGlue());
 
         mainPanel.add(Box.createVerticalStrut(15));
@@ -256,7 +281,7 @@ public class PlayerSelection extends GenericMenuScreen {
         public void mouseClicked(MouseEvent e) {
             if (frameIndices[index] == CREATE_NEW_BUTTON) {
                 if (dialog != null)
-                    dialog.showDialog();
+                    dialog.showDialog(null);
             }
         }
     }
