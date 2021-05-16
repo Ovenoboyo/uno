@@ -18,7 +18,7 @@ import com.unoapp.uno.utils.Constants;
  * Panel to hold player names with 
  * arrow on top of current player
  */
-public class PlayerOrder extends JPanel {
+public class PlayerOrder extends TransparentPanel {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Constants.Color activeColor;

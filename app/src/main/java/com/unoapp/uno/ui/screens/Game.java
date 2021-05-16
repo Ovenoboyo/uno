@@ -147,6 +147,7 @@ public class Game extends GenericMenuScreen {
         JScrollPane scrollCards = new JScrollPane(activePlayerCardPanel);
         scrollCards.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 50));
         scrollCards.setBorder(null);
+        scrollCards.setOpaque(false);
 
         activePlayerDetails = new TransparentPanel();
         activePlayerDetails.setLayout(new FlowLayout(FlowLayout.LEFT));

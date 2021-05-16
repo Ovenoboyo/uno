@@ -15,7 +15,7 @@ import com.unoapp.uno.utils.Constants;
 /**
  * Generic implementation of anti-aliased text
  */
-public class SmoothText extends JPanel {
+public class SmoothText extends TransparentPanel {
     private String str;
     private Color color;
     private Font font;
