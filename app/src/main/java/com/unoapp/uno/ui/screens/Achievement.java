@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
-import javax.swing.JPanel;
 
 import com.unoapp.uno.Application;
 import com.unoapp.uno.Application.ScreenObject;

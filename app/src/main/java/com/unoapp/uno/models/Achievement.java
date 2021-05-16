@@ -14,4 +14,24 @@ public class Achievement {
         this.progress = progress;
         this.total = total;
     }
+
+    public AchievementTypes getType() {
+        return this.type;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Float getProgress() {
+        return this.progress;
+    }
+
+    public Float getTotal() {
+        return this.total;
+    }
+
+    public void setProgress(Float progress) {
+        this.progress = progress;
+    }
 }
