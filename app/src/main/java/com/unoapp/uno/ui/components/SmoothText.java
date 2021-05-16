@@ -8,8 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import javax.swing.JPanel;
-
 import com.unoapp.uno.utils.Constants;
 
 /**

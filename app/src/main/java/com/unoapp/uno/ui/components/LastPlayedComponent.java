@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 import com.unoapp.uno.models.Card;
 
 /**

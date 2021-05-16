@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.drawables.Arrow;
 import com.unoapp.uno.utils.Constants;
