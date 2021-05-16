@@ -145,7 +145,8 @@ public class Database {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         while (set.next()) {
             players.add(new PlayerInfo(set.getString("id"), set.getString("name"), set.getInt("won"),
-                    set.getInt("lost"), set.getInt("experience")));
+                    set.getInt("lost"), set.getInt("experience"), set.getInt("draw2_count"), set.getInt("draw4_count"), 
+                    set.getInt("skip_count"), set.getInt("rev_count"), set.getInt("wild_count")));
         }
         return players;
     }

@@ -63,7 +63,7 @@ public class Game extends GenericMenuScreen {
     private ArrayList<Player> populatePlayers(ArrayList<PlayerInfo> playerInfos) {
         ArrayList<Player> players = new ArrayList<>();
         for (PlayerInfo p : playerInfos) {
-            players.add(new Player(p.getName()));
+            players.add(Player.parseFromPlayerInfo(p));
         }
         return players;
     }
@@ -242,7 +242,7 @@ public class Game extends GenericMenuScreen {
             }
 
             @Override
-            public void gotWinnerCallback(Player player) {
+            public void gotWinnerCallback(Player player, ArrayList<Player> players) {
                 System.out.println("Got winner");
             }
 
@@ -286,15 +286,13 @@ public class Game extends GenericMenuScreen {
         generatePlayerOrder();
 
         if (controller.getCurrentPlayer().getHand().size() == 1 && controller.playerCanPlay()) {
-            generateUnoButton();
+            unoPanel.setVisible(true);
+        } else {
+            unoPanel.setVisible(false);
         }
 
         revalidate();
         repaint();
-    }
-
-    private void generateUnoButton() {
-        unoPanel.setVisible(true);
     }
 
     /**

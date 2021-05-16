@@ -90,18 +90,21 @@ public class GameController {
      * 
      * @param card card which was played last @
      */
-    private void handleActionCards(Card card) {
+    private void handleActionCards(Player player, Card card) {
         switch (card.getNum()) {
             case Constants.SKIP:
+                player.getAnalytics().incSkip();
                 incrementTurn();
                 break;
 
             case Constants.DRAW2:
+                player.getAnalytics().incDraw2();
                 isStackingD2++;
                 mGameController.drawTwoCallback();
                 break;
 
             case Constants.REVERSE:
+                player.getAnalytics().incReverse();
                 this.isReversed = !this.isReversed;
                 break;
         }
@@ -113,13 +116,15 @@ public class GameController {
      * 
      * @param card card to be handled
      */
-    private void handleSpecialCards(Card card) {
+    private void handleSpecialCards(Player player, Card card) {
         switch (card.getNum()) {
             case Constants.DRAWFOUR:
+                player.getAnalytics().incDraw4();
                 isStackingD4++;
                 mGameController.drawFourCallback();
                 break;
             case Constants.WILD:
+                player.getAnalytics().incWild();
                 break;
         }
     }
@@ -159,9 +164,9 @@ public class GameController {
             Card lastPlayed = playedCard.getTop();
             if (!isPass) {
                 if (lastPlayed.isAction()) {
-                    handleActionCards(lastPlayed);
+                    handleActionCards(player, lastPlayed);
                 } else if (lastPlayed.isSpecial()) {
-                    handleSpecialCards(lastPlayed);
+                    handleSpecialCards(player, lastPlayed);
                 }
             }
             incrementTurn();
@@ -171,7 +176,7 @@ public class GameController {
             return;
         }
         // Notify of the winner
-        mGameController.gotWinnerCallback(player);
+        mGameController.gotWinnerCallback(player, this.players);
     }
 
     /**
@@ -343,6 +348,6 @@ public class GameController {
          * 
          * @param player object of the winner
          */
-        void gotWinnerCallback(Player player);
+        void gotWinnerCallback(Player player, ArrayList<Player> players);
     }
 }
