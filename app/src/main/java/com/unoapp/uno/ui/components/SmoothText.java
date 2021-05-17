@@ -8,14 +8,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import javax.swing.JPanel;
-
 import com.unoapp.uno.utils.Constants;
 
 /**
  * Generic implementation of anti-aliased text
  */
-public class SmoothText extends JPanel {
+public class SmoothText extends TransparentPanel {
     private String str;
     private Color color;
     private Font font;
@@ -66,7 +64,7 @@ public class SmoothText extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         g2d.setColor(this.color);
-        g2d.drawString(str, 0, font.getSize());
+        g2d.drawString(str, 0, font.getSize() * 3 / 4);
     }
 
 }

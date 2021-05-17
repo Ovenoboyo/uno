@@ -13,7 +13,6 @@ import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import com.unoapp.uno.abstracts.onClickListener;
@@ -29,7 +28,7 @@ import com.unoapp.uno.utils.Constants;
 /**
  * Panel to hold drawn uno card
  */
-public class CardPanel extends JPanel {
+public class CardPanel extends TransparentPanel {
 
     /**
      * Auto Generated

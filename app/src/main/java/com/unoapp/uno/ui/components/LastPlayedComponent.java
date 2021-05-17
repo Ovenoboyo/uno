@@ -5,14 +5,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 import com.unoapp.uno.models.Card;
 
 /**
  * Panel to hold last played cards
  */
-public class LastPlayedComponent extends JPanel {
+public class LastPlayedComponent extends TransparentPanel {
 
     private ArrayList<Card> lastPlayed = new ArrayList<>();
 

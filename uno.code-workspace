@@ -13,7 +13,7 @@
 			"aaron-bond.better-comments",
 			"redhat.java",
 			"mtxr.sqltools",
-			"mtxr.sqltools-driver-mysql"
+			"mtxr.sqltools-driver-mysql",
 		]
 	},
 	"settings": {
@@ -22,6 +22,10 @@
 			"tasks": [
 				"app:run"
 			]
-		}
+		},
+		"java.completion.filteredTypes": [
+			"com.sun.*",
+			"sun.*"
+		]
 	},
 }

@@ -81,4 +81,8 @@ public class Constants {
         TITLE_SCREEN, PLAYER_SELECT, GAME, ACHIEVEMENT, EXIT
     }
 
+    public enum AchievementTypes {
+        PLAYED, DRAW4, WILD, DRAW2, SKIP, REVERSE, EXP
+    }
+
 }

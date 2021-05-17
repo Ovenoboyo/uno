@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.engine.GameController;
 import com.unoapp.uno.engine.GameController.IGameController;
 import com.unoapp.uno.engine.GameController.IGameController.continueDraw;
@@ -39,6 +40,7 @@ public class Game extends GenericMenuScreen {
     private JPanel activePlayerCardPanel;
     private JPanel activePlayerDetails;
     private JPanel tablePanel;
+    private TransparentPanel unoPanel;
     private GameController controller;
 
     private CustomCardDialog customDialog;
@@ -61,7 +63,7 @@ public class Game extends GenericMenuScreen {
     private ArrayList<Player> populatePlayers(ArrayList<PlayerInfo> playerInfos) {
         ArrayList<Player> players = new ArrayList<>();
         for (PlayerInfo p : playerInfos) {
-            players.add(new Player(p.getName()));
+            players.add(Player.parseFromPlayerInfo(p));
         }
         return players;
     }
@@ -145,6 +147,7 @@ public class Game extends GenericMenuScreen {
         JScrollPane scrollCards = new JScrollPane(activePlayerCardPanel);
         scrollCards.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 50));
         scrollCards.setBorder(null);
+        scrollCards.setOpaque(false);
 
         activePlayerDetails = new TransparentPanel();
         activePlayerDetails.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -155,10 +158,21 @@ public class Game extends GenericMenuScreen {
         southPanel.add(activePlayerDetails);
         southPanel.add(scrollCards);
 
+        unoPanel = new TransparentPanel();
+        var unoIcon = new ScaledBackground(Constants.getAsset("playIcon.png"), 178, 124);
+        unoIcon.addMouseListener(new MouseClickListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.getCurrentPlayer().setUno(true);
+                unoIcon.setVisible(false);
+            }
+        });
+        unoPanel.add(unoIcon);
+        unoPanel.setVisible(false);
+
         tablePanel = new TransparentPanel();
         tablePanel.add(generateDeckButton());
-
-        tablePanel.setLayout(new FlowLayout());
+        tablePanel.add(unoPanel);
         tablePanel.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 100));
 
         TransparentPanel componentHolder = new TransparentPanel(new BorderLayout());
@@ -182,13 +196,15 @@ public class Game extends GenericMenuScreen {
      * @throws IOException
      */
     private void populateDrawnCardsDialog(Card[] cards, continueDraw cDraw) throws IOException {
-        this.isDrawing = true;
+        if (cDraw != null)
+            this.isDrawing = true;
 
         customDialog.clean();
         customDialog.addCards(cards);
         customDialog.addButton("Continue", arg0 -> {
             this.isDrawing = false;
-            cDraw.continueTurn();
+            if (cDraw != null)
+                cDraw.continueTurn();
         }, true);
 
         customDialog.showDialog();
@@ -227,7 +243,7 @@ public class Game extends GenericMenuScreen {
             }
 
             @Override
-            public void gotWinnerCallback(Player player) {
+            public void gotWinnerCallback(Player player, ArrayList<Player> players) {
                 System.out.println("Got winner");
             }
 
@@ -258,7 +274,7 @@ public class Game extends GenericMenuScreen {
      * @throws IOException
      */
     private void refreshUI() {
-        if (tablePanel.getComponentCount() == 2)
+        if (tablePanel.getComponentCount() == 3)
             tablePanel.remove(1);
         generateLastCard();
 
@@ -269,6 +285,12 @@ public class Game extends GenericMenuScreen {
 
         activePlayerDetails.removeAll();
         generatePlayerOrder();
+
+        if (controller.getCurrentPlayer().getHand().size() == 1 && controller.playerCanPlay()) {
+            unoPanel.setVisible(true);
+        } else {
+            unoPanel.setVisible(false);
+        }
 
         revalidate();
         repaint();

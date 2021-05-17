@@ -17,7 +17,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.unoapp.uno.models.Achievement;
 import com.unoapp.uno.models.PlayerInfo;
+import com.unoapp.uno.utils.Constants.AchievementTypes;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
@@ -143,9 +145,32 @@ public class Database {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         while (set.next()) {
             players.add(new PlayerInfo(set.getString("id"), set.getString("name"), set.getInt("won"),
-                    set.getInt("lost"), set.getInt("experience")));
+                    set.getInt("lost"), set.getInt("experience"), set.getInt("draw2_count"), set.getInt("draw4_count"), 
+                    set.getInt("skip_count"), set.getInt("rev_count"), set.getInt("wild_count")));
         }
         return players;
+    }
+
+    public ArrayList<Achievement> getAchievements() {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM achievements");
+            ResultSet set = stmt.executeQuery();
+            var parsed = parseAchievements(set);
+            stmt.close();
+            return parsed;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ArrayList<Achievement> parseAchievements(ResultSet set) throws SQLException {
+        ArrayList<Achievement> achievements = new ArrayList<>();
+        while (set.next()) {
+            achievements.add(new Achievement(AchievementTypes.valueOf(set.getString("typee")), set.getString("title"),
+                    0f, set.getFloat("total")));
+        }
+        return achievements;
     }
 
     private File[] globMigrations() {

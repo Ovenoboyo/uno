@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.drawables.Arrow;
 import com.unoapp.uno.utils.Constants;
@@ -18,7 +16,7 @@ import com.unoapp.uno.utils.Constants;
  * Panel to hold player names with 
  * arrow on top of current player
  */
-public class PlayerOrder extends JPanel {
+public class PlayerOrder extends TransparentPanel {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Constants.Color activeColor;

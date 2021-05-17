@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS players (
+    id VARCHAR(36) PRIMARY KEY NOT NULL,
+    name VARCHAR(15) NOT NULL,
+    won INTEGER DEFAULT 0,
+    lost INTEGER DEFAULT 0,
+    experience INTEGER DEFAULT 0,
+    draw4_count INTEGER DEFAULT 0,
+    wild_count INTEGER DEFAULT 0,
+    draw2_count INTEGER DEFAULT 0,
+    skip_count INTEGER DEFAULT 0,
+    rev_count INTEGER DEFAULT 0
+);

@@ -90,18 +90,21 @@ public class GameController {
      * 
      * @param card card which was played last @
      */
-    private void handleActionCards(Card card) {
+    private void handleActionCards(Player player, Card card) {
         switch (card.getNum()) {
             case Constants.SKIP:
+                player.getAnalytics().incSkip();
                 incrementTurn();
                 break;
 
             case Constants.DRAW2:
+                player.getAnalytics().incDraw2();
                 isStackingD2++;
                 mGameController.drawTwoCallback();
                 break;
 
             case Constants.REVERSE:
+                player.getAnalytics().incReverse();
                 this.isReversed = !this.isReversed;
                 break;
         }
@@ -113,13 +116,15 @@ public class GameController {
      * 
      * @param card card to be handled
      */
-    private void handleSpecialCards(Card card) {
+    private void handleSpecialCards(Player player, Card card) {
         switch (card.getNum()) {
             case Constants.DRAWFOUR:
+                player.getAnalytics().incDraw4();
                 isStackingD4++;
                 mGameController.drawFourCallback();
                 break;
             case Constants.WILD:
+                player.getAnalytics().incWild();
                 break;
         }
     }
@@ -154,13 +159,14 @@ public class GameController {
      */
     private void nextTurn(Player player, Boolean isPass) {
         // If the player is null, then it indicates first turn where turnIndex is -1
-        if (player == null || !checkWinner(player)) {
+        if (player == null || checkInvalidUno(player)) {
+
             Card lastPlayed = playedCard.getTop();
             if (!isPass) {
                 if (lastPlayed.isAction()) {
-                    handleActionCards(lastPlayed);
+                    handleActionCards(player, lastPlayed);
                 } else if (lastPlayed.isSpecial()) {
-                    handleSpecialCards(lastPlayed);
+                    handleSpecialCards(player, lastPlayed);
                 }
             }
             incrementTurn();
@@ -170,7 +176,7 @@ public class GameController {
             return;
         }
         // Notify of the winner
-        mGameController.gotWinnerCallback(player);
+        mGameController.gotWinnerCallback(player, this.players);
     }
 
     /**
@@ -221,6 +227,16 @@ public class GameController {
         mGameController.drawingCallback(cards, () -> nextTurn(player, true));
     }
 
+    public void drawUnoFault(Player player) {
+        Card cards[] = new Card[2];
+        for (int i = 0; i < 2; i++) {
+            Card card = deck.popDeck();
+            cards[i] = card;
+            player.addCard(card);
+        }
+        mGameController.drawingCallback(cards, null);
+    }
+
     /**
      * Draw 4 cards from deck and add them to player
      * @param player player that is affected by draw 4
@@ -265,14 +281,25 @@ public class GameController {
         return playedCard.getLastPlayedCards();
     }
 
-    /**
-     * Checks if the player has 0 cards left or not
-     * 
-     * @param player player to be checked for winner
-     * @return true if winner else false
-     */
-    public boolean checkWinner(Player player) {
-        return player.getHand().size() == 0;
+    private Boolean checkInvalidUno(Player player) {
+        if (player.getHand().size() == 0) {
+            if (player.isUno()) {
+                player.setUno(true);
+                return false;
+            } else {
+                drawUnoFault(player);
+            }
+        }
+        return true;
+    }
+
+    public Boolean playerCanPlay() {
+        for (Card c : getCurrentPlayer().getHand()) {
+            if (playedCard.validateCard(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -321,6 +348,6 @@ public class GameController {
          * 
          * @param player object of the winner
          */
-        void gotWinnerCallback(Player player);
+        void gotWinnerCallback(Player player, ArrayList<Player> players);
     }
 }

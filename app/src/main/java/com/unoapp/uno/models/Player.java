@@ -9,6 +9,31 @@ import java.util.List;
 public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
     private String name;
+    private String id;
+
+    private Boolean isUno = false;
+    private StatAnalytics analytics;
+
+    public static Player parseFromPlayerInfo(PlayerInfo info) {
+        return new Player(info.getName(), info.getId(),
+                new StatAnalytics(info.getDraw2(), info.getDraw4(), info.getSkip(), info.getReverse(), info.getWild()));
+    }
+
+    public StatAnalytics getAnalytics() {
+        return this.analytics;
+    }
+
+    public Boolean isUno() {
+        return this.isUno;
+    }
+
+    public void setUno(Boolean isUno) {
+        this.isUno = isUno;
+    }
+
+    public String getId() {
+        return this.id;
+    }
 
     /**
      * Get name of the player
@@ -22,8 +47,10 @@ public class Player {
      * Constructor for player
      * @param name name of player
      */
-    public Player(String name) {
+    public Player(String name, String id, StatAnalytics analytics) {
         this.name = name;
+        this.id = id;
+        this.analytics = analytics;
     }
 
     /**

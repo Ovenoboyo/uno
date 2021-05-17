@@ -29,7 +29,7 @@ public class Application {
 				public void run() {
 					try {
 						registerFont();
-						changeScreen(new ScreenObject(Screens.ACHIEVEMENT));
+						changeScreen(new ScreenObject(Screens.TITLE_SCREEN));
 					} catch (FontFormatException | IOException e) {
 						e.printStackTrace();
 					}
