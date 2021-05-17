@@ -12,10 +12,19 @@ public class Card {
     private String UID;
     private Integer num;
     private Color color;
+    private Integer angle = 0;
 
     public void setChangedColor(Color changedColor) {
         if (isSpecial())
             this.color = changedColor;
+    }
+
+    public Integer getAngle() {
+        return this.angle;
+    }
+
+    public void setAngle(Integer angle) {
+        this.angle = angle;
     }
 
     /**
