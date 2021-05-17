@@ -43,12 +43,12 @@ public class TitleScreen extends GenericMenuScreen {
         // Play button
         buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124,
                 () -> Application.changeScreen(new ScreenObject(this, Screens.PLAYER_SELECT))));
-        buttonPanel.add(Box.createHorizontalStrut(80));
+        buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Settings button
         buttonPanel.add(createPanel("Settings", Constants.getAsset("gear.png"), 123, 123,
                 () -> Application.changeScreen(new ScreenObject(this, Screens.EXIT))));
-        buttonPanel.add(Box.createHorizontalStrut(80));
+        buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Quit button
         buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144, () -> System.exit(0)));
@@ -84,20 +84,21 @@ public class TitleScreen extends GenericMenuScreen {
             }
         });
 
+        int rectSize = (MAX_COMPONENT_X / 4) - (60);
+
         TransparentPanel textPanel = new TransparentPanel();
         SmoothText text = new SmoothText(labelText, Constants.getColor(Constants.Color.RED, false),
                 Constants.getProximaInstance(26));
         textPanel.add(text);
-        textPanel.add(Box.createVerticalStrut(100));
+        textPanel.add(Box.createVerticalStrut(rectSize / 3));
 
-        RoundedRectangle playButton = new RoundedRectangle(280, 280, 80, new BorderLayout());
+        RoundedRectangle playButton = new RoundedRectangle(rectSize, rectSize, 80, new BorderLayout());
         TransparentPanel label = new TransparentPanel();
         label.add(new ScaledBackground(iconSrc, iconWidth, iconHeight, new FlowLayout()));
-        playButton.add(Box.createVerticalStrut(40), BorderLayout.NORTH);
+        playButton.add(Box.createVerticalStrut(rectSize / 4), BorderLayout.NORTH);
         playButton.add(label, BorderLayout.CENTER);
         playButton.add(textPanel, BorderLayout.SOUTH);
 
-        mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(playButton);
 
         return mainPanel;
