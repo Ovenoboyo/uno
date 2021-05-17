@@ -22,11 +22,13 @@ public class CustomCardDialog extends JDialog {
     private JPanel cardPanel = new JPanel();
     private JPanel buttonGroup = new JPanel();
     private JPanel global = new JPanel();
+    private GenericMenuScreen parent;
 
     private static final long serialVersionUID = 1L;
 
-    public CustomCardDialog() {
+    public CustomCardDialog(GenericMenuScreen parent) {
         super();
+        this.parent = parent;
         init();
     }
 
@@ -64,6 +66,8 @@ public class CustomCardDialog extends JDialog {
         JButton button = new JButton(title);
         button.addActionListener(e -> {
             dispose();
+            parent.toFront();
+            parent.requestFocus();
             mListener.actionPerformed(e);
         });
         button.setEnabled(enabled);
