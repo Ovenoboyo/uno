@@ -16,7 +16,6 @@ import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.models.StatAnalytics;
-import com.unoapp.uno.ui.components.BackButton;
 import com.unoapp.uno.ui.components.ContinueLabel;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.ProgressBar;
@@ -26,7 +25,6 @@ import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
 
 public class Results extends GenericMenuScreen {
-    private final GenericMenuScreen context = this;
     private final ArrayList<Player> players;
     private final Player winner;
     private TransparentPanel buttonPanel;
@@ -66,21 +64,9 @@ public class Results extends GenericMenuScreen {
             }
         });
 
-        TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
-        northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
-        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36, true));
-        backButton.addMouseListener(new MouseClickListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(new ScreenObject(context, Screens.TITLE_SCREEN));
-            }
-        });
-        northPanel.add(backButton);
-
         southPanel.add(continueButton);
         southPanel.add(Box.createRigidArea(new Dimension(30, 100)));
         background.add(southPanel, BorderLayout.SOUTH);
-        background.add(northPanel, BorderLayout.NORTH);
 
         pack();
     }

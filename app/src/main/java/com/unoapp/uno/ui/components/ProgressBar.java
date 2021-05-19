@@ -112,15 +112,15 @@ public class ProgressBar extends TransparentPanel {
 
         if (initialWidth == 0) {
             g2d.fill(new RoundRectangle2D.Double(0, 0, newProgressWidth, height, height, height));
-            initialWidth = newProgressWidth;
+            initialWidth = newProgressWidth / 2;
             newProgressWidth = newProgressWidth / 2;
         }
 
         if (initialWidth + newProgressWidth >= width - 15) {
             newProgressWidth = width - initialWidth;
-            g2d.fill(new RoundRectangle2D.Double(initialWidth, 0, newProgressWidth, height, height, height));
+            g2d.fill(new RoundRectangle2D.Double(initialWidth, 0, newProgressWidth + 1, height, height, height));
         } else {
-            g2d.fill(new Rectangle2D.Double(initialWidth, 0, newProgressWidth, height));
+            g2d.fill(new Rectangle2D.Double(initialWidth, 0, newProgressWidth + 1, height));
         }
     }
 }
