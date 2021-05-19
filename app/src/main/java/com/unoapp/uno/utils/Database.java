@@ -107,6 +107,7 @@ public class Database {
     public PlayerInfo getSinglePlayer(String id) {
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM players WHERE id = ?");
+            stmt.setString(1, id);
             ResultSet set = stmt.executeQuery();
             ArrayList<PlayerInfo> info = parseResultSet(set);
             if (info.size() > 0) {
@@ -134,6 +135,23 @@ public class Database {
         conn.commit();
     }
 
+    public void updatePlayer(PlayerInfo info) throws SQLException {
+        PreparedStatement prep = conn.prepareStatement(
+                "UPDATE players SET won = ?, lost = ?, experience = ?, draw2_count = ?, draw4_count = ?, skip_count = ?, rev_count = ?, wild_count = ? WHERE id = ?");
+        prep.setInt(1, info.getGamesWon());
+        prep.setInt(2, info.getGamesLost());
+        prep.setInt(3, info.getExperience());
+        prep.setInt(4, info.getDraw2());
+        prep.setInt(5, info.getDraw4());
+        prep.setInt(6, info.getSkip());
+        prep.setInt(7, info.getReverse());
+        prep.setInt(8, info.getWild());
+        prep.setString(9, info.getId());
+        prep.executeUpdate();
+        prep.close();
+        conn.commit();
+    }
+
     /**
      * Parses result set into ArrayList of PlayerInfo
      * 
@@ -145,7 +163,7 @@ public class Database {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         while (set.next()) {
             players.add(new PlayerInfo(set.getString("id"), set.getString("name"), set.getInt("won"),
-                    set.getInt("lost"), set.getInt("experience"), set.getInt("draw2_count"), set.getInt("draw4_count"), 
+                    set.getInt("lost"), set.getInt("experience"), set.getInt("draw2_count"), set.getInt("draw4_count"),
                     set.getInt("skip_count"), set.getInt("rev_count"), set.getInt("wild_count")));
         }
         return players;

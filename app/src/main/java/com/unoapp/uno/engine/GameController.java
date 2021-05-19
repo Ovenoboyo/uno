@@ -159,8 +159,10 @@ public class GameController {
      */
     private void nextTurn(Player player, Boolean isPass) {
         // If the player is null, then it indicates first turn where turnIndex is -1
-        if (player == null || checkInvalidUno(player)) {
-
+        if (player == null) {
+            player = players.get(0);
+        }
+        if (checkInvalidUno(player)) {
             Card lastPlayed = playedCard.getTop();
             if (!isPass) {
                 if (lastPlayed.isAction()) {
@@ -210,6 +212,10 @@ public class GameController {
             return true;
         }
         return false;
+    }
+
+    public void simulateWinner() {
+        mGameController.gotWinnerCallback(this.players.get(0), this.players);
     }
 
     /**

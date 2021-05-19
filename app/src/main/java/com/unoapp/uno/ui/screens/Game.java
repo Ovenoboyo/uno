@@ -11,10 +11,13 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.unoapp.uno.Application;
+import com.unoapp.uno.Application.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.engine.GameController;
 import com.unoapp.uno.engine.GameController.IGameController;
@@ -32,6 +35,7 @@ import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.drawables.Deck;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Constants.Screens;
 
 /**
  * Game Screen
@@ -50,6 +54,8 @@ public class Game extends GenericMenuScreen {
     private boolean isDrawing = false;
     private boolean disabledExceptDraw2 = false;
     private boolean disabledExceptDraw4 = false;
+
+    private GenericMenuScreen context = this;
 
     /**
      * Default constructor
@@ -72,10 +78,11 @@ public class Game extends GenericMenuScreen {
      * Initialize game screen
      */
     private void init(ArrayList<PlayerInfo> players) {
+        initializeController(populatePlayers(players));
+
         generateUIComponents();
 
         // Initialize game controller after UI has been generated
-        initializeController(populatePlayers(players));
         controller.startGameLoop();
     }
 
@@ -155,6 +162,14 @@ public class Game extends GenericMenuScreen {
         TransparentPanel southPanel = new TransparentPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.PAGE_AXIS));
 
+        JButton simulateWinner = new JButton("Simulate winner");
+        simulateWinner.addMouseListener(new MouseClickListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.simulateWinner();
+            }
+        });
+
         southPanel.add(activePlayerDetails);
         southPanel.add(scrollCards);
 
@@ -173,6 +188,8 @@ public class Game extends GenericMenuScreen {
         tablePanel = new TransparentPanel();
         tablePanel.add(generateDeckButton());
         tablePanel.add(unoPanel);
+        tablePanel.add(simulateWinner);
+
         tablePanel.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 100));
 
         TransparentPanel componentHolder = new TransparentPanel(new BorderLayout());
@@ -243,8 +260,9 @@ public class Game extends GenericMenuScreen {
             }
 
             @Override
-            public void gotWinnerCallback(Player player, ArrayList<Player> players) {
-                System.out.println("Got winner");
+            public void gotWinnerCallback(Player player, ArrayList<Player> winner) {
+                Application.changeScreen(
+                        new ScreenObject(context, Screens.RESULTS, new ScreenObject.ResultsData(winner, player)));
             }
 
             @Override

@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 
 import com.unoapp.uno.Application;
 import com.unoapp.uno.Application.ScreenObject;
+import com.unoapp.uno.Application.ScreenObject.GameData;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.BackButton;
@@ -167,7 +168,7 @@ public class PlayerSelection extends GenericMenuScreen {
             public void mouseClicked(MouseEvent e) {
                 try {
                     validatePlayers();
-                    Application.changeScreen(new ScreenObject(context, Screens.GAME, getActivePlayers()));
+                    Application.changeScreen(new ScreenObject(context, Screens.GAME, new GameData(getActivePlayers())));
                 } catch (InvalidPlayersException e1) {
                     JOptionPane.showMessageDialog(context, e1.getMessage(), "Error!", JOptionPane.OK_OPTION);
                 }
@@ -176,7 +177,7 @@ public class PlayerSelection extends GenericMenuScreen {
 
         TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
         northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
-        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36));
+        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36, true));
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -236,7 +237,7 @@ public class PlayerSelection extends GenericMenuScreen {
         TriangleArrow arrowR = new TriangleArrow(false, color);
         SmoothText text = new SmoothText(
                 frameIndices[index] >= 0 ? players.get(frameIndices[index]).getName() : "Create New",
-                Constants.getProximaInstance(28));
+                Constants.getProximaInstance(28, true));
 
         TransparentPanel playerNameHolder = new TransparentPanel();
         playerNameHolder.add(text);

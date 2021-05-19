@@ -83,4 +83,44 @@ public class PlayerInfo {
     public Integer getExperience() {
         return experience;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGamesWon(Integer gamesWon) {
+        this.gamesWon = gamesWon;
+    }
+
+    public void setGamesLost(Integer gamesLost) {
+        this.gamesLost = gamesLost;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public void setDraw2(Integer draw2) {
+        this.draw2 = draw2;
+    }
+
+    public void setDraw4(Integer draw4) {
+        this.draw4 = draw4;
+    }
+
+    public void setSkip(Integer skip) {
+        this.skip = skip;
+    }
+
+    public void setReverse(Integer reverse) {
+        this.reverse = reverse;
+    }
+
+    public void setWild(Integer wild) {
+        this.wild = wild;
+    }
 }

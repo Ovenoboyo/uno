@@ -67,10 +67,14 @@ public class Constants {
     }
 
     private static Font ProximaNovaBold = new Font("Proxima Nova Bold", Font.PLAIN, 36);
+    private static Font ProximaNovaRegular = new Font("Proxima Nova Regular", Font.PLAIN, 36);
     private static Font GilmerHeavy = new Font("Gilmer Heavy", Font.PLAIN, 36);
 
-    public static Font getProximaInstance(float fontSize) {
-        return ProximaNovaBold.deriveFont(fontSize);
+    public static Font getProximaInstance(float fontSize, Boolean bold) {
+        if (bold)
+            return ProximaNovaBold.deriveFont(fontSize);
+        else
+            return ProximaNovaRegular.deriveFont(fontSize);
     }
 
     public static Font getGilmerInstance(float fontSize) {
@@ -78,7 +82,7 @@ public class Constants {
     }
 
     public enum Screens {
-        TITLE_SCREEN, PLAYER_SELECT, GAME, ACHIEVEMENT, EXIT
+        TITLE_SCREEN, PLAYER_SELECT, GAME, ACHIEVEMENT, RESULTS, EXIT
     }
 
     public enum AchievementTypes {

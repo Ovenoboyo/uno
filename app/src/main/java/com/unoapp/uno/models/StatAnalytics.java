@@ -4,21 +4,11 @@ package com.unoapp.uno.models;
  * HAHA ANAL-YTIC
  */
 public class StatAnalytics {
-    private Integer draw2Played;
-    private Integer draw4Played;
-    private Integer skipPlayed;
-    private Integer reversePlayed;
-    private Integer wildPlayed;
-
-    public StatAnalytics(Integer draw2Played, Integer draw4Played, Integer skipPlayed, Integer reversePlayed,
-            Integer wildPlayed) {
-        this.draw2Played = draw2Played;
-        this.draw4Played = draw4Played;
-        this.skipPlayed = skipPlayed;
-        this.reversePlayed = reversePlayed;
-        this.wildPlayed = wildPlayed;
-
-    }
+    private Integer draw2Played = 0;
+    private Integer draw4Played = 0;
+    private Integer skipPlayed = 0;
+    private Integer reversePlayed = 0;
+    private Integer wildPlayed = 0;
 
     public void incDraw2() {
         draw2Played += 1;
@@ -40,23 +30,23 @@ public class StatAnalytics {
         wildPlayed += 1;
     }
 
-    public Integer getDraw2Played() {
+    public Integer getDraw2() {
         return this.draw2Played;
     }
 
-    public Integer getDraw4Played() {
+    public Integer getDraw4() {
         return this.draw4Played;
     }
 
-    public Integer getSkipPlayed() {
+    public Integer getSkip() {
         return this.skipPlayed;
     }
 
-    public Integer getReversePlayed() {
+    public Integer getReverse() {
         return this.reversePlayed;
     }
 
-    public Integer getWildPlayed() {
+    public Integer getWild() {
         return this.wildPlayed;
     }
 }

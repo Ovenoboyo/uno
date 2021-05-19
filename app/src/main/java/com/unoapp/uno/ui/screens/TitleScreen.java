@@ -88,7 +88,7 @@ public class TitleScreen extends GenericMenuScreen {
 
         TransparentPanel textPanel = new TransparentPanel();
         SmoothText text = new SmoothText(labelText, Constants.getColor(Constants.Color.RED, false),
-                Constants.getProximaInstance(26));
+                Constants.getProximaInstance(26, true));
         textPanel.add(text);
         textPanel.add(Box.createVerticalStrut(rectSize / 3));
 

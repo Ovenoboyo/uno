@@ -27,7 +27,7 @@ public class SmoothText extends TransparentPanel {
     }
 
     public SmoothText(String str, Color color) {
-        this(str, color, Constants.getProximaInstance(36));
+        this(str, color, Constants.getProximaInstance(36, true));
     }
 
     public SmoothText(String str, Font font) {
@@ -35,7 +35,7 @@ public class SmoothText extends TransparentPanel {
     }
 
     public SmoothText(String str) {
-        this(str, Color.BLACK, Constants.getProximaInstance(36));
+        this(str, Color.BLACK);
     }
 
     @Override
@@ -44,6 +44,11 @@ public class SmoothText extends TransparentPanel {
         g.setFont(font);
         FontMetrics met = g.getFontMetrics();
         return new Dimension(met.stringWidth(str), met.getHeight());
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return getPreferredSize();
     }
 
     public void setText(String str) {
@@ -64,7 +69,7 @@ public class SmoothText extends TransparentPanel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         g2d.setColor(this.color);
-        g2d.drawString(str, 0, font.getSize() * 3 / 4);
+        g2d.drawString(str, 0, font.getSize() * 7 / 8);
     }
 
 }

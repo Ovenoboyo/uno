@@ -10,10 +10,12 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import com.unoapp.uno.models.Player;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.screens.Achievement;
 import com.unoapp.uno.ui.screens.Game;
 import com.unoapp.uno.ui.screens.PlayerSelection;
+import com.unoapp.uno.ui.screens.Results;
 import com.unoapp.uno.ui.screens.TitleScreen;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
@@ -50,8 +52,10 @@ public class Application {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		File gilmer = new File(Constants.getAsset("gilmer_heavy.otf"));
 		File proxima = new File(Constants.getAsset("ProximaNova-Bold.otf"));
+		File proximaReg = new File(Constants.getAsset("ProximaNova-Regular.otf"));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, gilmer));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proxima));
+		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proximaReg));
 	}
 
 	public static void changeScreen(ScreenObject screenObject) {
@@ -59,7 +63,7 @@ public class Application {
 			screenObject.currentScreen.dispose();
 		switch (screenObject.screen) {
 			case GAME:
-				new Game(screenObject.gameData).setVisible(true);
+				new Game(screenObject.gameData.players).setVisible(true);
 				break;
 			case TITLE_SCREEN:
 				new TitleScreen().setVisible(true);
@@ -70,6 +74,9 @@ public class Application {
 			case ACHIEVEMENT:
 				new Achievement().setVisible(true);
 				break;
+			case RESULTS:
+				new Results(screenObject.resultData.players, screenObject.resultData.winner).setVisible(true);
+				break;
 			case EXIT:
 				System.exit(0);
 		}
@@ -77,7 +84,8 @@ public class Application {
 
 	public static class ScreenObject {
 		Constants.Screens screen;
-		ArrayList<PlayerInfo> gameData;
+		GameData gameData;
+		ResultsData resultData;
 		JFrame currentScreen;
 
 		public ScreenObject(Constants.Screens screen) {
@@ -89,9 +97,32 @@ public class Application {
 			this.currentScreen = currentScreen;
 		}
 
-		public ScreenObject(JFrame currentScreen, Constants.Screens screen, ArrayList<PlayerInfo> gameData) {
+		public ScreenObject(JFrame currentScreen, Constants.Screens screen, GameData gameData) {
 			this(currentScreen, screen);
 			this.gameData = gameData;
+		}
+
+		public ScreenObject(JFrame currentScreen, Constants.Screens screen, ResultsData resultData) {
+			this(currentScreen, screen);
+			this.resultData = resultData;
+		}
+
+		public static class GameData {
+			ArrayList<PlayerInfo> players;
+
+			public GameData(ArrayList<PlayerInfo> players) {
+				this.players = players;
+			}
+		}
+
+		public static class ResultsData {
+			ArrayList<Player> players;
+			Player winner;
+
+			public ResultsData(ArrayList<Player> players, Player winner) {
+				this.players = players;
+				this.winner = winner;
+			}
 		}
 	}
 }

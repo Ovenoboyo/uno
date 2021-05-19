@@ -11,7 +11,11 @@ import com.unoapp.uno.ui.drawables.Person;
  */
 public class PersonIcon extends JLabel {
     public PersonIcon(java.awt.Color color) {
-        setIcon(new Person(150, 150, color));
-        setPreferredSize(new Dimension(150, 150));
+        this(150, 150, color);
+    }
+
+    public PersonIcon(int width, int height, java.awt.Color color) {
+        setIcon(new Person(width, height, color));
+        setPreferredSize(new Dimension(width, height));
     }
 }

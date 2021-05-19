@@ -10,13 +10,11 @@ public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
     private String name;
     private String id;
-
     private Boolean isUno = false;
     private StatAnalytics analytics;
 
     public static Player parseFromPlayerInfo(PlayerInfo info) {
-        return new Player(info.getName(), info.getId(),
-                new StatAnalytics(info.getDraw2(), info.getDraw4(), info.getSkip(), info.getReverse(), info.getWild()));
+        return new Player(info.getName(), info.getId(), new StatAnalytics());
     }
 
     public StatAnalytics getAnalytics() {

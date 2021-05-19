@@ -35,7 +35,7 @@ public class Achievement extends GenericMenuScreen {
 
         TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
         northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
-        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36));
+        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36, true));
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
