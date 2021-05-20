@@ -98,7 +98,6 @@ public class ProgressBar extends TransparentPanel {
         g2d.fillRoundRect(0, 0, width, height, height, height);
 
         int initialWidth = percentageToWidth(initialProgress);
-        System.out.println(initialWidth);
 
         if (initialWidth != 0) {
             g2d.setPaint(getColors());
@@ -108,7 +107,6 @@ public class ProgressBar extends TransparentPanel {
         g2d.setPaint(getLightColors());
 
         var newProgressWidth = percentageToWidth(newProgress);
-        System.out.println(newProgressWidth);
 
         if (initialWidth == 0) {
             g2d.fill(new RoundRectangle2D.Double(0, 0, newProgressWidth, height, height, height));

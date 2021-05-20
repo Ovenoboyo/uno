@@ -15,7 +15,6 @@ import com.unoapp.uno.Application.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.models.PlayerInfo;
-import com.unoapp.uno.models.StatAnalytics;
 import com.unoapp.uno.ui.components.ContinueLabel;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.ProgressBar;

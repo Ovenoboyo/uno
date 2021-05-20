@@ -46,12 +46,13 @@ public class TitleScreen extends GenericMenuScreen {
         buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Settings button
-        buttonPanel.add(createPanel("Settings", Constants.getAsset("gear.png"), 123, 123,
-                () -> Application.changeScreen(new ScreenObject(this, Screens.EXIT))));
+        buttonPanel.add(createPanel("Achievements", Constants.getAsset("trophy.png"), 123, 123,
+                () -> Application.changeScreen(new ScreenObject(this, Screens.ACHIEVEMENT))));
         buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Quit button
-        buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144, () -> System.exit(0)));
+        buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144,
+                () -> Application.changeScreen(new ScreenObject(this, Screens.EXIT))));
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(Box.createVerticalGlue());

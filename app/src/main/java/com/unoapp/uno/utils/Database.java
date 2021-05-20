@@ -186,7 +186,7 @@ public class Database {
         ArrayList<Achievement> achievements = new ArrayList<>();
         while (set.next()) {
             achievements.add(new Achievement(AchievementTypes.valueOf(set.getString("typee")), set.getString("title"),
-                    0f, set.getFloat("total")));
+                    set.getFloat("total")));
         }
         return achievements;
     }

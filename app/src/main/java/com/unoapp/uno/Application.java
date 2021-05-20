@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.models.PlayerInfo;
-import com.unoapp.uno.ui.screens.Achievement;
+import com.unoapp.uno.ui.screens.AchievementScreen;
 import com.unoapp.uno.ui.screens.Game;
 import com.unoapp.uno.ui.screens.PlayerSelection;
 import com.unoapp.uno.ui.screens.Results;
@@ -72,7 +72,7 @@ public class Application {
 				new PlayerSelection().setVisible(true);
 				break;
 			case ACHIEVEMENT:
-				new Achievement().setVisible(true);
+				new AchievementScreen().setVisible(true);
 				break;
 			case RESULTS:
 				new Results(screenObject.resultData.players, screenObject.resultData.winner).setVisible(true);

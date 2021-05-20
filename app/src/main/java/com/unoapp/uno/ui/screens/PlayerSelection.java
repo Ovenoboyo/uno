@@ -252,20 +252,20 @@ public class PlayerSelection extends GenericMenuScreen {
 
         textHolder.add(textPanel);
 
-        RoundedRectangle playButton = new RoundedRectangle(rectSize, rectSize, 80);
-        playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
+        RoundedRectangle playerHolder = new RoundedRectangle(rectSize, rectSize, 80);
+        playerHolder.setLayout(new BoxLayout(playerHolder, BoxLayout.PAGE_AXIS));
 
         TransparentPanel label = new TransparentPanel();
         label.add(new PersonIcon(color));
 
-        playButton.add(Box.createVerticalGlue());
-        playButton.add(Box.createHorizontalStrut(150 / 2));
-        playButton.add(label);
-        playButton.add(textHolder);
-        playButton.add(Box.createVerticalGlue());
+        playerHolder.add(Box.createVerticalGlue());
+        playerHolder.add(Box.createHorizontalStrut(150 / 2));
+        playerHolder.add(label);
+        playerHolder.add(textHolder);
+        playerHolder.add(Box.createVerticalGlue());
 
         mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(playButton);
+        mainPanel.add(playerHolder);
 
         return mainPanel;
     }

@@ -5,13 +5,11 @@ import com.unoapp.uno.utils.Constants.AchievementTypes;
 public class Achievement {
     private AchievementTypes type;
     private String title;
-    private Float progress;
     private Float total;
 
-    public Achievement(AchievementTypes type, String title, Float progress, Float total) {
+    public Achievement(AchievementTypes type, String title, Float total) {
         this.type = type;
         this.title = title;
-        this.progress = progress;
         this.total = total;
     }
 
@@ -23,15 +21,7 @@ public class Achievement {
         return this.title;
     }
 
-    public Float getProgress() {
-        return this.progress;
-    }
-
     public Float getTotal() {
         return this.total;
-    }
-
-    public void setProgress(Float progress) {
-        this.progress = progress;
     }
 }

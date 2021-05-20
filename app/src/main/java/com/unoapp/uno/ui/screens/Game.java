@@ -188,7 +188,7 @@ public class Game extends GenericMenuScreen {
         tablePanel = new TransparentPanel();
         tablePanel.add(generateDeckButton());
         tablePanel.add(unoPanel);
-        tablePanel.add(simulateWinner);
+        // tablePanel.add(simulateWinner);
 
         tablePanel.setPreferredSize(new Dimension(MAX_COMPONENT_X, 267 + 100));
 
