@@ -407,4 +407,11 @@ public class Game extends GenericMenuScreen {
         if (disabledExceptDraw4)
             disabledExceptDraw4 = false;
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.controller = null;
+        this.customDialog = null;
+    }
 }
