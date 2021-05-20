@@ -11,8 +11,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 
-import com.unoapp.uno.Application;
-import com.unoapp.uno.Application.ScreenObject;
+import com.unoapp.uno.UNO;
+import com.unoapp.uno.UNO.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.Achievement;
 import com.unoapp.uno.models.PlayerInfo;
@@ -61,7 +61,7 @@ public class AchievementScreen extends GenericMenuScreen {
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(new ScreenObject(context, Screens.TITLE_SCREEN));
+                UNO.changeScreen(new ScreenObject(context, Screens.TITLE_SCREEN));
             }
         });
 

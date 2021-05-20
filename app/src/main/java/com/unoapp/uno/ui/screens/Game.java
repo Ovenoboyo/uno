@@ -16,8 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.unoapp.uno.Application;
-import com.unoapp.uno.Application.ScreenObject;
+import com.unoapp.uno.UNO;
+import com.unoapp.uno.UNO.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.engine.GameController;
 import com.unoapp.uno.engine.GameController.IGameController;
@@ -261,7 +261,7 @@ public class Game extends GenericMenuScreen {
 
             @Override
             public void gotWinnerCallback(Player player, ArrayList<Player> winner) {
-                Application.changeScreen(
+                UNO.changeScreen(
                         new ScreenObject(context, Screens.RESULTS, new ScreenObject.ResultsData(winner, player)));
             }
 

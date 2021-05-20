@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-import com.unoapp.uno.Application;
-import com.unoapp.uno.Application.ScreenObject;
+import com.unoapp.uno.UNO;
+import com.unoapp.uno.UNO.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.abstracts.onClickListener;
 import com.unoapp.uno.ui.components.GenericMenuScreen;
@@ -42,17 +42,17 @@ public class TitleScreen extends GenericMenuScreen {
 
         // Play button
         buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124,
-                () -> Application.changeScreen(new ScreenObject(this, Screens.PLAYER_SELECT))));
+                () -> UNO.changeScreen(new ScreenObject(this, Screens.PLAYER_SELECT))));
         buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Settings button
         buttonPanel.add(createPanel("Achievements", Constants.getAsset("trophy.png"), 123, 123,
-                () -> Application.changeScreen(new ScreenObject(this, Screens.ACHIEVEMENT))));
+                () -> UNO.changeScreen(new ScreenObject(this, Screens.ACHIEVEMENT))));
         buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Quit button
         buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144,
-                () -> Application.changeScreen(new ScreenObject(this, Screens.EXIT))));
+                () -> UNO.changeScreen(new ScreenObject(this, Screens.EXIT))));
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(Box.createVerticalGlue());

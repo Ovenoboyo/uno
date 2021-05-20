@@ -19,9 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.unoapp.uno.Application;
-import com.unoapp.uno.Application.ScreenObject;
-import com.unoapp.uno.Application.ScreenObject.GameData;
+import com.unoapp.uno.UNO;
+import com.unoapp.uno.UNO.ScreenObject;
+import com.unoapp.uno.UNO.ScreenObject.GameData;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.PlayerInfo;
 import com.unoapp.uno.ui.components.BackButton;
@@ -168,7 +168,7 @@ public class PlayerSelection extends GenericMenuScreen {
             public void mouseClicked(MouseEvent e) {
                 try {
                     validatePlayers();
-                    Application.changeScreen(new ScreenObject(context, Screens.GAME, new GameData(getActivePlayers())));
+                    UNO.changeScreen(new ScreenObject(context, Screens.GAME, new GameData(getActivePlayers())));
                 } catch (InvalidPlayersException e1) {
                     JOptionPane.showMessageDialog(context, e1.getMessage(), "Error!", JOptionPane.OK_OPTION);
                 }
@@ -181,7 +181,7 @@ public class PlayerSelection extends GenericMenuScreen {
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(new ScreenObject(context, Screens.TITLE_SCREEN));
+                UNO.changeScreen(new ScreenObject(context, Screens.TITLE_SCREEN));
             }
         });
         northPanel.add(backButton);

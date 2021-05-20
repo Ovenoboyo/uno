@@ -7,8 +7,6 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
     id 'java'
     id 'org.beryx.jlink' version '2.23.6'
 }
@@ -30,8 +28,8 @@ dependencies {
 }
 
 ext {
-    mainClass = 'com.unoapp.uno.Application'
-    launcherName = 'uno'
+    mainClass = 'com.unoapp.uno.UNO'
+    launcherName = 'UNO'
     imageDirPath = "$buildDir/${launcherName}-image"
     imageZipPath = "$buildDir/image-zip/${launcherName}-image.zip"
     installerPath = "installer"
@@ -40,8 +38,8 @@ ext {
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.unoapp.uno.Application'
-    mainModule = 'mainModule'
+    mainClass = 'com.unoapp.uno.UNO'
+    mainModule = 'UnoModule'
 }
 
 jar {

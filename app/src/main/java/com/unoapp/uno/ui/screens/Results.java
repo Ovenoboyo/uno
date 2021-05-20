@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-import com.unoapp.uno.Application;
-import com.unoapp.uno.Application.ScreenObject;
+import com.unoapp.uno.UNO;
+import com.unoapp.uno.UNO.ScreenObject;
 import com.unoapp.uno.abstracts.MouseClickListener;
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.models.PlayerInfo;
@@ -59,7 +59,7 @@ public class Results extends GenericMenuScreen {
         continueButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Application.changeScreen(new ScreenObject(Screens.TITLE_SCREEN));
+                UNO.changeScreen(new ScreenObject(Screens.TITLE_SCREEN));
             }
         });
 

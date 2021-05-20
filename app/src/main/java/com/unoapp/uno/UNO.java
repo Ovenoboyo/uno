@@ -21,7 +21,7 @@ import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
 import com.unoapp.uno.utils.Database.DBNotInitializedException;
 
-public class Application {
+public class UNO {
 	public static void main(String[] args) {
 		try {
 			Constants.dbConnection.connect();

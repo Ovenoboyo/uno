@@ -1,4 +1,4 @@
-module mainModule {
+module UnoModule {
     requires transitive java.desktop;
     requires transitive java.sql;
     requires org.mybatis;
