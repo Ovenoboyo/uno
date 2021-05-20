@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.unoapp.uno.models.StatAnalytics;
+
 public class Constants {
     /**
      * Enum to hold all possible colors for cards
@@ -87,6 +89,30 @@ public class Constants {
 
     public enum AchievementTypes {
         PLAYED, DRAW4, WILD, DRAW2, SKIP, REVERSE, EXP
+    }
+
+    private static Double XPSCALE = 2d;
+
+    public static int getLevel(int xp) {
+        Double level = Math.pow(((double) xp / 500), (1 / XPSCALE));
+        return level.intValue();
+
+        // return (int) (Math.floor(500 + Math.sqrt(2500 + 100 * xp)) / 100);
+    }
+
+    public static Integer calculateXP(String id, StatAnalytics analytics, Boolean winner) {
+        int xp = 100 + (analytics.getDraw2() * 2 + 2 * analytics.getSkip() + 2 * analytics.getReverse()
+                + analytics.getWild() * 3 + analytics.getDraw4() * 4) * 3;
+        if (winner) {
+            xp += 100;
+        }
+        return xp;
+    }
+
+    public static int getUpperBoundXP(int level) {
+        Double L = level + 1d;
+        Double upperBound = Math.pow(L, XPSCALE) * 500;
+        return upperBound.intValue();
     }
 
 }

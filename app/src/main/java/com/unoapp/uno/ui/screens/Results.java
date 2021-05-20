@@ -84,26 +84,8 @@ public class Results extends GenericMenuScreen {
         buttonPanel.add(Box.createVerticalGlue());
     }
 
-    private int getLevel(int xp) {
-        return (int) (Math.floor(500 + Math.sqrt(2500 + 100 * xp)) / 100);
-    }
-
-    private int getUpperBoundXP(int level) {
-        int L = level + 1;
-        return 50 * L * L - 50 * L;
-    }
-
     private Double getProgressPercentage(int current, int upperBoundXP) {
         return ((double) current / upperBoundXP) * 100;
-    }
-
-    private Integer calculateXP(String id, StatAnalytics analytics) {
-        int xp = 100 + (analytics.getDraw2() * 2 + 2 * analytics.getSkip() + 2 * analytics.getReverse()
-                + analytics.getWild() * 3 + analytics.getDraw4() * 4) * 3;
-        if (id.equals(winner.getId())) {
-            xp += 100;
-        }
-        return xp;
     }
 
     private void updateDatabase(PlayerInfo info, Player player, int experience) {
@@ -131,9 +113,10 @@ public class Results extends GenericMenuScreen {
         TransparentPanel mainPanel = new TransparentPanel();
 
         Integer initialXP = info.getExperience();
-        Integer level = getLevel(initialXP);
-        Integer upperBoundXP = getUpperBoundXP(level);
-        Integer newXP = calculateXP(player.getId(), player.getAnalytics());
+        Integer level = Constants.getLevel(initialXP);
+        Integer upperBoundXP = Constants.getUpperBoundXP(level);
+        Integer newXP = Constants.calculateXP(player.getId(), player.getAnalytics(),
+                player.getId().equals(winner.getId()));
 
         updateDatabase(info, player, newXP);
 
