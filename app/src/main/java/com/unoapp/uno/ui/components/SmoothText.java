@@ -8,7 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Fonts;
 
 /**
  * Generic implementation of anti-aliased text
@@ -27,7 +27,7 @@ public class SmoothText extends TransparentPanel {
     }
 
     public SmoothText(String str, Color color) {
-        this(str, color, Constants.getProximaInstance(36, true));
+        this(str, color, Fonts.getProximaInstance(36, true));
     }
 
     public SmoothText(String str, Font font) {

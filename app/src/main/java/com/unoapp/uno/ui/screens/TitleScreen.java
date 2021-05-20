@@ -17,8 +17,11 @@ import com.unoapp.uno.ui.components.RoundedRectangle;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TransparentPanel;
+import com.unoapp.uno.utils.Assets;
+import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
+import com.unoapp.uno.utils.Fonts;
 
 /**
  * Title screen 
@@ -31,7 +34,7 @@ public class TitleScreen extends GenericMenuScreen {
     }
 
     private void init() {
-        ScaledBackground background = new ScaledBackground(Constants.getAsset("mainBg.png"), xSize, ySize);
+        ScaledBackground background = new ScaledBackground(Assets.getAsset("mainBg.png"), xSize, ySize);
         getContentPane().add(background);
 
         TransparentPanel mainPanel = new TransparentPanel();
@@ -41,17 +44,17 @@ public class TitleScreen extends GenericMenuScreen {
         TransparentPanel buttonPanel = new TransparentPanel();
 
         // Play button
-        buttonPanel.add(createPanel("Play", Constants.getAsset("playIcon.png"), 178, 124,
+        buttonPanel.add(createPanel("Play", Assets.getAsset("playIcon.png"), 178, 124,
                 () -> UNO.changeScreen(new ScreenObject(this, Screens.PLAYER_SELECT))));
         buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Settings button
-        buttonPanel.add(createPanel("Achievements", Constants.getAsset("trophy.png"), 123, 123,
+        buttonPanel.add(createPanel("Achievements", Assets.getAsset("trophy.png"), 123, 123,
                 () -> UNO.changeScreen(new ScreenObject(this, Screens.ACHIEVEMENT))));
         buttonPanel.add(Box.createHorizontalStrut(60));
 
         // Quit button
-        buttonPanel.add(createPanel("Quit", Constants.getAsset("power.png"), 144, 144,
+        buttonPanel.add(createPanel("Quit", Assets.getAsset("power.png"), 144, 144,
                 () -> UNO.changeScreen(new ScreenObject(this, Screens.EXIT))));
 
         mainPanel.add(Box.createVerticalGlue());
@@ -88,8 +91,8 @@ public class TitleScreen extends GenericMenuScreen {
         int rectSize = (MAX_COMPONENT_X / 4) - (60);
 
         TransparentPanel textPanel = new TransparentPanel();
-        SmoothText text = new SmoothText(labelText, Constants.getColor(Constants.Color.RED, false),
-                Constants.getProximaInstance(26, true));
+        SmoothText text = new SmoothText(labelText, Colors.getColor(Constants.Color.RED, false),
+                Fonts.getProximaInstance(26, true));
         textPanel.add(text);
         textPanel.add(Box.createVerticalStrut(rectSize / 3));
 

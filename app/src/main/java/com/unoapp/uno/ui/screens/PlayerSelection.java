@@ -33,8 +33,11 @@ import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.StartLabel;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.components.TriangleArrow;
+import com.unoapp.uno.utils.Assets;
+import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
+import com.unoapp.uno.utils.Fonts;
 
 /**
  * Screen where players will be choosen
@@ -144,7 +147,7 @@ public class PlayerSelection extends GenericMenuScreen {
     private void init() {
         dialog = new CreateUserDialog(this);
 
-        ScaledBackground background = new ScaledBackground(Constants.getAsset("mainBg.png"), xSize, ySize,
+        ScaledBackground background = new ScaledBackground(Assets.getAsset("mainBg.png"), xSize, ySize,
                 new BorderLayout());
         getContentPane().add(background);
 
@@ -154,13 +157,13 @@ public class PlayerSelection extends GenericMenuScreen {
 
         TransparentPanel buttonPanel = new TransparentPanel();
 
-        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.BLUE, false), 0));
+        buttonPanel.add(createPanel(Colors.getColor(Constants.Color.BLUE, false), 0));
         buttonPanel.add(Box.createHorizontalStrut(60));
-        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.GREEN, false), 1));
+        buttonPanel.add(createPanel(Colors.getColor(Constants.Color.GREEN, false), 1));
         buttonPanel.add(Box.createHorizontalStrut(60));
-        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.YELLOW, false), 2));
+        buttonPanel.add(createPanel(Colors.getColor(Constants.Color.YELLOW, false), 2));
         buttonPanel.add(Box.createHorizontalStrut(60));
-        buttonPanel.add(createPanel(Constants.getColor(Constants.Color.RED, false), 3));
+        buttonPanel.add(createPanel(Colors.getColor(Constants.Color.RED, false), 3));
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(Box.createVerticalGlue());
@@ -190,7 +193,7 @@ public class PlayerSelection extends GenericMenuScreen {
 
         TransparentPanel northPanel = new TransparentPanel(new FlowLayout(FlowLayout.LEFT));
         northPanel.add(Box.createRigidArea(new Dimension(30, 120)));
-        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36, true));
+        BackButton backButton = new BackButton(0.8, Fonts.getProximaInstance(36, true));
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -250,7 +253,7 @@ public class PlayerSelection extends GenericMenuScreen {
         TriangleArrow arrowR = new TriangleArrow(false, color);
         SmoothText text = new SmoothText(
                 frameIndices[index] >= 0 ? players.get(frameIndices[index]).getName() : "Create New",
-                Constants.getProximaInstance(28, true));
+                Fonts.getProximaInstance(28, true));
 
         TransparentPanel playerNameHolder = new TransparentPanel();
         playerNameHolder.add(text);

@@ -34,6 +34,7 @@ import com.unoapp.uno.ui.components.PlayerOrder;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.drawables.Deck;
+import com.unoapp.uno.utils.Assets;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
 
@@ -147,7 +148,7 @@ public class Game extends GenericMenuScreen {
      * Generate all the UI required for game screen
      */
     private void generateUIComponents() {
-        ScaledBackground background = new ScaledBackground(Constants.getAsset("bg.png"), xSize, ySize);
+        ScaledBackground background = new ScaledBackground(Assets.getAsset("bg.png"), xSize, ySize);
 
         activePlayerCardPanel = new TransparentPanel();
 
@@ -174,7 +175,7 @@ public class Game extends GenericMenuScreen {
         southPanel.add(scrollCards);
 
         unoPanel = new TransparentPanel();
-        var unoIcon = new ScaledBackground(Constants.getAsset("playIcon.png"), 178, 124);
+        var unoIcon = new ScaledBackground(Assets.getAsset("playIcon.png"), 178, 124);
         unoIcon.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

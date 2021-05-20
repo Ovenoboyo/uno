@@ -24,9 +24,12 @@ import com.unoapp.uno.ui.components.SmoothText;
 import com.unoapp.uno.ui.components.TickLabel;
 import com.unoapp.uno.ui.components.TransparentPanel;
 import com.unoapp.uno.ui.components.TriangleArrow;
+import com.unoapp.uno.utils.Assets;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.AchievementTypes;
 import com.unoapp.uno.utils.Constants.Screens;
+import com.unoapp.uno.utils.Experience;
+import com.unoapp.uno.utils.Fonts;
 
 /**
  * Achievement screen
@@ -54,7 +57,7 @@ public class AchievementScreen extends GenericMenuScreen {
      * Initialize screen components
      */
     private void init() {
-        ScaledBackground background = new ScaledBackground(Constants.getAsset("mainBg.png"), xSize, ySize,
+        ScaledBackground background = new ScaledBackground(Assets.getAsset("mainBg.png"), xSize, ySize,
                 new BorderLayout());
         getContentPane().add(background);
 
@@ -66,7 +69,7 @@ public class AchievementScreen extends GenericMenuScreen {
         northPanel.add(Box.createVerticalStrut(30));
         backPanel.add(Box.createHorizontalStrut(30));
 
-        BackButton backButton = new BackButton(0.8, Constants.getProximaInstance(36, true));
+        BackButton backButton = new BackButton(0.8, Fonts.getProximaInstance(36, true));
         backButton.addMouseListener(new MouseClickListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -128,7 +131,7 @@ public class AchievementScreen extends GenericMenuScreen {
         TriangleArrow arrowL = new TriangleArrow(true, Color.BLUE);
         TriangleArrow arrowR = new TriangleArrow(false, Color.BLUE);
         SmoothText text = new SmoothText(players.get(playerIndex).getName(), Color.BLACK,
-                Constants.getProximaInstance(28, true));
+                Fonts.getProximaInstance(28, true));
 
         TransparentPanel playerNameHolder = new TransparentPanel();
         playerNameHolder.add(text);
@@ -184,7 +187,7 @@ public class AchievementScreen extends GenericMenuScreen {
                 case DRAW4:
                     return p.getDraw4();
                 case EXP:
-                    return Constants.getLevel(p.getExperience());
+                    return Experience.getLevel(p.getExperience());
                 case REVERSE:
                     return p.getReverse();
                 case SKIP:
@@ -212,7 +215,7 @@ public class AchievementScreen extends GenericMenuScreen {
         box.add(Box.createVerticalGlue());
 
         int xp = players.get(playerIndex).getExperience();
-        Double nearest = Math.max(5, 5 * (Math.ceil(Math.abs(Constants.getLevel(xp) / (double) 5))));
+        Double nearest = Math.max(5, 5 * (Math.ceil(Math.abs(Experience.getLevel(xp) / (double) 5))));
 
         box.add(createPanel(
                 new Achievement(AchievementTypes.EXP, "Reach level " + nearest.intValue(), nearest.floatValue()),

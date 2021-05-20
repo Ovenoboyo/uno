@@ -23,7 +23,9 @@ import com.unoapp.uno.ui.drawables.DrawTwo;
 import com.unoapp.uno.ui.drawables.Reverse;
 import com.unoapp.uno.ui.drawables.Skip;
 import com.unoapp.uno.ui.drawables.Wild;
+import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Fonts;
 
 /**
  * Panel to hold drawn uno card
@@ -44,9 +46,9 @@ public class CardPanel extends TransparentPanel {
     private final int width = 168;
     private final int height = 267;
 
-    private final Font small = Constants.getGilmerInstance(36);
-    private final Font reverse = Constants.getGilmerInstance(-36);
-    private final Font big = Constants.getGilmerInstance(82);
+    private final Font small = Fonts.getGilmerInstance(36);
+    private final Font reverse = Fonts.getGilmerInstance(-36);
+    private final Font big = Fonts.getGilmerInstance(82);
 
     /**
      * Constructor to generate card
@@ -124,7 +126,7 @@ public class CardPanel extends TransparentPanel {
     private void drawPlus2(Graphics2D g2d) {
         new TextLayout("+2", small, g2d.getFontRenderContext()).draw(g2d, 14, 44);
         new TextLayout("+2", reverse, g2d.getFontRenderContext()).draw(g2d, (width - 14), (height - 44));
-        DrawTwo.paint(g2d, Constants.getColor(color, disabled), (width / 2) - (DrawTwo.getOrigWidth() * 0.2 * 0.5),
+        DrawTwo.paint(g2d, Colors.getColor(color, disabled), (width / 2) - (DrawTwo.getOrigWidth() * 0.2 * 0.5),
                 (height / 2) - (DrawTwo.getOrigHeight() * 0.2 * 0.5));
     }
 
@@ -140,7 +142,7 @@ public class CardPanel extends TransparentPanel {
                 (width - 16) - (Reverse.getOrigX() * 0.05) - (Reverse.getOrigWidth() * 0.05),
                 (height - 34) - (Reverse.getOrigY() * 0.05) - (Reverse.getOrigHeight() * 0.05 * 0.5));
 
-        Reverse.paint(g2d, Constants.getColor(color, disabled), 0.15f,
+        Reverse.paint(g2d, Colors.getColor(color, disabled), 0.15f,
                 (width / 2) - (Reverse.getOrigWidth() * 0.15 * 0.5) - Reverse.getOrigX() * 0.15,
                 (height / 2) - (Reverse.getOrigHeight() * 0.15 * 0.5) - Reverse.getOrigY() * 0.15);
 
@@ -155,7 +157,7 @@ public class CardPanel extends TransparentPanel {
 
         Skip.paint(g2d, Color.WHITE, 0.05f, (width - 16) - (Skip.getOrigWidth() * 0.05),
                 (height - 32) - (Skip.getOrigHeight() * 0.05 * 0.5));
-        Skip.paint(g2d, Constants.getColor(color, disabled), 0.15f, (width / 2) - (Skip.getOrigWidth() * 0.15 * 0.5),
+        Skip.paint(g2d, Colors.getColor(color, disabled), 0.15f, (width / 2) - (Skip.getOrigWidth() * 0.15 * 0.5),
                 (height / 2) - (Skip.getOrigHeight() * 0.15 * 0.5));
     }
 
@@ -175,7 +177,7 @@ public class CardPanel extends TransparentPanel {
      * @param g2d
      */
     private void drawWild(Graphics2D g2d) {
-        Wild.paint(g2d, Constants.getColor(color, disabled), width, height);
+        Wild.paint(g2d, Colors.getColor(color, disabled), width, height);
     }
 
     /**
@@ -198,7 +200,7 @@ public class CardPanel extends TransparentPanel {
         if (isSixNine())
             g2d.fillRect((int) (width - 16 - 1 - r3.getWidth()), (height - 44 - 4), (int) r3.getWidth() + 2, 2);
 
-        g2d.setColor(Constants.getColor(color, disabled));
+        g2d.setColor(Colors.getColor(color, disabled));
         TextLayout layout2 = new TextLayout(num.toString(), big, g2d.getFontRenderContext());
         Rectangle r2 = layout2.getPixelBounds(null, 0, 0);
         float width2 = ((width / 2) - (float) (r2.getWidth() / 2));
@@ -227,7 +229,7 @@ public class CardPanel extends TransparentPanel {
         ng2d.drawImage(image, 0, 0, width, height, null);
         double coef = Math.min((double) width / (double) 1120, (double) height / (double) 1780);
         ng2d.scale(coef, coef);
-        BlankCard.paint(Constants.getColor(color, disabled), ng2d);
+        BlankCard.paint(Colors.getColor(color, disabled), ng2d);
         ng2d.dispose();
 
         g2d.setColor(Color.WHITE);

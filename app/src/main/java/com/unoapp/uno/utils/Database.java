@@ -135,6 +135,12 @@ public class Database {
         conn.commit();
     }
 
+    /**
+     * Update player table
+     * 
+     * @param info Updated player details
+     * @throws SQLException 
+     */
     public void updatePlayer(PlayerInfo info) throws SQLException {
         PreparedStatement prep = conn.prepareStatement(
                 "UPDATE players SET won = ?, lost = ?, experience = ?, draw2_count = ?, draw4_count = ?, skip_count = ?, rev_count = ?, wild_count = ? WHERE id = ?");
@@ -169,6 +175,11 @@ public class Database {
         return players;
     }
 
+    /**
+     * Get all achievements
+     * 
+     * @return ArrayList of all achievements
+     */
     public ArrayList<Achievement> getAchievements() {
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM achievements");
@@ -182,6 +193,13 @@ public class Database {
         return null;
     }
 
+    /**
+     * Parse ResultSet into Achievement model
+     * 
+     * @param set ResultSet returned from sql query
+     * @return ArrayList of achievements parsed
+     * @throws SQLException
+     */
     private ArrayList<Achievement> parseAchievements(ResultSet set) throws SQLException {
         ArrayList<Achievement> achievements = new ArrayList<>();
         while (set.next()) {
@@ -191,11 +209,18 @@ public class Database {
         return achievements;
     }
 
+    /**
+     * Glob all files ending with .sql (Hoping they all contain legitimate code. Technically anyone can inject anything but whatever)
+     * @return Array of File(s) globed
+     */
     private File[] globMigrations() {
-        File dir = new File(Paths.get(Constants.getAssetsDirectory().toString(), "migrations").toString());
+        File dir = new File(Paths.get(Assets.getAssetsDirectory().toString(), "migrations").toString());
         return dir.listFiles((d, name) -> name.endsWith(".sql"));
     }
 
+    /**
+     * Custom exception when database isnt initialize where it should be
+     */
     public class DBNotInitializedException extends Exception {
         DBNotInitializedException() {
             super("Database not initialized");

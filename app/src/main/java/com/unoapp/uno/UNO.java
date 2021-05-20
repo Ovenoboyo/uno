@@ -17,6 +17,7 @@ import com.unoapp.uno.ui.screens.Game;
 import com.unoapp.uno.ui.screens.PlayerSelection;
 import com.unoapp.uno.ui.screens.Results;
 import com.unoapp.uno.ui.screens.TitleScreen;
+import com.unoapp.uno.utils.Assets;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
 import com.unoapp.uno.utils.Database.DBNotInitializedException;
@@ -50,9 +51,9 @@ public class UNO {
 	 */
 	private static void registerFont() throws FontFormatException, IOException {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		File gilmer = new File(Constants.getAsset("gilmer_heavy.otf"));
-		File proxima = new File(Constants.getAsset("ProximaNova-Bold.otf"));
-		File proximaReg = new File(Constants.getAsset("ProximaNova-Regular.otf"));
+		File gilmer = new File(Assets.getAsset("gilmer_heavy.otf"));
+		File proxima = new File(Assets.getAsset("ProximaNova-Bold.otf"));
+		File proximaReg = new File(Assets.getAsset("ProximaNova-Regular.otf"));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, gilmer));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proxima));
 		ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, proximaReg));

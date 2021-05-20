@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import com.unoapp.uno.models.Player;
 import com.unoapp.uno.ui.drawables.Arrow;
+import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Fonts;
 
 /**
  * Panel to hold player names with 
@@ -44,7 +46,7 @@ public class PlayerOrder extends TransparentPanel {
             }
         }
         this.str = str;
-        setFont(Constants.getGilmerInstance(36f));
+        setFont(Fonts.getGilmerInstance(36f));
     }
 
     @Override
@@ -67,7 +69,7 @@ public class PlayerOrder extends TransparentPanel {
         String[] split = str.split(",");
         int nextStringPos = 0;
         for (String s : split) {
-            g2d.setColor(Constants.getColor(activeColor, !s.equals(currentPlayer.getName())));
+            g2d.setColor(Colors.getColor(activeColor, !s.equals(currentPlayer.getName())));
             g2d.drawString(s, nextStringPos, getFont().getSize() + Arrow.getIconHeight());
             nextStringPos += met.stringWidth(s);
         }
@@ -79,7 +81,7 @@ public class PlayerOrder extends TransparentPanel {
             g2d.rotate(Math.PI);
             g2d.translate(-Arrow.getIconWidth(), -Arrow.getIconHeight());
         }
-        Arrow.paint(g2d, Constants.getColor(activeColor, false));
+        Arrow.paint(g2d, Colors.getColor(activeColor, false));
 
         g2d.dispose();
     }

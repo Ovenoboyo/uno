@@ -12,7 +12,9 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
+import com.unoapp.uno.utils.Fonts;
 
 public class ProgressBar extends TransparentPanel {
     private int width, height;
@@ -36,7 +38,7 @@ public class ProgressBar extends TransparentPanel {
 
     private TransparentPanel createNamePanel(String str) {
         var namePanel = createTextPanel(str);
-        namePanel.add(new PersonIcon(59, 59, Constants.getColor(color, false)), 0);
+        namePanel.add(new PersonIcon(59, 59, Colors.getColor(color, false)), 0);
         namePanel.add(Box.createHorizontalStrut(60), 0);
 
         return namePanel;
@@ -46,7 +48,7 @@ public class ProgressBar extends TransparentPanel {
         TransparentPanel extraPanel = new TransparentPanel();
         extraPanel.setLayout(new BoxLayout(extraPanel, BoxLayout.X_AXIS));
         extraPanel.add(Box.createHorizontalStrut(30));
-        extraPanel.add(new SmoothText(str, Constants.getProximaInstance(29, false)), BorderLayout.WEST);
+        extraPanel.add(new SmoothText(str, Fonts.getProximaInstance(29, false)), BorderLayout.WEST);
         extraPanel.add(Box.createHorizontalStrut(30));
 
         return extraPanel;

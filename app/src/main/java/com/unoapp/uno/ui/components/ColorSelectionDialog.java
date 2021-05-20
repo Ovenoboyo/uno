@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.unoapp.uno.ui.drawables.ColorSelection;
+import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
 
 /**
@@ -229,7 +230,7 @@ public class ColorSelectionDialog extends JDialog {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-            ColorSelection.paint(g2d, Constants.getColor(color, false), angle, this.expanded, expandedSize - 5,
+            ColorSelection.paint(g2d, Colors.getColor(color, false), angle, this.expanded, expandedSize - 5,
                     normalSize);
 
             g2d.dispose();

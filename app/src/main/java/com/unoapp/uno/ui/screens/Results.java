@@ -20,8 +20,10 @@ import com.unoapp.uno.ui.components.GenericMenuScreen;
 import com.unoapp.uno.ui.components.ProgressBar;
 import com.unoapp.uno.ui.components.ScaledBackground;
 import com.unoapp.uno.ui.components.TransparentPanel;
+import com.unoapp.uno.utils.Assets;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
+import com.unoapp.uno.utils.Experience;
 
 public class Results extends GenericMenuScreen {
     private final ArrayList<Player> players;
@@ -36,7 +38,7 @@ public class Results extends GenericMenuScreen {
     }
 
     private void init() {
-        ScaledBackground background = new ScaledBackground(Constants.getAsset("mainBg.png"), xSize, ySize,
+        ScaledBackground background = new ScaledBackground(Assets.getAsset("mainBg.png"), xSize, ySize,
                 new BorderLayout());
         getContentPane().add(background);
 
@@ -127,10 +129,9 @@ public class Results extends GenericMenuScreen {
         TransparentPanel mainPanel = new TransparentPanel();
 
         Integer initialXP = info.getExperience();
-        Integer level = Constants.getLevel(initialXP);
-        Integer upperBoundXP = Constants.getUpperBoundXP(level);
-        Integer newXP = Constants.calculateXP(player.getId(), player.getAnalytics(),
-                player.getId().equals(winner.getId()));
+        Integer level = Experience.getLevel(initialXP);
+        Integer upperBoundXP = Experience.getUpperBoundXP(level);
+        Integer newXP = Experience.calculateXP(player.getAnalytics(), player.getId().equals(winner.getId()));
 
         updateDatabase(info, player, newXP);
 
