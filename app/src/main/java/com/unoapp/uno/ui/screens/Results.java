@@ -87,6 +87,13 @@ public class Results extends GenericMenuScreen {
         return ((double) current / upperBoundXP) * 100;
     }
 
+    /**
+     * Update database with new player stats
+     * 
+     * @param info PlayerInfo with old player stats
+     * @param player Player with updated stats
+     * @param experience Experience recieved by player
+     */
     private void updateDatabase(PlayerInfo info, Player player, int experience) {
         info.setDraw2(info.getDraw2() + player.getAnalytics().getDraw2());
         info.setDraw4(info.getDraw4() + player.getAnalytics().getDraw4());
@@ -108,6 +115,14 @@ public class Results extends GenericMenuScreen {
         }
     }
 
+    /**
+     * Creates panel with progressbar
+     * 
+     * @param player Player whose experience is to be generated
+     * @param info  PlayerInfo of player whose experience is to be generated
+     * @param color Color of progress bar
+     * @return Transparant panel with ProgressBar
+     */
     private TransparentPanel createPanel(Player player, PlayerInfo info, Constants.Color color) {
         TransparentPanel mainPanel = new TransparentPanel();
 

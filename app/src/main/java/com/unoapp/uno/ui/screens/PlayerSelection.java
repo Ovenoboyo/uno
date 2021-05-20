@@ -103,10 +103,18 @@ public class PlayerSelection extends GenericMenuScreen {
         init();
     }
 
+    /**
+     * Get all players from database
+     */
     private void getPlayers() {
         players = Constants.dbConnection.getAllPlayers();
     }
 
+    /**
+     * Get players selected by user
+     * @return ArrayList of players selected by users
+     * @throws InvalidPlayersException when less than 2 players are selected
+     */
     private ArrayList<PlayerInfo> getActivePlayers() throws InvalidPlayersException {
         ArrayList<PlayerInfo> players = new ArrayList<>();
         for (Integer i : frameIndices) {
@@ -119,6 +127,11 @@ public class PlayerSelection extends GenericMenuScreen {
         return players;
     }
 
+    /**
+     * Check if any of the selected players are duplicates
+     * 
+     * @throws InvalidPlayersException when one or more players are duplicate
+     */
     private void validatePlayers() throws InvalidPlayersException {
         Set<Integer> lump = new HashSet<Integer>();
         for (Integer i : frameIndices) {

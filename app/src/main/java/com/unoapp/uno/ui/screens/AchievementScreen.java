@@ -28,6 +28,9 @@ import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.AchievementTypes;
 import com.unoapp.uno.utils.Constants.Screens;
 
+/**
+ * Achievement screen
+ */
 public class AchievementScreen extends GenericMenuScreen {
     private ArrayList<Achievement> achievements;
     private ArrayList<PlayerInfo> players;
@@ -37,6 +40,9 @@ public class AchievementScreen extends GenericMenuScreen {
 
     private final GenericMenuScreen context = this;
 
+    /**
+     * Default constructor
+     */
     public AchievementScreen() {
         super();
         getAllPlayers();
@@ -44,6 +50,9 @@ public class AchievementScreen extends GenericMenuScreen {
         init();
     }
 
+    /**
+     * Initialize screen components
+     */
     private void init() {
         ScaledBackground background = new ScaledBackground(Constants.getAsset("mainBg.png"), xSize, ySize,
                 new BorderLayout());
@@ -108,6 +117,10 @@ public class AchievementScreen extends GenericMenuScreen {
 
     }
 
+    /**
+     * Create player circular selection panel
+     * @return Transparent panel with player selection
+     */
     private TransparentPanel createPlayerSelection() {
         RoundedRectangle rectangle = new RoundedRectangle(280, 50, 50);
         TransparentPanel textHolder = new TransparentPanel();
@@ -140,14 +153,27 @@ public class AchievementScreen extends GenericMenuScreen {
         return rectangle;
     }
 
+    /**
+     * Get all players from database
+     */
     private void getAllPlayers() {
         this.players = Constants.dbConnection.getAllPlayers();
     }
 
+    /**
+     * Get all achievements from database
+     */
     private void getAllAchievements() {
         this.achievements = Constants.dbConnection.getAchievements();
     }
 
+    /**
+     * Get progress number of current player respective to achievement type
+     * 
+     * @param p PlayerInfo object fetched from database
+     * @param type Type of achievement
+     * @return Progress of given achievement as int
+     */
     private int getPlayerProgress(PlayerInfo p, AchievementTypes type) {
         if (p != null) {
             switch (type) {
@@ -170,6 +196,9 @@ public class AchievementScreen extends GenericMenuScreen {
         return 0;
     }
 
+    /**
+     * Increment index 
+     */
     private void incrementIndex() {
         playerIndex++;
         if (playerIndex >= players.size()) {
@@ -209,6 +238,13 @@ public class AchievementScreen extends GenericMenuScreen {
         }
     }
 
+    /**
+     * Create achievement rectangle panel
+     * 
+     * @param achievement achievement to render 
+     * @param player player whose progress to show
+     * @return Transparent panel of rendered rectangle
+     */
     private TransparentPanel createPanel(Achievement achievement, PlayerInfo player) {
         Integer progress = getPlayerProgress(player, achievement.getType());
         Float total = achievement.getTotal();
@@ -216,6 +252,15 @@ public class AchievementScreen extends GenericMenuScreen {
         return createAchievementRect(progress >= total, achievement.getTitle(), progress, total.intValue());
     }
 
+    /**
+     * Create rectangle for achievement
+     * 
+     * @param completed true if achievment is completed otherwise false
+     * @param title title of achievement
+     * @param progress current of progress of player towards achievement
+     * @param total total amount required to complete achievement
+     * @return panel with rounded rectangle
+     */
     private TransparentPanel createAchievementRect(Boolean completed, String title, Integer progress, Integer total) {
         var mainPanel = new TransparentPanel();
 
