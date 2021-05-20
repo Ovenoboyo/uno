@@ -210,66 +210,47 @@ public class AchievementScreen extends GenericMenuScreen {
     }
 
     private TransparentPanel createPanel(Achievement achievement, PlayerInfo player) {
-        var mainPanel = new TransparentPanel();
-
         Integer progress = getPlayerProgress(player, achievement.getType());
         Float total = achievement.getTotal();
 
-        // TODO: Very shit code and i'm not in a mood to make it better
-        if (progress < total) {
+        return createAchievementRect(progress >= total, achievement.getTitle(), progress, total.intValue());
+    }
 
-            RoundedRectangle rect = new RoundedRectangle(MAX_COMPONENT_X - 500, 120, 60, new FlowLayout());
+    private TransparentPanel createAchievementRect(Boolean completed, String title, Integer progress, Integer total) {
+        var mainPanel = new TransparentPanel();
 
-            var textBox = new TransparentPanel();
-            textBox.setLayout(new BoxLayout(textBox, BoxLayout.Y_AXIS));
-            textBox.setPreferredSize(new Dimension(MAX_COMPONENT_X - 500, 120 - 5));
+        RoundedRectangle rect = new RoundedRectangle(MAX_COMPONENT_X - 500, 120, 60, new FlowLayout(),
+                (completed) ? new Color(97, 215, 67) : Color.WHITE);
 
-            var borderPanel = new TransparentPanel(new BorderLayout());
-            borderPanel.setMaximumSize(new Dimension(MAX_COMPONENT_X - 580, 30));
+        var textBox = new TransparentPanel();
+        textBox.setLayout(new BoxLayout(textBox, BoxLayout.Y_AXIS));
+        textBox.setPreferredSize(new Dimension(MAX_COMPONENT_X - 500, 120 - 5));
 
-            SmoothText text = new SmoothText(achievement.getTitle());
-            SmoothText text2 = new SmoothText(progress.intValue() + " / " + total.intValue());
+        var borderPanel = new TransparentPanel(new BorderLayout());
+        borderPanel.setMaximumSize(new Dimension(MAX_COMPONENT_X - 580, 29));
 
-            borderPanel.add(text, BorderLayout.WEST);
-            borderPanel.add(text2, BorderLayout.EAST);
+        SmoothText text = new SmoothText(title);
+        borderPanel.add(text, BorderLayout.WEST);
 
-            textBox.add(Box.createVerticalGlue());
-            textBox.add(borderPanel);
-            textBox.add(Box.createVerticalGlue());
-
-            rect.add(textBox);
-            mainPanel.add(rect);
-        } else {
-            RoundedRectangle rect = new RoundedRectangle(MAX_COMPONENT_X - 500, 120, 60, new FlowLayout(),
-                    new Color(97, 215, 67));
-
-            var textBox = new TransparentPanel();
-            textBox.setLayout(new BoxLayout(textBox, BoxLayout.Y_AXIS));
-            textBox.setPreferredSize(new Dimension(MAX_COMPONENT_X - 500, 120 - 5));
-
-            var borderPanel = new TransparentPanel(new BorderLayout());
-            borderPanel.setMaximumSize(new Dimension(MAX_COMPONENT_X - 580, 29));
-
-            SmoothText text = new SmoothText(achievement.getTitle());
-
+        if (completed) {
             var tickPanel = new TransparentPanel();
             var tickLabel = new TickLabel();
 
             tickPanel.add(tickLabel);
-
-            borderPanel.add(text, BorderLayout.WEST);
             borderPanel.add(tickPanel, BorderLayout.EAST);
-
-            textBox.add(Box.createVerticalGlue());
-            textBox.add(borderPanel);
-            textBox.add(Box.createVerticalGlue());
-
-            rect.add(textBox);
-            mainPanel.add(rect);
-
+        } else {
+            SmoothText text2 = new SmoothText(progress + " / " + total);
+            borderPanel.add(text2, BorderLayout.EAST);
         }
 
+        textBox.add(Box.createVerticalGlue());
+        textBox.add(borderPanel);
+        textBox.add(Box.createVerticalGlue());
+
+        rect.add(textBox);
+        mainPanel.add(rect);
         return mainPanel;
+
     }
 
     /**
