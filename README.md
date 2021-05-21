@@ -10,7 +10,7 @@ A simple single player implemntation of the game UNO in Java.
 - Play a game according to the official rules of UNO
 
 ## Screenshots
-![Screenshot 1] (master/screenshots/1.png)
+![Screenshot 1] (https://raw.githubusercontent.com/Ovenoboyo/uno/master/screenshots/1.png)
 
 ## Building from source
 ### Requirements
