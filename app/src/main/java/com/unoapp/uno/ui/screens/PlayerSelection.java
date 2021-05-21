@@ -208,7 +208,6 @@ public class PlayerSelection extends GenericMenuScreen {
         background.add(northPanel, BorderLayout.NORTH);
 
         pack();
-
     }
 
     /**

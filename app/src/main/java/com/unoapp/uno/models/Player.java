@@ -41,7 +41,6 @@ public class Player {
     }
 
     /**
-     * TODO: Add bots as a subtype of player
      * Constructor for player
      * @param name name of player
      */
