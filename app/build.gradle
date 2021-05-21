@@ -25,6 +25,7 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
     implementation 'org.xerial:sqlite-jdbc:3.34.0'
     implementation 'org.mybatis:mybatis:3.5.7'
+    
 }
 
 ext {
