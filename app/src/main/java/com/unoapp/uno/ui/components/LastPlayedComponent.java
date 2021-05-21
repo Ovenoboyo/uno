@@ -13,14 +13,14 @@ import com.unoapp.uno.models.Card;
  */
 public class LastPlayedComponent extends TransparentPanel {
 
-    private ArrayList<Card> lastPlayed = new ArrayList<>();
+    private ArrayList<Card> lastPlayed;
     private int RLowerBoundary = -16;
     private int RUpperBoundary = 16;
     private int RotationOffset = 8;
     private Random random = new Random();
 
     public LastPlayedComponent(ArrayList<Card> lastPlayed) {
-        this.lastPlayed.addAll(lastPlayed);
+        this.lastPlayed = lastPlayed;
         this.init();
     }
 
@@ -47,6 +47,21 @@ public class LastPlayedComponent extends TransparentPanel {
 
             if (card.getAngle() == 0) {
                 rand = getRandomAngle();
+
+                /**
+                 * Check if the generated angle is greater or lesser than previous angle by [RotationOffset]
+                 * 
+                 * Say the RotationOffset is [8] and the previous angle is 3, RLowerBoundary is [-16], RUpperBoundary is [16]
+                 * then the angle generated should lie in range 
+                 * 
+                 * [RLowerBoundary, PreviousAngle - RotationOffset] U [PreviousAngle + RotationOffset, RUpperBoundary]
+                 * or
+                 * [-16, -5] U [8, 16]. 
+                 * 
+                 * Since it should be union of both ranges, if it lies in either of the ranges the condition should be satisfied.
+                 * 
+                 * The only exception being if the previous angle is 0. Then we can use any value
+                 */
                 while (!(inRange(RLowerBoundary, prevAngle - RotationOffset, rand)
                         || inRange(prevAngle + RotationOffset, RUpperBoundary, rand)) && prevAngle != 0) {
                     rand = getRandomAngle();
@@ -63,10 +78,22 @@ public class LastPlayedComponent extends TransparentPanel {
         g2d.dispose();
     }
 
+    /**
+     * Generates random integer between RUpperBoundary and RLowerBoundary (Inclusive).
+     * @return Integer between RUpperBoundary and RLowerBoundary (Inclusive)
+     */
     private Integer getRandomAngle() {
         return random.nextInt(RUpperBoundary - RLowerBoundary) + RLowerBoundary;
     }
 
+    /**
+     * Check if provided value is between specified low and high bounds of range
+     * 
+     * @param low lower bound of range
+     * @param high upper bound of range
+     * @param x value to check
+     * @return true if value is in range otherwise false
+     */
     private Boolean inRange(int low, int high, int x) {
         return ((x - high) * (x - low) <= 0);
     }

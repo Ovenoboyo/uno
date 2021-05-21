@@ -67,7 +67,7 @@ public class PlayerSelection extends GenericMenuScreen {
         }
 
         private Boolean validate() {
-            return (nameField.getText().length() <= 15);
+            return (nameField.getText().length() <= 15 && nameField.getText().length() >= 4);
         }
 
         private void showDialog(String errorString) {
@@ -87,7 +87,7 @@ public class PlayerSelection extends GenericMenuScreen {
                         e.printStackTrace();
                     }
                 } else {
-                    showDialog("Character length should be less than 15!");
+                    showDialog("Character length should be less than 15 and and greater than 4!");
                 }
             }
         }

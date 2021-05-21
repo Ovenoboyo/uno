@@ -25,6 +25,10 @@ import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Constants.Screens;
 import com.unoapp.uno.utils.Experience;
 
+/**
+ * End-game screen shown after a winner is chosen
+ * Shows experience gained by every player and a button to return to title screen
+ */
 public class Results extends GenericMenuScreen {
     private final ArrayList<Player> players;
     private final Player winner;

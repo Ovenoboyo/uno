@@ -29,22 +29,37 @@ public class PlayerInfo {
         this.wild = wild;
     }
 
+    /**
+     * @return draw 2 played
+     */
     public Integer getDraw2() {
         return this.draw2;
     }
 
+    /**
+     * @return draw 4 played
+     */
     public Integer getDraw4() {
         return this.draw4;
     }
 
+    /**
+     * @return skips played
+     */
     public Integer getSkip() {
         return this.skip;
     }
 
+    /**
+     * @return reverse played
+     */
     public Integer getReverse() {
         return this.reverse;
     }
 
+    /**
+     * @return wilds played
+     */
     public Integer getWild() {
         return this.wild;
     }

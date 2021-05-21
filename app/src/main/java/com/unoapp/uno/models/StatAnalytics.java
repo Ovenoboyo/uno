@@ -1,8 +1,5 @@
 package com.unoapp.uno.models;
 
-/**
- * HAHA ANAL-YTIC
- */
 public class StatAnalytics {
     private Integer draw2Played = 0;
     private Integer draw4Played = 0;

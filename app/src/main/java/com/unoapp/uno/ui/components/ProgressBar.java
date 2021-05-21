@@ -16,11 +16,25 @@ import com.unoapp.uno.utils.Colors;
 import com.unoapp.uno.utils.Constants;
 import com.unoapp.uno.utils.Fonts;
 
+/**
+ * Panel with gradient color acting like progressbar
+ */
 public class ProgressBar extends TransparentPanel {
     private int width, height;
     private Double initialProgress, newProgress;
     private Constants.Color color;
 
+    /**
+     * Multi colored progressbar like rounded rectangle
+     * 
+     * @param width width of bar
+     * @param height height of bar
+     * @param initialProgress initial progress (Rendered in darker color)
+     * @param newProgress new progress (Rendered in lighter color)
+     * @param color Constants.Color constant of color
+     * @param name Name of player rendered in far left after icon
+     * @param xpAdded xp given to the player rendered on far right of bar
+     */
     public ProgressBar(int width, int height, Double initialProgress, Double newProgress, Constants.Color color,
             String name, String xpAdded) {
         super(new BorderLayout());
@@ -101,6 +115,12 @@ public class ProgressBar extends TransparentPanel {
 
         int initialWidth = percentageToWidth(initialProgress);
 
+        /**
+         * Render a rounded white rectangle with width as initialWidth
+         * Then render a normal rectangle starting from half the width of rounded rectangle with width (half of rounded rectangle + 1)
+         * 
+         * This essentially creates a rectangle rounded on only the left side.
+         */
         if (initialWidth != 0) {
             g2d.setPaint(getColors());
             g2d.fill(new RoundRectangle2D.Double(0, 0, initialWidth, height, height, height));
@@ -110,12 +130,19 @@ public class ProgressBar extends TransparentPanel {
 
         var newProgressWidth = percentageToWidth(newProgress);
 
+        /**
+         * If a darker rounded rectangle isnt made initially then we need to create it first.
+         */
         if (initialWidth == 0) {
             g2d.fill(new RoundRectangle2D.Double(0, 0, newProgressWidth, height, height, height));
             initialWidth = newProgressWidth / 2;
             newProgressWidth = newProgressWidth / 2;
         }
 
+        /**
+         * If the rectangle width exceeds total width then clamp it to max value
+         * and make a rounded rectangle instead of normal
+         */
         if (initialWidth + newProgressWidth >= width - 15) {
             newProgressWidth = width - initialWidth;
             g2d.fill(new RoundRectangle2D.Double(initialWidth, 0, newProgressWidth + 1, height, height, height));

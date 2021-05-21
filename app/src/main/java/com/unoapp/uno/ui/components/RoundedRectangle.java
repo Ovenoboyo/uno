@@ -16,14 +16,38 @@ public class RoundedRectangle extends TransparentPanel {
     private int width, height, borderRadius;
     private Color color;
 
+    /**
+     * Create rounded rectangle as JPanel
+     * 
+     * @param width width of rounded rectangle
+     * @param height height of rounded rectangle
+     * @param borderRadius border radius of rounded rectangle
+     */
     public RoundedRectangle(int width, int height, int borderRadius) {
         this(width, height, borderRadius, new FlowLayout(), Color.WHITE);
     }
 
+    /**
+     * Create rounded rectangle as JPanel
+     * 
+     * @param width width of rounded rectangle
+     * @param height height of rounded rectangle
+     * @param borderRadius border radius of rounded rectangle
+     * @param mgr Layoutmanager of jpanel 
+     */
     public RoundedRectangle(int width, int height, int borderRadius, LayoutManager mgr) {
         this(width, height, borderRadius, mgr, Color.WHITE);
     }
 
+    /**
+     * Create rounded rectangle as JPanel
+     * 
+     * @param width width of rounded rectangle
+     * @param height height of rounded rectangle
+     * @param borderRadius border radius of rounded rectangle
+     * @param mgr Layoutmanager of jpanel 
+     * @param color color of rounded rectangle
+     */
     public RoundedRectangle(int width, int height, int borderRadius, LayoutManager mgr, Color color) {
         super();
         this.width = width;

@@ -19,13 +19,38 @@ import com.unoapp.uno.utils.Fonts;
  * arrow on top of current player
  */
 public class PlayerOrder extends TransparentPanel {
+    /**
+     * ArrayList of all players
+     */
     private ArrayList<Player> players;
+
+    /**
+     * object of current player
+     */
     private Player currentPlayer;
+
+    /**
+     * color of arrow and text
+     */
     private Constants.Color activeColor;
+
+    /**
+     * Generated string with names of all players seperated by
+     * 4 whitespaces and custom delimiter.
+     */
     private String str;
     private int charCount = 0;
     private boolean isReversed;
 
+    /**
+     * Panel to hold player names with 
+     * arrow on top of current player
+     * 
+     * @param players ArrayList of all players
+     * @param currentPlayer object of current player
+     * @param activeColor color of arrow and text
+     * @param isReversed true if arrow should be pointing left otherwise false
+     */
     public PlayerOrder(ArrayList<Player> players, Player currentPlayer, Constants.Color activeColor,
             boolean isReversed) {
         this.players = players;
@@ -35,6 +60,9 @@ public class PlayerOrder extends TransparentPanel {
         this.isReversed = isReversed;
     }
 
+    /**
+     * Generate str from player names and set appropriate font.
+     */
     private void setData() {
         String str = "";
         for (Player p : players) {
@@ -49,6 +77,11 @@ public class PlayerOrder extends TransparentPanel {
         setFont(Fonts.getGilmerInstance(36f));
     }
 
+    /**
+     * Preferred size should be (width of string, height of string + height of arrow icon)
+     * Offset in height is considered as space around arrow icon and line height of string
+     * so it is included in current calculations
+     */
     @Override
     public Dimension getPreferredSize() {
         Graphics g = getGraphics();
@@ -66,6 +99,13 @@ public class PlayerOrder extends TransparentPanel {
 
         FontMetrics met = g.getFontMetrics();
 
+        /**
+         * Strings are split by custom delimiter.
+         * Each string is drawn after the previous one.
+         * 
+         * The name of current player is drawn with activeColor as primary color
+         * while other strings are drawn with "disabled" color
+         */
         String[] split = str.split(",");
         int nextStringPos = 0;
         for (String s : split) {
@@ -76,7 +116,7 @@ public class PlayerOrder extends TransparentPanel {
 
         g2d.setColor(new Color(185, 185, 185));
 
-        g2d.translate(met.stringWidth(this.str.substring(0, charCount)) - Arrow.getIconWidth() / 2, 0);
+        g2d.translate(met.stringWidth(this.str.substring(0, charCount)) - Arrow.getIconWidth() * 1 / 3, 0);
         if (this.isReversed) {
             g2d.rotate(Math.PI);
             g2d.translate(-Arrow.getIconWidth(), -Arrow.getIconHeight());

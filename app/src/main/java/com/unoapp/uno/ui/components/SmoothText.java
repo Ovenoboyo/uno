@@ -18,6 +18,13 @@ public class SmoothText extends TransparentPanel {
     private Color color;
     private Font font;
 
+    /**
+     * Anti-aliased text
+     *  
+     * @param str text to be rendered
+     * @param color color of text
+     * @param font font of text
+     */
     public SmoothText(String str, Color color, Font font) {
         this.str = str;
         this.color = color;
@@ -26,14 +33,31 @@ public class SmoothText extends TransparentPanel {
         setOpaque(false);
     }
 
+    /**
+     * Anti-aliased text
+     *  
+     * @param str text to be rendered
+     * @param color color of text
+     */
     public SmoothText(String str, Color color) {
         this(str, color, Fonts.getProximaInstance(36, true));
     }
 
+    /**
+     * Anti-aliased text
+     *  
+     * @param str text to be rendered
+     * @param font font of text
+     */
     public SmoothText(String str, Font font) {
         this(str, Color.BLACK, font);
     }
 
+    /**
+     * Anti-aliased text
+     *  
+     * @param str text to be rendered
+     */
     public SmoothText(String str) {
         this(str, Color.BLACK);
     }

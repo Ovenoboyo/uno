@@ -10,6 +10,12 @@ public class TriangleArrow extends TransparentPanel {
     private Boolean left;
     private Color color;
 
+    /**
+     * Create a fully filled triangle pointing sideways
+     * 
+     * @param left true if arrow is pointing left
+     * @param color color of arrow
+     */
     public TriangleArrow(Boolean left, Color color) {
         super();
         this.left = left;

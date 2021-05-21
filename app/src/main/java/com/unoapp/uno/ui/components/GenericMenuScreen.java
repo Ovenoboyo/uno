@@ -10,7 +10,28 @@ import javax.swing.JFrame;
  * Generic fullscreen frame implementation
  */
 public abstract class GenericMenuScreen extends JFrame {
-    public final int MAX_COMPONENT_X, MAX_COMPONENT_Y, xSize, ySize;
+
+    /**
+     * Maximum available value of X axis after subtracting all offsets.
+     * (More specifically 60 on both sides)
+     */
+    public final int MAX_COMPONENT_X;
+
+    /**
+     * Maximum available value of Y axis after subtracting all offsets.
+     * (More specifically 30 on both sides)
+     */
+    public final int MAX_COMPONENT_Y;
+
+    /**
+     * Raw width of screen
+     */
+    public final int xSize;
+
+    /**
+     * Raw height of screen
+     */
+    public final int ySize;
 
     protected GenericMenuScreen() {
         Toolkit tk = Toolkit.getDefaultToolkit();
