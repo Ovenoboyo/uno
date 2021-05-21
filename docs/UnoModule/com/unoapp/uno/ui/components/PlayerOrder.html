@@ -149,7 +149,10 @@ loadScripts(document, 'script');</script>
  <a href="../../models/Player.html" title="class in com.unoapp.uno.models">Player</a>&nbsp;currentPlayer,
  <a href="../../utils/Constants.Color.html" title="enum class in com.unoapp.uno.utils">Constants.Color</a>&nbsp;activeColor,
  boolean&nbsp;isReversed)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Panel to hold player names with 
+ arrow on top of current player</div>
+</div>
 </div>
 </section>
 </li>
@@ -166,7 +169,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/java/awt/Dimension.html" title="class or interface in java.awt" class="external-link">Dimension</a></code></div>
 <div class="col-second even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#getPreferredSize()">getPreferredSize</a></span>()</code></div>
-<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">
+<div class="block">Preferred size should be (width of string, height of string + height of arrow icon)
+ Offset in height is considered as space around arrow icon and line height of string
+ so it is included in current calculations</div>
+</div>
 <div class="col-first odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#paintComponent(java.awt.Graphics)">paintComponent</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/java/awt/Graphics.html" title="class or interface in java.awt" class="external-link">Graphics</a>&nbsp;g)</code></div>
 <div class="col-last odd-row-color method-summary-table-tab2 method-summary-table-tab4 method-summary-table">&nbsp;</div>
@@ -206,6 +213,15 @@ loadScripts(document, 'script');</script>
  <a href="../../models/Player.html" title="class in com.unoapp.uno.models">Player</a>&nbsp;currentPlayer,
  <a href="../../utils/Constants.Color.html" title="enum class in com.unoapp.uno.utils">Constants.Color</a>&nbsp;activeColor,
  boolean&nbsp;isReversed)</span></div>
+<div class="block">Panel to hold player names with 
+ arrow on top of current player</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>players</code> - ArrayList of all players</dd>
+<dd><code>currentPlayer</code> - object of current player</dd>
+<dd><code>activeColor</code> - color of arrow and text</dd>
+<dd><code>isReversed</code> - true if arrow should be pointing left otherwise false</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -220,6 +236,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPreferredSize()">
 <h3>getPreferredSize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/java/awt/Dimension.html" title="class or interface in java.awt" class="external-link">Dimension</a></span>&nbsp;<span class="element-name">getPreferredSize</span>()</div>
+<div class="block">Preferred size should be (width of string, height of string + height of arrow icon)
+ Offset in height is considered as space around arrow icon and line height of string
+ so it is included in current calculations</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/javax/swing/JComponent.html#getPreferredSize()" title="class or interface in javax.swing" class="external-link">getPreferredSize</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/javax/swing/JComponent.html" title="class or interface in javax.swing" class="external-link">JComponent</a></code></dd>
