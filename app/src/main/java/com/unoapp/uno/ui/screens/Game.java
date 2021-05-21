@@ -56,7 +56,7 @@ public class Game extends GenericMenuScreen {
      * 
      */
     public Game(ArrayList<PlayerInfo> players) {
-        customDialog = new CustomCardDialog();
+        customDialog = new CustomCardDialog(this);
         init(players);
     }
 

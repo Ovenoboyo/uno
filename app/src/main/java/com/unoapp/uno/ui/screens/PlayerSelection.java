@@ -141,11 +141,11 @@ public class PlayerSelection extends GenericMenuScreen {
         TransparentPanel buttonPanel = new TransparentPanel();
 
         buttonPanel.add(createPanel(Constants.getColor(Constants.Color.BLUE, false), 0));
-        buttonPanel.add(Box.createHorizontalStrut(30));
+        buttonPanel.add(Box.createHorizontalStrut(60));
         buttonPanel.add(createPanel(Constants.getColor(Constants.Color.GREEN, false), 1));
-        buttonPanel.add(Box.createHorizontalStrut(30));
+        buttonPanel.add(Box.createHorizontalStrut(60));
         buttonPanel.add(createPanel(Constants.getColor(Constants.Color.YELLOW, false), 2));
-        buttonPanel.add(Box.createHorizontalStrut(30));
+        buttonPanel.add(Box.createHorizontalStrut(60));
         buttonPanel.add(createPanel(Constants.getColor(Constants.Color.RED, false), 3));
 
         mainPanel.add(Box.createVerticalGlue());
@@ -225,11 +225,13 @@ public class PlayerSelection extends GenericMenuScreen {
     private TransparentPanel createPanel(java.awt.Color color, Integer index) {
         incrementIndex(index);
 
+        int rectSize = (MAX_COMPONENT_X / 4) - (60);
+
         TransparentPanel mainPanel = new TransparentPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
         TransparentPanel textHolder = new TransparentPanel();
-        TransparentPanel textPanel = new TransparentPanel(new BorderLayout(), new Dimension(375 - 100, 30));
+        TransparentPanel textPanel = new TransparentPanel(new BorderLayout(), new Dimension(rectSize - 100, 32));
         TriangleArrow arrowL = new TriangleArrow(true, color);
         TriangleArrow arrowR = new TriangleArrow(false, color);
         SmoothText text = new SmoothText(
@@ -249,14 +251,14 @@ public class PlayerSelection extends GenericMenuScreen {
 
         textHolder.add(textPanel);
 
-        RoundedRectangle playButton = new RoundedRectangle(375, 375, 80);
+        RoundedRectangle playButton = new RoundedRectangle(rectSize, rectSize, 80);
         playButton.setLayout(new BoxLayout(playButton, BoxLayout.PAGE_AXIS));
 
         TransparentPanel label = new TransparentPanel();
         label.add(new PersonIcon(color));
 
         playButton.add(Box.createVerticalGlue());
-        playButton.add(Box.createHorizontalStrut(135 / 2));
+        playButton.add(Box.createHorizontalStrut(150 / 2));
         playButton.add(label);
         playButton.add(textHolder);
         playButton.add(Box.createVerticalGlue());
