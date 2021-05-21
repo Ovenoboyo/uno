@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"mainModule"}];updateSearchResults();
+moduleSearchIndex = [{"l":"UnoModule"}];updateSearchResults();

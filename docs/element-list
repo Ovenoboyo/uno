@@ -1,4 +1,4 @@
-module:mainModule
+module:UnoModule
 com.unoapp.uno
 com.unoapp.uno.abstracts
 com.unoapp.uno.engine
