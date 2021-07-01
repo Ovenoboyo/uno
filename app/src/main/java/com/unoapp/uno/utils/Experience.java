@@ -11,6 +11,8 @@ public class Experience {
     /**
      * Calculate current level from given xp
      * 
+     * level = (x/500) ^ 1/2
+     * 
      * @param xp of player to calculate level of
      * @return level as int
      */

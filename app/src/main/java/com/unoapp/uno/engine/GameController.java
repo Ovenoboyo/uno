@@ -20,6 +20,7 @@ public class GameController {
 
     private int isStackingD2 = 0;
     private int isStackingD4 = 0;
+
     private boolean isReversed = false;
 
     /**
